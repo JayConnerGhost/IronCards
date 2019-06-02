@@ -7,14 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using IronCards.Controls;
 
 namespace IronCards
 {
-    public partial class Form1 : Form
+    public partial class Container : BaseForm, IApplicationContainer
     {
-        public Form1()
+        public Container(ILanesContainer lanes):base()
         {
+            ((UserControl) lanes).Dock = DockStyle.Fill;
             InitializeComponent();
         }
+    }
+
+    public interface IApplicationContainer
+    {
     }
 }
