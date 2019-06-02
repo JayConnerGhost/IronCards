@@ -35,6 +35,7 @@ namespace IronCards.Controls
             for (int i = 0; i< numberOfLanes; i++)
             {
                 //Spike code replace with full lanes code 
+                //create Lane component 
                 layoutPanel.Controls.Add(new TextBox(){Width = 100, Dock = DockStyle.Left, BorderStyle = BorderStyle.Fixed3D,BackColor = Color.Wheat});
             }
             this.Controls.Add(layoutPanel);

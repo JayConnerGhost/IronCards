@@ -16,13 +16,10 @@ namespace IronCards
         public Container(ILanesContainer lanes):base()
         {
             InitializeComponent();
+            
             Controls.Add((UserControl)lanes);
             ((UserControl) lanes).Dock = DockStyle.Fill;
             ((LanesContainer) lanes).NumberOfLanes = 4;
         }
-    }
-
-    public interface IApplicationContainer
-    {
     }
 }

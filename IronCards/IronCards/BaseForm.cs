@@ -8,6 +8,8 @@ namespace IronCards
     {
         public BaseForm()
         {
+            base.FormBorderStyle = FormBorderStyle.Sizable;
+            
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
