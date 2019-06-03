@@ -34,8 +34,7 @@ namespace IronCards.Controls
 
         public void AddLane(string laneLabel)
         {
-            var lane = new Lane(laneLabel);
-            lane.Height = this.Height - 20;
+            var lane = new Lane(laneLabel) {Height = this.Height - 20};
             LanesCollection.Add(lane);
            _layoutPanel.Controls.Add(lane);
         }

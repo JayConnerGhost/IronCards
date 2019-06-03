@@ -18,7 +18,7 @@ namespace IronCards.Controls
 
         private Control BuildLabel(string laneLabel)
         {
-            var label = new MetroLabel() {Text = laneLabel,Width = 200,TextAlign =ContentAlignment.BottomLeft };
+            var label = new MetroLabel() {Text = laneLabel,Width = 200,TextAlign =ContentAlignment.BottomLeft,Dock = DockStyle.Top};
             return label;
         }
     }
