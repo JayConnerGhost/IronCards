@@ -12,35 +12,23 @@ namespace IronCards.Controls
 {
     public partial class LanesContainer: UserControl,ILanesContainer
     {
-        private int _numberOfLanes;
-
+        public List<Lane> LanesCollection { get; set; }
+        private FlowLayoutPanel _layoutPanel;
         public LanesContainer()
         {
             InitializeComponent();
+            LanesCollection = new List<Lane>();
+            _layoutPanel = new FlowLayoutPanel { FlowDirection = FlowDirection.LeftToRight, Dock = DockStyle.Fill };
+            this.Controls.Add(_layoutPanel);
         }
 
-        public int NumberOfLanes
+
+        public void AddLane(string laneLabel)
         {
-            get => _numberOfLanes;
-            set
-            {
-                _numberOfLanes = value;
-                BuildLanes(_numberOfLanes);
-            }
+           var lane= new Lane(laneLabel);
+           LanesCollection.Add(lane);
+           _layoutPanel.Controls.Add(lane);
         }
 
-        private void BuildLanes(int numberOfLanes)
-        {
-            var layoutPanel = new FlowLayoutPanel {FlowDirection = FlowDirection.LeftToRight, Dock = DockStyle.Fill};
-            for (int i = 0; i< numberOfLanes; i++)
-            {
-                //Spike code replace with full lanes code 
-                //create Lane component 
-                layoutPanel.Controls.Add(new TextBox(){Width = 100, Dock = DockStyle.Left, BorderStyle = BorderStyle.Fixed3D,BackColor = Color.Wheat});
-            }
-            this.Controls.Add(layoutPanel);
-
-
-        }
     }
 }

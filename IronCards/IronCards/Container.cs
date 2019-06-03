@@ -19,7 +19,10 @@ namespace IronCards
             
             Controls.Add((UserControl)lanes);
             ((UserControl) lanes).Dock = DockStyle.Fill;
-            ((LanesContainer) lanes).NumberOfLanes = 4;
+            ((LanesContainer) lanes).AddLane("TODO");
+            ((LanesContainer) lanes).AddLane("In Development");
+            ((LanesContainer) lanes).AddLane("In Testing");
+            ((LanesContainer) lanes).AddLane("Done");
         }
     }
 }
