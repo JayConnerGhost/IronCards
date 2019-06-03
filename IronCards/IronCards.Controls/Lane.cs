@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 using MetroFramework.Controls;
+using MetroFramework.Drawing;
 
 namespace IronCards.Controls
 {
@@ -8,6 +9,10 @@ namespace IronCards.Controls
     {
         public Lane(string laneLabel)
         {
+            BorderStyle = BorderStyle.FixedSingle;
+            
+            Width = 250;
+            
             Controls.Add(BuildLabel(laneLabel));
         }
 
