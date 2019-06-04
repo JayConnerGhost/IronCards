@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using MetroFramework.Controls;
 using MetroFramework.Drawing;
@@ -12,6 +13,8 @@ namespace IronCards.Controls
             Changed,
             Unchanged
         }
+        public Guid Id { get; set; }
+
         public Lane(string laneLabel)
         {
             BorderStyle = BorderStyle.FixedSingle;
@@ -40,7 +43,10 @@ namespace IronCards.Controls
             var textBox = ((MetroTextBox) sender);
             if ((TextChangedValue)textBox.Tag == TextChangedValue.Changed)
             {
-                //update DB with new Column Name
+
+                EventHandler<LaneTitleEditedArgs> handler = TitleChanged;
+                handler?.Invoke(this, new LaneTitleEditedArgs(){LaneId = Id,NewTitle = textBox.Text.Trim()});
+                //raise event passing out new Args 
             }
             textBox.Tag = TextChangedValue.Unchanged;
         }
@@ -49,5 +55,14 @@ namespace IronCards.Controls
         {
             ((MetroTextBox) (sender)).ReadOnly = false;
         }
+
+        public event EventHandler<LaneTitleEditedArgs> TitleChanged;
+    }
+
+    public class LaneTitleEditedArgs : EventArgs
+    {
+        public Guid LaneId { get; set; }
+        public string NewTitle { get; set; }
     }
 }
+

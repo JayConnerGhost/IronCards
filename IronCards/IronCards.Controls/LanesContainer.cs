@@ -38,10 +38,17 @@ namespace IronCards.Controls
 
         public void AddLane(string laneLabel)
         {
+            //Code to add to database needed 
             var lane = new Lane(laneLabel) {Height = this.Height - 20};
+            lane.TitleChanged += Lane_TitleChanged;
+            lane.Id = Guid.NewGuid();
             LanesCollection.Add(lane);
            _layoutPanel.Controls.Add(lane);
         }
 
+        private void Lane_TitleChanged(object sender, LaneTitleEditedArgs e)
+        {
+            //code to edit lane title in the database
+        }
     }
 }
