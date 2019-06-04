@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using IronCards.Services.Controls;
+using LiteDB;
 
 namespace IronCards.Services.Controls
 {
@@ -46,9 +47,18 @@ namespace IronCards.Controls
         public void AddLane(string laneLabel)
         {
             //Code to add to database needed 
+
             var lane = new Lane(laneLabel) {Height = this.Height - 20};
             lane.TitleChanged += Lane_TitleChanged;
             lane.Id = Guid.NewGuid();
+            using (var db = new LiteDatabase(@"requirements.db"))
+            {
+                var lanes = db.GetCollection<LaneDocument>();
+                lanes.Insert(new LaneDocument(){Title = laneLabel});
+                lanes.EnsureIndex("Title");
+                var docs=lanes.FindAll().First();
+            }
+
             LanesCollection.Add(lane);
            _layoutPanel.Controls.Add(lane);
         }
@@ -57,5 +67,11 @@ namespace IronCards.Controls
         {
             //code to edit lane title in the database
         }
+    }
+
+    public class LaneDocument 
+    {
+        public int Id { get; set; }
+        public string Title { get; set; }
     }
 }
