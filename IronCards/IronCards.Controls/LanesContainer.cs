@@ -23,8 +23,7 @@ namespace IronCards.Controls
             {
                 FlowDirection = FlowDirection.LeftToRight, Dock = DockStyle.Fill, WrapContents = false,
                 HorizontalScroll = {Enabled = true},AutoScroll = true
-            
-        };
+            };
             this.Controls.Add(_layoutPanel);
             this.Resize += LanesContainer_Resize;
         }

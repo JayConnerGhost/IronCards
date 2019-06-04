@@ -7,6 +7,11 @@ namespace IronCards.Controls
 {
     public class Lane:UserControl
     {
+        enum TextChangedValue
+        {
+            Changed,
+            Unchanged
+        }
         public Lane(string laneLabel)
         {
             BorderStyle = BorderStyle.FixedSingle;
@@ -18,8 +23,31 @@ namespace IronCards.Controls
 
         private Control BuildLabel(string laneLabel)
         {
-            var label = new MetroLabel() {Text = laneLabel,Width = 200,TextAlign =ContentAlignment.BottomLeft,Dock = DockStyle.Top};
+            var label = new MetroTextBox() {Text = laneLabel,Width = 200,ReadOnly = true,Dock = DockStyle.Top};
+            label.Click += Label_Click;
+            label.Leave += Label_Leave;
+            label.TextChanged += Label_TextChanged;
             return label;
+        }
+
+        private void Label_TextChanged(object sender, System.EventArgs e)
+        {
+            ((MetroTextBox) (sender)).Tag = TextChangedValue.Changed;
+        }
+
+        private void Label_Leave(object sender, System.EventArgs e)
+        {
+            var textBox = ((MetroTextBox) sender);
+            if ((TextChangedValue)textBox.Tag == TextChangedValue.Changed)
+            {
+                //update DB with new Column Name
+            }
+            textBox.Tag = TextChangedValue.Unchanged;
+        }
+
+        private void Label_Click(object sender, System.EventArgs e)
+        {
+            ((MetroTextBox) (sender)).ReadOnly = false;
         }
     }
 }
