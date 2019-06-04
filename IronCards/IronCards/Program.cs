@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using IronCards.Controls;
+using IronCards.Services;
+using IronCards.Services.Controls;
 using Unity;
 using Unity.Lifetime;
 
@@ -29,6 +31,8 @@ namespace IronCards
             var container = new UnityContainer();
             container.RegisterType<ILanesContainer, LanesContainer>(new ContainerControlledLifetimeManager());
             container.RegisterType<IApplicationContainer, Container>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IDatabaseService, DatabaseService>(new ContainerControlledLifetimeManager());
+
             return container;
         }
     }

@@ -8,15 +8,22 @@ using System.Runtime.Remoting.Channels;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using IronCards.Services.Controls;
+
+namespace IronCards.Services.Controls
+{
+}
 
 namespace IronCards.Controls
 {
     public partial class LanesContainer: UserControl,ILanesContainer
     {
+        private readonly IDatabaseService _databaseService;
         public List<Lane> LanesCollection { get; set; }
         private FlowLayoutPanel _layoutPanel;
-        public LanesContainer()
+        public LanesContainer(IDatabaseService databaseService)
         {
+            _databaseService = databaseService;
             InitializeComponent();
             LanesCollection = new List<Lane>();
             _layoutPanel = new FlowLayoutPanel

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Drawing;
 using System.Windows.Forms;
 using MetroFramework.Controls;
@@ -40,15 +41,26 @@ namespace IronCards.Controls
 
         private void Label_Leave(object sender, System.EventArgs e)
         {
-            var textBox = ((MetroTextBox) sender);
+            try
+            {
+                var textBox = ((MetroTextBox) sender);
             if ((TextChangedValue)textBox.Tag == TextChangedValue.Changed)
             {
-
-                EventHandler<LaneTitleEditedArgs> handler = TitleChanged;
-                handler?.Invoke(this, new LaneTitleEditedArgs(){LaneId = Id,NewTitle = textBox.Text.Trim()});
-                //raise event passing out new Args 
+               
+                    EventHandler<LaneTitleEditedArgs> handler = TitleChanged;
+                    handler?.Invoke(this, new LaneTitleEditedArgs() { LaneId = Id, NewTitle = textBox.Text.Trim() });
+                    //raise event passing out new Args 
+               
             }
             textBox.Tag = TextChangedValue.Unchanged;
+
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+                //Ignore exception 
+            }
+
         }
 
         private void Label_Click(object sender, System.EventArgs e)
