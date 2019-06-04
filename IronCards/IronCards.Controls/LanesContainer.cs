@@ -19,7 +19,12 @@ namespace IronCards.Controls
         {
             InitializeComponent();
             LanesCollection = new List<Lane>();
-            _layoutPanel = new FlowLayoutPanel { FlowDirection = FlowDirection.LeftToRight, Dock = DockStyle.Fill,WrapContents = false};
+            _layoutPanel = new FlowLayoutPanel
+            {
+                FlowDirection = FlowDirection.LeftToRight, Dock = DockStyle.Fill, WrapContents = false,
+                HorizontalScroll = {Enabled = true},AutoScroll = true
+            
+        };
             this.Controls.Add(_layoutPanel);
             this.Resize += LanesContainer_Resize;
         }
@@ -28,7 +33,7 @@ namespace IronCards.Controls
         {
             foreach (var lane in LanesCollection)
             {
-                ((UserControl) lane).Height = this.Height - 20;
+                ((UserControl) lane).Height = this.Height - 25;
             }
         }
 
