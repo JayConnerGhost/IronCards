@@ -108,6 +108,10 @@
       <Project>{17379964-0140-4172-A7AD-FAC5D3A01D24}</Project>
       <Name>IronCards.Controls</Name>
     </ProjectReference>
+    <ProjectReference Include="..\IronCards.Services\IronCards.Services.csproj">
+      <Project>{A6986F78-C6AD-41F8-8D14-4AA7704154CF}</Project>
+      <Name>IronCards.Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="MetroFramework.txt" />

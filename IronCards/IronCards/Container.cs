@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using IronCards.Controls;
-using IronCards.Services.Controls;
 
 namespace IronCards
 {

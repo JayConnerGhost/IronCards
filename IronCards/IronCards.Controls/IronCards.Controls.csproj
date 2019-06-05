@@ -74,5 +74,11 @@
   <ItemGroup>
     <Content Include="MetroFramework.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IronCards.Services\IronCards.Services.csproj">
+      <Project>{A6986F78-C6AD-41F8-8D14-4AA7704154CF}</Project>
+      <Name>IronCards.Services</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
