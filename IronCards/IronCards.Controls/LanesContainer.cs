@@ -35,15 +35,6 @@ namespace IronCards.Controls
 
         private void LoadLanes()
         {
-            /**
-             * var lane = new Lane(laneLabel) {Height = this.Height - 20};
-             lane.TitleChanged += Lane_TitleChanged;
-             lane.Id=_databaseService.Insert(laneLabel);
-             LanesCollection.Add(lane);
-            _layoutPanel.Controls.Add(lane);
-            
-             *
-             */
             var lanesCollection = _databaseService.GetAll();
 
             foreach (var laneDocument in lanesCollection)
@@ -61,7 +52,7 @@ namespace IronCards.Controls
         {
             foreach (var lane in LanesCollection)
             {
-                ((UserControl) lane).Height = this.Height - 25;
+                ((UserControl) lane).Height = this.Height - 20;
             }
         }
 
