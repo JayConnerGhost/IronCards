@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using IronCards.Objects;
@@ -11,18 +12,34 @@ namespace IronCards.Services
     {
         public int Insert(string laneLabel)
         {
-            int Id;
+            int id;
             using (var database = new LiteDB.LiteDatabase("Lanes.db"))
             {
                 var lanes = database.GetCollection<LaneDocument>();
-                Id = lanes.Insert(new LaneDocument() { Title = laneLabel });
+                id = lanes.Insert(new LaneDocument() { Title = laneLabel });
             }
-            return Id;
+            return id;
         }
 
-        public void Update(int targetId, string eNewTitle)
+        public void Update(int targetId, string laneLabel)
         {
-            throw new System.NotImplementedException();
+            using (var database = new LiteDB.LiteDatabase("Lanes.db"))
+            {
+                var lanes = database.GetCollection<LaneDocument>();
+                lanes.Update(targetId, new LaneDocument() { Title = laneLabel });
+            }
+        }
+
+        public List<LaneDocument> GetAll()
+        {
+            var laneDocuments = new List<LaneDocument>();
+            using (var database = new LiteDB.LiteDatabase("Lanes.db"))
+            {
+                var lanes = database.GetCollection<LaneDocument>();
+                laneDocuments=lanes.FindAll().ToList();
+            }
+
+            return laneDocuments;
         }
     }
 }

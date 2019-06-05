@@ -20,7 +20,7 @@ namespace IronCards
             
             Controls.Add((UserControl)lanes);
             ((UserControl) lanes).Dock = DockStyle.Fill;
-            BuildInitialLanes(lanes);
+          //  BuildInitialLanes(lanes);//commented out use for dev purposes
         }
 
         private static void BuildInitialLanes(ILanesContainer lanes)

@@ -30,6 +30,31 @@ namespace IronCards.Controls
             };
             this.Controls.Add(_layoutPanel);
             this.Resize += LanesContainer_Resize;
+            LoadLanes();
+        }
+
+        private void LoadLanes()
+        {
+            /**
+             * var lane = new Lane(laneLabel) {Height = this.Height - 20};
+             lane.TitleChanged += Lane_TitleChanged;
+             lane.Id=_databaseService.Insert(laneLabel);
+             LanesCollection.Add(lane);
+            _layoutPanel.Controls.Add(lane);
+            
+             *
+             */
+            var lanesCollection = _databaseService.GetAll();
+
+            foreach (var laneDocument in lanesCollection)
+            {
+                var lane = new Lane(laneDocument.Title) { Height = this.Height - 20 ,Id = laneDocument.Id};
+                lane.TitleChanged += Lane_TitleChanged;
+                LanesCollection.Add(lane);
+                _layoutPanel.Controls.Add(lane);
+            }
+
+
         }
 
         private void LanesContainer_Resize(object sender, EventArgs e)
