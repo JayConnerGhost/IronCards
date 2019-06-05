@@ -14,7 +14,7 @@ namespace IronCards.Controls
             Changed,
             Unchanged
         }
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         public Lane(string laneLabel)
         {
@@ -73,7 +73,7 @@ namespace IronCards.Controls
 
     public class LaneTitleEditedArgs : EventArgs
     {
-        public Guid LaneId { get; set; }
+        public int LaneId { get; set; }
         public string NewTitle { get; set; }
     }
 }

@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronCards", "IronCards\Iron
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronCards.Controls", "IronCards.Controls\IronCards.Controls.csproj", "{17379964-0140-4172-A7AD-FAC5D3A01D24}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronCards.Services", "IronCards.Services\IronCards.Services.csproj", "{72D12082-77A0-4934-AC24-483D900E4DD3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronCards.Objects", "IronCards.Objects\IronCards.Objects.csproj", "{5B5C7DD5-A93D-415F-B7A9-1A0D35229C27}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{17379964-0140-4172-A7AD-FAC5D3A01D24}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17379964-0140-4172-A7AD-FAC5D3A01D24}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17379964-0140-4172-A7AD-FAC5D3A01D24}.Release|Any CPU.Build.0 = Release|Any CPU
-		{72D12082-77A0-4934-AC24-483D900E4DD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{72D12082-77A0-4934-AC24-483D900E4DD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{72D12082-77A0-4934-AC24-483D900E4DD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{72D12082-77A0-4934-AC24-483D900E4DD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B5C7DD5-A93D-415F-B7A9-1A0D35229C27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B5C7DD5-A93D-415F-B7A9-1A0D35229C27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B5C7DD5-A93D-415F-B7A9-1A0D35229C27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B5C7DD5-A93D-415F-B7A9-1A0D35229C27}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -9,11 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using IronCards.Services.Controls;
-using LiteDB;
 
-namespace IronCards.Services.Controls
-{
-}
 
 namespace IronCards.Controls
 {
@@ -24,8 +20,8 @@ namespace IronCards.Controls
         private FlowLayoutPanel _layoutPanel;
         public LanesContainer(IDatabaseService databaseService)
         {
-            _databaseService = databaseService;
             InitializeComponent();
+            _databaseService = databaseService;
             LanesCollection = new List<Lane>();
             _layoutPanel = new FlowLayoutPanel
             {
@@ -50,28 +46,14 @@ namespace IronCards.Controls
 
             var lane = new Lane(laneLabel) {Height = this.Height - 20};
             lane.TitleChanged += Lane_TitleChanged;
-            lane.Id = Guid.NewGuid();
-            using (var db = new LiteDatabase(@"requirements.db"))
-            {
-                var lanes = db.GetCollection<LaneDocument>();
-                lanes.Insert(new LaneDocument(){Title = laneLabel});
-                lanes.EnsureIndex("Title");
-                var docs=lanes.FindAll().First();
-            }
-
+            lane.Id=_databaseService.Insert(laneLabel);
             LanesCollection.Add(lane);
            _layoutPanel.Controls.Add(lane);
         }
 
         private void Lane_TitleChanged(object sender, LaneTitleEditedArgs e)
         {
-            //code to edit lane title in the database
+            _databaseService.Update(e.LaneId, e.NewTitle);
         }
-    }
-
-    public class LaneDocument 
-    {
-        public int Id { get; set; }
-        public string Title { get; set; }
     }
 }
