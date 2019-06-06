@@ -56,6 +56,13 @@ namespace IronCards
 
         private void BuildUpLanesMenu(ToolStripMenuItem menu)
         {
+            var lanesNewMenuItem = new ToolStripMenuItem("New Lane", null, NewLaneLanesOnClick);
+            menu.DropDownItems.Add(lanesNewMenuItem);
+        }
+
+        private void NewLaneLanesOnClick(object sender, EventArgs e)
+        {
+            _lanes.AddLane("new Lane");
         }
 
         private void BuildUpFileMenu(ToolStripMenuItem menu)

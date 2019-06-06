@@ -2,6 +2,6 @@
 {
     public interface ILanesContainer
     {
-        
+        void AddLane(string newLane);
     }
 }
