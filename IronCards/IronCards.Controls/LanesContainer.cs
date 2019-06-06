@@ -65,6 +65,7 @@ namespace IronCards.Controls
             lane.Id=_databaseService.Insert(laneLabel);
             LanesCollection.Add(lane);
            _layoutPanel.Controls.Add(lane);
+           lane.Focus();
         }
 
         private void Lane_TitleChanged(object sender, LaneTitleEditedArgs e)
