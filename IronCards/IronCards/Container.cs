@@ -19,10 +19,10 @@ namespace IronCards
         {
             _lanes = lanes;
             InitializeComponent();
-            BuildMenu(lanes);
             //Build a container 
             var layout = new TableLayoutPanel {RowCount = 2, ColumnCount = 1, Dock = DockStyle.Fill};
             var menu=new MenuStrip();
+            BuildMenu(lanes,menu);
 
             layout.Controls.Add(menu,0,0);
             ((UserControl) lanes).Dock = DockStyle.Fill;
@@ -33,11 +33,40 @@ namespace IronCards
             //  BuildInitialLanes(lanes);//commented out use for dev purposes
         }
 
-        private void BuildMenu(ILanesContainer lanes)
+        private void BuildMenu(ILanesContainer lanes, MenuStrip menu)
         {
             //build menu 
+            var mnuLanes = new ToolStripMenuItem("Lane");
+            var mnuFile = new ToolStripMenuItem("File");
+            var mnuCards = new ToolStripMenuItem("Cards");
             //Add menu items 
-            
+            BuildUpFileMenu(mnuFile);
+            BuildUpLanesMenu(mnuLanes);
+            BuildUpCardsMenu(mnuCards);
+
+
+            menu.Items.Add(mnuFile);
+            menu.Items.Add(mnuLanes);
+            menu.Items.Add(mnuCards);
+        }
+
+        private void BuildUpCardsMenu(ToolStripMenuItem menu)
+        {
+        }
+
+        private void BuildUpLanesMenu(ToolStripMenuItem menu)
+        {
+        }
+
+        private void BuildUpFileMenu(ToolStripMenuItem menu)
+        {
+            var fileCloseMenuItem=new ToolStripMenuItem("Quit", null,CloseFileOnClick);
+            menu.DropDownItems.Add(fileCloseMenuItem);
+        }
+
+        private void CloseFileOnClick(object sender, EventArgs e)
+        {
+           this.Close();
         }
 
         private static void BuildInitialLanes(ILanesContainer lanes)
