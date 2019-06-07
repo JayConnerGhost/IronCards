@@ -33,6 +33,8 @@ namespace IronCards.Controls
             LoadLanes();
         }
 
+        
+
         private void LoadLanes()
         {
             var lanesCollection = _databaseService.GetAll();
@@ -51,9 +53,15 @@ namespace IronCards.Controls
 
         private void Lane_LaneRequestingDelete(object sender, LaneDeleteArgs e)
         {
-            _databaseService.Delete(e.LaneId);
-            LanesCollection.Remove(LanesCollection.Find(x => x.Id == e.LaneId));
-            _layoutPanel.Controls.Remove((UserControl)sender);
+            DeleteLane(e.LaneId,(UserControl) sender);
+        }
+
+        private void DeleteLane(int Id, UserControl lane)
+        {
+          
+            _databaseService.Delete(Id);
+            LanesCollection.Remove(LanesCollection.Find(x => x.Id == Id));
+            _layoutPanel.Controls.Remove((UserControl) lane);
         }
 
         private void LanesContainer_Resize(object sender, EventArgs e)
@@ -70,6 +78,7 @@ namespace IronCards.Controls
 
             var lane = new Lane(laneLabel) {Height = this.Height - 20};
             lane.TitleChanged += Lane_TitleChanged;
+            lane.LaneRequestingDelete += Lane_LaneRequestingDelete;
             lane.Id=_databaseService.Insert(laneLabel);
             LanesCollection.Add(lane);
            _layoutPanel.Controls.Add(lane);
