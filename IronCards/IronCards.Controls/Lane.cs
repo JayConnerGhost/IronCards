@@ -43,6 +43,8 @@ namespace IronCards.Controls
             laneContextMenu.Items.Add(addLaneButton);
             lane.ContextMenuStrip=laneContextMenu;
             laneContextMenu.Show();
+
+            //TODO:hook up add card menu item
         }
 
         private void OnAddLaneClick(object sender, EventArgs e)
@@ -104,6 +106,8 @@ namespace IronCards.Controls
         public event EventHandler<LaneTitleEditedArgs> TitleChanged;
         public event EventHandler<LaneDeleteArgs> LaneRequestingDelete;
         public event EventHandler<LaneAddArgs> LaneRequestingAddLane;
+
+        //TODO: hook up add card event 
     }
 
     public class LaneTitleEditedArgs : EventArgs

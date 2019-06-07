@@ -53,7 +53,7 @@ namespace IronCards.Controls
 
         private void LoadCards(Lane lane)
         {
-            throw new NotImplementedException();
+            //TODO: implement load card collection per lane form the database
         }
 
         private void Lane_LaneRequestingAddLane(object sender, LaneAddArgs e)
