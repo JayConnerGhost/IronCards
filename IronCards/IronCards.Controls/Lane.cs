@@ -35,9 +35,17 @@ namespace IronCards.Controls
         private void BuildsContextMenu(UserControl lane)
         {
             var laneContextMenu=new ContextMenuStrip();
-            laneContextMenu.Items.Add(new ToolStripButton("Delete"));
+            var deleteButton = new ToolStripButton("Delete",null,OnDeleteClick);
+            laneContextMenu.Items.Add(deleteButton);
             lane.ContextMenuStrip=laneContextMenu;
             laneContextMenu.Show();
+        }
+
+        private void OnDeleteClick(object sender, EventArgs e)
+        {
+
+            EventHandler<LaneDeleteArgs> handler = LaneRequestingDelete;
+            handler?.Invoke(this, new LaneDeleteArgs() { LaneId = Id, });
         }
 
         private Control BuildLabel(string laneLabel)
@@ -84,12 +92,18 @@ namespace IronCards.Controls
         }
 
         public event EventHandler<LaneTitleEditedArgs> TitleChanged;
+        public event EventHandler<LaneDeleteArgs> LaneRequestingDelete;
     }
 
     public class LaneTitleEditedArgs : EventArgs
     {
         public int LaneId { get; set; }
         public string NewTitle { get; set; }
+    }
+
+    public class LaneDeleteArgs : EventArgs
+    {
+        public int LaneId { get; set; }
     }
 }
 

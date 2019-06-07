@@ -41,5 +41,15 @@ namespace IronCards.Services
 
             return laneDocuments;
         }
+
+        public bool Delete(int laneId)
+        {
+            using (var database = new LiteDB.LiteDatabase("Lanes.db"))
+            {
+                var lanes = database.GetCollection<LaneDocument>();
+               var result= lanes.Delete(laneId);
+               return result;
+            }
+        }
     }
 }
