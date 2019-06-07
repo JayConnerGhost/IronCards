@@ -3,6 +3,7 @@ using System.Configuration;
 using System.Drawing;
 using System.Dynamic;
 using System.Windows.Forms;
+using IronCards.Services;
 using MetroFramework.Controls;
 using MetroFramework.Drawing;
 
@@ -10,6 +11,7 @@ namespace IronCards.Controls
 {
     public class Lane:UserControl
     {
+
         enum TextChangedValue
         {
             Changed,

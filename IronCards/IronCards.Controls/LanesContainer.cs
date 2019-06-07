@@ -46,8 +46,14 @@ namespace IronCards.Controls
                 lane.LaneRequestingDelete += Lane_LaneRequestingDelete;
                 lane.LaneRequestingAddLane += Lane_LaneRequestingAddLane;
                 LanesCollection.Add(lane);
+                LoadCards(lane);
                 _layoutPanel.Controls.Add(lane);
             }   
+        }
+
+        private void LoadCards(Lane lane)
+        {
+            throw new NotImplementedException();
         }
 
         private void Lane_LaneRequestingAddLane(object sender, LaneAddArgs e)
