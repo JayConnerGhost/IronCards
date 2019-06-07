@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.Drawing;
+using System.Dynamic;
 using System.Windows.Forms;
 using MetroFramework.Controls;
 using MetroFramework.Drawing;
@@ -18,11 +19,25 @@ namespace IronCards.Controls
 
         public Lane(string laneLabel)
         {
+            BuildLane(laneLabel);
+        }
+
+        private void BuildLane(string laneLabel)
+        {
             BorderStyle = BorderStyle.FixedSingle;
-            
+
             Width = 250;
-            
+
             Controls.Add(BuildLabel(laneLabel));
+            BuildsContextMenu(this);
+        }
+
+        private void BuildsContextMenu(UserControl lane)
+        {
+            var laneContextMenu=new ContextMenuStrip();
+            laneContextMenu.Items.Add(new ToolStripButton("Delete"));
+            lane.ContextMenuStrip=laneContextMenu;
+            laneContextMenu.Show();
         }
 
         private Control BuildLabel(string laneLabel)
