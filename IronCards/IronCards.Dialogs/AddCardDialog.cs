@@ -9,28 +9,32 @@ namespace IronCards.Dialogs
     {
         public Tuple<string, string> ShowDialog()
         {
-            MetroTextBox name = new MetroTextBox() {Top=64, Width = 460, Height = 20, TabIndex = 0, TabStop = true, Multiline = false, Text = "" };
-            MetroTextBox description = new MetroTextBox() {Top=144, Width = 460, Height = 350, TabIndex = 0, TabStop = true, Multiline = true, Text = "" };
+            MetroTextBox name = new MetroTextBox() { Width = 460, Height = 20, TabIndex = 0, TabStop = true, Multiline = false, Text = "" };
+            MetroTextBox description = new MetroTextBox() { Width = 460, Height = 350, TabIndex = 0, TabStop = true, Multiline = true, Text = "" };
 
-            using (var form = new DialogForm(new FormInfo("Add Card", 485, 700)))
+            using (var form = new DialogForm(new FormInfo("Add Card", 485, 570)))
             {
-               MetroLabel nameLabel = new MetroLabel() { Top = 80, Left = 4, Height = 15, Text = "Card Name" };
-                name.Top = 120;
+               MetroLabel nameLabel = new MetroLabel() { Height = 20, Text = "Card Name" };
+          
                 name.Left = 4;
-                description.Top = 68;
+              
                 description.Left = 4;
 
-                MetroLabel descriptionLabel = new MetroLabel() { Top = 144, Left = 4, Text = "Card Description" };
+                MetroLabel descriptionLabel = new MetroLabel() {  Text = "Card Description",Width = 110};
                 MetroButton confirmation = new MetroButton() { Text = "Save", TabIndex = 1, TabStop = true };
                 MetroButton close = new MetroButton() { Text = "close", TabIndex = 1, TabStop = true };
                 confirmation.Click += (sender, e) => { form.Close(); };
                 close.Click += (sender, e) => { form.Close(); };
 
-
-                form.Controls.Add(nameLabel);
-                form.Controls.Add(name);
-                form.Controls.Add(descriptionLabel);
-                form.Controls.Add(description);
+                var flowLayoutVertical=new FlowLayoutPanel();
+                
+                flowLayoutVertical.FlowDirection = FlowDirection.TopDown;
+                flowLayoutVertical.Location = new System.Drawing.Point(0, 60);
+                flowLayoutVertical.Size = new System.Drawing.Size(485, 550);
+                flowLayoutVertical.Controls.Add(nameLabel);
+                flowLayoutVertical.Controls.Add(name);
+                flowLayoutVertical.Controls.Add(descriptionLabel);
+                flowLayoutVertical.Controls.Add(description);
                 var buttonLayoutPanel = new FlowLayoutPanel
                 {
                     FlowDirection = FlowDirection.RightToLeft,
@@ -40,7 +44,8 @@ namespace IronCards.Dialogs
                 };
                 buttonLayoutPanel.Controls.Add(close);
                 buttonLayoutPanel.Controls.Add(confirmation);
-                form.Controls.Add(buttonLayoutPanel);
+                flowLayoutVertical.Controls.Add(buttonLayoutPanel);
+                form.Controls.Add(flowLayoutVertical);
                 //TODO build form
                 form.FormBorderStyle = FormBorderStyle.FixedDialog;
                 form.StartPosition = FormStartPosition.CenterScreen;
