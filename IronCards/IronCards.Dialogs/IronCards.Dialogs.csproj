@@ -4,10 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{17379964-0140-4172-A7AD-FAC5D3A01D24}</ProjectGuid>
+    <ProjectGuid>{11E6C586-D5CA-4B7D-8E97-67128153B405}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>IronCards.Controls</RootNamespace>
-    <AssemblyName>IronCards.Controls</AssemblyName>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>IronCards.Dialogs</RootNamespace>
+    <AssemblyName>IronCards.Dialogs</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -30,63 +31,35 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MaterialSkin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MaterialSkin.0.2.1\lib\MaterialSkin.dll</HintPath>
-    </Reference>
     <Reference Include="MetroFramework, Version=1.2.0.3, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
       <HintPath>..\packages\MetroFramework.RunTime.1.2.0.3\lib\net40-Client\MetroFramework.dll</HintPath>
     </Reference>
-    <Reference Include="MetroFramework.Design, Version=1.2.0.3, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
-      <HintPath>..\packages\MetroFramework.Design.1.2.0.3\lib\net40\MetroFramework.Design.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="MetroFramework.Fonts, Version=1.2.0.3, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
-      <HintPath>..\packages\MetroFramework.Fonts.1.2.0.3\lib\net40\MetroFramework.Fonts.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ILanesContainer.cs" />
-    <Compile Include="Lane.cs">
-      <SubType>UserControl</SubType>
+    <Compile Include="BaseDialogForm.cs">
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LanesContainer.cs">
-      <SubType>UserControl</SubType>
+    <Compile Include="DialogForm.cs">
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LanesContainer.Designer.cs">
-      <DependentUpon>LanesContainer.cs</DependentUpon>
+    <Compile Include="AddCardDialog.cs">
+      <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FormInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="MetroFramework.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\IronCards.Dialogs\IronCards.Dialogs.csproj">
-      <Project>{11E6C586-D5CA-4B7D-8E97-67128153B405}</Project>
-      <Name>IronCards.Dialogs</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\IronCards.Objects\IronCards.Objects.csproj">
-      <Project>{5b5c7dd5-a93d-415f-b7a9-1a0d35229c27}</Project>
-      <Name>IronCards.Objects</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\IronCards.Services\IronCards.Services.csproj">
-      <Project>{A6986F78-C6AD-41F8-8D14-4AA7704154CF}</Project>
-      <Name>IronCards.Services</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -52,7 +52,7 @@ namespace IronCards.Controls
         private void OnAddCardClick(object sender, EventArgs e)
         {
             EventHandler<AddCardArgs> handler = LaneRequestingAddCard;
-            handler?.Invoke(this, new AddCardArgs());
+            handler?.Invoke(this, new AddCardArgs(){LaneId = Id,Target = this});
         }
 
         private void OnAddLaneClick(object sender, EventArgs e)
@@ -137,7 +137,8 @@ namespace IronCards.Controls
 
     public class AddCardArgs : EventArgs
     {
-
+        public Lane Target { get; set; }
+        public int LaneId { get; set; }
     }
 }
 

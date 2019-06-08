@@ -8,7 +8,9 @@ using System.Runtime.Remoting.Channels;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using IronCards.Dialogs;
 using IronCards.Services;
+using DataGridViewAutoSizeColumnModeEventArgs = System.Windows.Forms.DataGridViewAutoSizeColumnModeEventArgs;
 
 
 namespace IronCards.Controls
@@ -45,10 +47,21 @@ namespace IronCards.Controls
                 lane.TitleChanged += Lane_TitleChanged;
                 lane.LaneRequestingDelete += Lane_LaneRequestingDelete;
                 lane.LaneRequestingAddLane += Lane_LaneRequestingAddLane;
+                lane.LaneRequestingAddCard += Lane_LaneRequestingAddCard;
                 LanesCollection.Add(lane);
                 LoadCards(lane);
                 _layoutPanel.Controls.Add(lane);
             }   
+        }
+
+        private void Lane_LaneRequestingAddCard(object sender, AddCardArgs e)
+        {
+            
+            //Open dialog to capture card detials 
+            var result = new AddCardDialog().ShowDialog();
+            //Create card 
+            //Add card to UserControl Lane passed in Args
+            //Add CardDocument, store Card, name, points, description ,lane_Id in the database as a card Document 
         }
 
         private void LoadCards(Lane lane)

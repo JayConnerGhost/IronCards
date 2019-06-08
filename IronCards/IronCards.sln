@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronCards.Objects", "IronCa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronCards.Services", "IronCards.Services\IronCards.Services.csproj", "{A6986F78-C6AD-41F8-8D14-4AA7704154CF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronCards.Dialogs", "IronCards.Dialogs\IronCards.Dialogs.csproj", "{11E6C586-D5CA-4B7D-8E97-67128153B405}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{A6986F78-C6AD-41F8-8D14-4AA7704154CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6986F78-C6AD-41F8-8D14-4AA7704154CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6986F78-C6AD-41F8-8D14-4AA7704154CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11E6C586-D5CA-4B7D-8E97-67128153B405}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11E6C586-D5CA-4B7D-8E97-67128153B405}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11E6C586-D5CA-4B7D-8E97-67128153B405}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11E6C586-D5CA-4B7D-8E97-67128153B405}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
