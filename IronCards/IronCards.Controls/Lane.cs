@@ -43,8 +43,6 @@ namespace IronCards.Controls
             _cardContainer = new FlowLayoutPanel
             {
                 FlowDirection = FlowDirection.TopDown,
-                //Size = new Size(248, this.Height - 50),
-                BackColor = Color.Crimson,
                 Dock=DockStyle.Fill
             };
             BorderStyle = BorderStyle.Fixed3D;
@@ -136,7 +134,6 @@ namespace IronCards.Controls
         //TODO: hook up add card event 
         public void AddCard(Card card)
         {
-            card.BackColor = Color.Aqua;
             _cardContainer.Controls.Add(card);
         }
     }
