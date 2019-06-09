@@ -11,6 +11,7 @@ namespace IronCards.Controls
 {
     public class Lane:UserControl
     {
+        private FlowLayoutPanel _cardContainer;
 
         enum TextChangedValue
         {
@@ -31,7 +32,23 @@ namespace IronCards.Controls
             Width = 250;
 
             Controls.Add(BuildLabel(laneLabel));
+            var cardContainer = BuildCardContainer();
+            Controls.Add(cardContainer);
             BuildsContextMenu(this);
+        }
+
+        private Control BuildCardContainer()
+        {
+           
+            _cardContainer = new FlowLayoutPanel
+            {
+                FlowDirection = FlowDirection.TopDown,
+                //Size = new Size(248, this.Height - 50),
+                BackColor = Color.Crimson,
+                Dock=DockStyle.Fill
+            };
+            BorderStyle = BorderStyle.Fixed3D;
+            return _cardContainer;
         }
 
         private void BuildsContextMenu(UserControl lane)
@@ -119,7 +136,8 @@ namespace IronCards.Controls
         //TODO: hook up add card event 
         public void AddCard(Card card)
         {
-            throw new NotImplementedException();
+            card.BackColor = Color.Aqua;
+            _cardContainer.Controls.Add(card);
         }
     }
 
