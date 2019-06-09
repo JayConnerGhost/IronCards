@@ -60,6 +60,12 @@ namespace IronCards.Controls
             //Open dialog to capture card detials 
             var result = new AddCardDialog().ShowDialog();
             //Create card 
+            var parentLaneId = e.LaneId;
+            var parentLane = e.Target;
+            var cardName = result.Item1;
+            var cardDescription = result.Item2;
+            var cardPoints = result.Item3;
+
             //Add card to UserControl Lane passed in Args
             //Add CardDocument, store Card, name, points, description ,lane_Id in the database as a card Document 
         }
