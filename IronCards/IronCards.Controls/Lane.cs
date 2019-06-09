@@ -117,6 +117,10 @@ namespace IronCards.Controls
         public event EventHandler<AddCardArgs> LaneRequestingAddCard;
 
         //TODO: hook up add card event 
+        public void AddCard(Card card)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class LaneTitleEditedArgs : EventArgs

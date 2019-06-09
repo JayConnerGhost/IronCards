@@ -16,7 +16,7 @@ namespace IronCards.Controls
             CardName = cardName;
             CardDescription = cardDescription;
             CardPoints = cardPoints;
-            throw new NotImplementedException();
+    
         }
     }
 }

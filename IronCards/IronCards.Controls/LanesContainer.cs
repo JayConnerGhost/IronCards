@@ -69,6 +69,7 @@ namespace IronCards.Controls
             //Add card to UserControl Lane passed in Args
             var card = new Card(parentLaneId,cardName,cardDescription,cardPoints);
             //Add CardDocument, store Card, name, points, description ,lane_Id in the database as a card Document 
+            parentLane.AddCard(card);
         }
 
         private void LoadCards(Lane lane)
