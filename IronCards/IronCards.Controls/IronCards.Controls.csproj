@@ -55,6 +55,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Card.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="ILanesContainer.cs" />
     <Compile Include="Lane.cs">
       <SubType>UserControl</SubType>
