@@ -7,12 +7,13 @@ namespace IronCards.Dialogs
     //Add points text box and label
     public class AddCardDialog : BaseDialogForm
     {
-        public Tuple<string, string> ShowDialog()
+        public Tuple<string, string, int> ShowDialog()
         {
             MetroTextBox name = new MetroTextBox() { Width = 460, Height = 20, TabIndex = 0, TabStop = true, Multiline = false, Text = "" };
             MetroTextBox description = new MetroTextBox() { Width = 460, Height = 350, TabIndex = 0, TabStop = true, Multiline = true, Text = "" };
+            var numericUpDown = new NumericUpDown() { Width = 50, Height = 20, TabIndex = 0, TabStop = true };
 
-            using (var form = new DialogForm(new FormInfo("Add Card", 485, 570)))
+            using (var form = new DialogForm(new FormInfo("Add Card", 485, 600)))
             {
                MetroLabel nameLabel = new MetroLabel() { Height = 20, Text = "Card Name" };
           
@@ -26,15 +27,24 @@ namespace IronCards.Dialogs
                 confirmation.Click += (sender, e) => { form.Close(); };
                 close.Click += (sender, e) => { form.Close(); };
 
+                 var pointsLayoutPanel=new FlowLayoutPanel();
+                 pointsLayoutPanel.Size = new System.Drawing.Size(485, 30);
+                 pointsLayoutPanel.FlowDirection = FlowDirection.LeftToRight;
+                 var pointsLabel = new MetroLabel(){Text="Points"};
+                 
+                pointsLayoutPanel.Controls.Add(pointsLabel);
+                pointsLayoutPanel.Controls.Add(numericUpDown);
+
                 var flowLayoutVertical=new FlowLayoutPanel();
                 
                 flowLayoutVertical.FlowDirection = FlowDirection.TopDown;
                 flowLayoutVertical.Location = new System.Drawing.Point(0, 60);
-                flowLayoutVertical.Size = new System.Drawing.Size(485, 550);
+                flowLayoutVertical.Size = new System.Drawing.Size(485, 600);
                 flowLayoutVertical.Controls.Add(nameLabel);
                 flowLayoutVertical.Controls.Add(name);
                 flowLayoutVertical.Controls.Add(descriptionLabel);
                 flowLayoutVertical.Controls.Add(description);
+                flowLayoutVertical.Controls.Add(pointsLayoutPanel);
                 var buttonLayoutPanel = new FlowLayoutPanel
                 {
                     FlowDirection = FlowDirection.RightToLeft,
@@ -53,7 +63,7 @@ namespace IronCards.Dialogs
                 form.ShowDialog();
             }
 
-            return new Tuple<string, string>(name.Text, description.Text);
+            return new Tuple<string, string, int>(name.Text, description.Text, Decimal.ToInt32(numericUpDown.Value));
         }
     }
 }
