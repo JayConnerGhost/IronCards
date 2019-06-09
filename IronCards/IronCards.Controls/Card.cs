@@ -30,12 +30,15 @@ namespace IronCards.Controls
 
 
             this.BackColor=Color.AliceBlue;
+            this.Margin = new Padding(10,20,10,10);
+            this.Width = 240;
+            this.Height = 200;
             //Name row 
-            var nameLabel = new MetroTextBox() {ReadOnly = true, Text = CardName};
+            var nameLabel = new MetroTextBox() {ReadOnly = true, Text = CardName,Width = 200};
             cardBodyLayout.Controls.Add(nameLabel);
-            var pointsLabel=new MetroLabel(){Text = "Points: "};
+            var pointsLabel=new MetroLabel(){Text = "Points: ",Width = 50};
             cardBodyLayout.Controls.Add(pointsLabel);
-            var pointsValue=new MetroTextBox(){Text=CardPoints.ToString()};
+            var pointsValue=new MetroTextBox(){Text=CardPoints.ToString(), Width = 20};
             cardBodyLayout.Controls.Add(pointsValue);
             this.Controls.Add(cardBodyLayout);
         }

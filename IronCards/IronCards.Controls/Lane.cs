@@ -29,7 +29,7 @@ namespace IronCards.Controls
         {
             BorderStyle = BorderStyle.FixedSingle;
 
-            Width = 250;
+            Width = 290;
 
             Controls.Add(BuildLabel(laneLabel));
             var cardContainer = BuildCardContainer();
@@ -43,7 +43,8 @@ namespace IronCards.Controls
             _cardContainer = new FlowLayoutPanel
             {
                 FlowDirection = FlowDirection.TopDown,
-                Dock=DockStyle.Fill
+                Dock=DockStyle.Fill,
+                Padding = new Padding(10,10,10,10)
             };
             BorderStyle = BorderStyle.Fixed3D;
             return _cardContainer;
