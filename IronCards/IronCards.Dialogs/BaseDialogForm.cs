@@ -7,7 +7,7 @@ namespace IronCards.Dialogs
     {
         public BaseDialogForm()
         {
-            base.Theme = MetroThemeStyle.Dark;
+            base.Theme = MetroThemeStyle.Light;
         }
     }
 }

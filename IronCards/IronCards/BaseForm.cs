@@ -16,7 +16,7 @@ namespace IronCards
             materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.Indigo400, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
         **/
-          base.Theme = MetroThemeStyle.Dark;
+          base.Theme = MetroThemeStyle.Light;
 
 
         }
