@@ -24,22 +24,31 @@ namespace IronCards.Controls
 
         private void BuildCard()
         {
-            var cardBodyLayout = new FlowLayoutPanel() {FlowDirection = FlowDirection.TopDown,Dock = DockStyle.Fill};
-            cardBodyLayout.Padding = Padding.Add(new Padding(5),new Padding( 5));
+            var cardBodyLayout = new FlowLayoutPanel
+            {
+                FlowDirection = FlowDirection.TopDown,
+                Dock = DockStyle.Fill,
+            };
             this.BorderStyle = BorderStyle.FixedSingle;
 
 
             this.BackColor=Color.AliceBlue;
+           
             this.Margin = new Padding(10,20,10,10);
             this.Width = 240;
-            this.Height = 200;
+            this.Height = 100;
             //Name row 
-            var nameLabel = new MetroTextBox() {ReadOnly = true, Text = CardName,Width = 200};
+            var nameLabel = new Label() { Text = CardName,Width = 200};
+            nameLabel.BackColor=Color.AliceBlue;
+            nameLabel.BorderStyle = BorderStyle.None;
             cardBodyLayout.Controls.Add(nameLabel);
-            var pointsLabel=new MetroLabel(){Text = "Points: ",Width = 50};
-            cardBodyLayout.Controls.Add(pointsLabel);
-            var pointsValue=new MetroTextBox(){Text=CardPoints.ToString(), Width = 20};
-            cardBodyLayout.Controls.Add(pointsValue);
+
+            var pointsLayout = new FlowLayoutPanel() { FlowDirection = FlowDirection.LeftToRight, Size=new Size(200,30)};
+            var pointsLabel=new Label(){Text = "Points: ",Width = 40};
+            pointsLayout.Controls.Add(pointsLabel);
+            var pointsValue=new Label(){Text=CardPoints.ToString(), Width = 25};
+            pointsLayout.Controls.Add(pointsValue);
+            cardBodyLayout.Controls.Add(pointsLayout);
             this.Controls.Add(cardBodyLayout);
         }
     }
