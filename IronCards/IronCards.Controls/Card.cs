@@ -26,7 +26,7 @@ namespace IronCards.Controls
         {
             var cardBodyLayout = new FlowLayoutPanel() {FlowDirection = FlowDirection.TopDown,Dock = DockStyle.Fill};
             cardBodyLayout.Padding = Padding.Add(new Padding(5),new Padding( 5));
-            this.BorderStyle = BorderStyle.Fixed3D;
+            this.BorderStyle = BorderStyle.FixedSingle;
 
 
             this.BackColor=Color.AliceBlue;
