@@ -65,7 +65,11 @@ namespace IronCards.Controls
             var cardName = result.Item1;
             var cardDescription = result.Item2;
             var cardPoints = result.Item3;
-
+            var dialogResult = result.Item4;
+            if (dialogResult==DialogResult.Cancel || cardName==string.Empty)
+            {
+                return;
+            }
             //Add card to UserControl Lane passed in Args
             var card = new Card(parentLaneId,cardName,cardDescription,cardPoints);
             //Add CardDocument, store Card, name, points, description ,lane_Id in the database as a card Document 
@@ -108,6 +112,7 @@ namespace IronCards.Controls
             lane.TitleChanged += Lane_TitleChanged;
             lane.LaneRequestingDelete += Lane_LaneRequestingDelete;
             lane.LaneRequestingAddLane += Lane_LaneRequestingAddLane;
+            lane.LaneRequestingAddCard += Lane_LaneRequestingAddCard;
             lane.Id=_databaseService.Insert(laneLabel);
             LanesCollection.Add(lane);
            _layoutPanel.Controls.Add(lane);

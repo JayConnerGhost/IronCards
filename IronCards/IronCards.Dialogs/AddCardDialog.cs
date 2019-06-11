@@ -7,12 +7,12 @@ namespace IronCards.Dialogs
     //Add points text box and label
     public class AddCardDialog : BaseDialogForm
     {
-        public Tuple<string, string, int> ShowDialog()
+        public Tuple<string, string, int, DialogResult> ShowDialog()
         {
             MetroTextBox name = new MetroTextBox() { Width = 460, Height = 20, TabIndex = 0, TabStop = true, Multiline = false, Text = "" };
             MetroTextBox description = new MetroTextBox() { Width = 460, Height = 350, TabIndex = 0, TabStop = true, Multiline = true, Text = "" };
             var numericUpDown = new NumericUpDown() { Width = 50, Height = 20, TabIndex = 0, TabStop = true };
-
+            var result = DialogResult;
             using (var form = new DialogForm(new FormInfo("Add Card", 485, 600)))
             {
                MetroLabel nameLabel = new MetroLabel() { Height = 20, Text = "Card Name" };
@@ -60,10 +60,10 @@ namespace IronCards.Dialogs
                 form.FormBorderStyle = FormBorderStyle.FixedDialog;
                 form.StartPosition = FormStartPosition.CenterScreen;
                 form.ControlBox = false;
-                form.ShowDialog();
+                result= form.ShowDialog();
             }
 
-            return new Tuple<string, string, int>(name.Text, description.Text, Decimal.ToInt32(numericUpDown.Value));
+            return new Tuple<string, string, int,DialogResult>(name.Text, description.Text, Decimal.ToInt32(d: numericUpDown.Value), result);
         }
     }
 }
