@@ -83,6 +83,11 @@ namespace IronCards.Controls
         {
            var cardDocuments= _cardDatabaseService.Get(lane.Id);
            //TODO: Build cards and add them to lane
+           foreach (var cardDocument in cardDocuments)
+           {
+                var card = new Card(cardDocument.ParentLaneId,cardDocument.CardName,cardDocument.CardDescription,cardDocument.CardPoints,cardDocument.Id);
+                lane.AddCard(card);
+           }
         }
 
         private void Lane_LaneRequestingAddLane(object sender, LaneAddArgs e)
