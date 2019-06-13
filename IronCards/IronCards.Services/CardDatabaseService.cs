@@ -1,4 +1,6 @@
-﻿namespace IronCards.Services
+﻿using System.Collections.Generic;
+
+namespace IronCards.Services
 {
     public class CardDatabaseService : ICardDatabaseService
     {
@@ -18,6 +20,11 @@
                 });
             }
             return id;
+        }
+
+        public List<CardDocument> Get(int laneId)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

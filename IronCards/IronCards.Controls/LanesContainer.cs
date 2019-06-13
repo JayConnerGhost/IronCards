@@ -76,13 +76,13 @@ namespace IronCards.Controls
             var cardId=_cardDatabaseService.Insert(parentLaneId, cardName, cardDescription, cardPoints);
             var card = new Card(parentLaneId,cardName,cardDescription,cardPoints,cardId);
             
-            //Insert CardDocument, store Card, name, points, description ,lane_Id in the database as a card Document 
             parentLane.AddCard(card);
         }
 
         private void LoadCards(Lane lane)
         {
-            //TODO: implement load card collection per lane form the database
+           var cardDocuments= _cardDatabaseService.Get(lane.Id);
+           //TODO: Build cards and add them to lane
         }
 
         private void Lane_LaneRequestingAddLane(object sender, LaneAddArgs e)
