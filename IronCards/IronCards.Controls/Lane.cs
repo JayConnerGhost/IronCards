@@ -44,7 +44,9 @@ namespace IronCards.Controls
             {
                 FlowDirection = FlowDirection.TopDown,
                 Dock=DockStyle.Fill,
-                Padding = new Padding(10,10,10,10)
+                Padding = new Padding(10,10,10,10),
+                WrapContents = false,
+                AutoScroll = true
             };
             BorderStyle = BorderStyle.Fixed3D;
             return _cardContainer;
