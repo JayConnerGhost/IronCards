@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using LiteDB;
 
 namespace IronCards.Services
 {
@@ -24,7 +27,15 @@ namespace IronCards.Services
 
         public List<CardDocument> Get(int laneId)
         {
-            throw new System.NotImplementedException();
+            var cardDocuments = new List<CardDocument>();
+            using (var database = new LiteDB.LiteDatabase("Lanes.db"))
+            {
+                var cards = database.GetCollection<CardDocument>();
+                cards.EnsureIndex("ParentLaneId");
+                cardDocuments = cards.Find(x=>x.ParentLaneId == laneId).ToList();
+            }
+
+            return cardDocuments;
         }
-    }
+     }
 }
