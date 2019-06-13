@@ -23,7 +23,7 @@ namespace IronCards
 
             ((UserControl) lanes).Dock = DockStyle.Fill;
             Controls.Add((UserControl)lanes);
-            //Add context menu  to container 
+            //Insert context menu  to container 
             var contextMenu = BuildContextMenu();
             contextMenu.Show();
         }
@@ -32,7 +32,7 @@ namespace IronCards
         {
             var contextMenu = new ContextMenuStrip();
             this.ContextMenuStrip = contextMenu;
-            ContextMenuStrip.Items.Add("Add Lane", null, AddLaneOnClick);
+            ContextMenuStrip.Items.Add("Insert Lane", null, AddLaneOnClick);
             return contextMenu;
         }
 

@@ -30,7 +30,8 @@ namespace IronCards
             var container = new UnityContainer();
             container.RegisterType<ILanesContainer, LanesContainer>(new ContainerControlledLifetimeManager());
             container.RegisterType<IApplicationContainer, Container>(new ContainerControlledLifetimeManager());
-            container.RegisterType<IDatabaseService, DatabaseService>(new ContainerControlledLifetimeManager());
+            container.RegisterType<ILanesDatabaseService, LanesDatabaseService>(new ContainerControlledLifetimeManager());
+            container.RegisterType<ICardDatabaseService, CardDatabaseService>(new ContainerControlledLifetimeManager());
 
             return container;
         }

@@ -17,13 +17,15 @@ namespace IronCards.Controls
 {
     public partial class LanesContainer: UserControl,ILanesContainer
     {
-        private readonly IDatabaseService _databaseService;
+        private readonly ILanesDatabaseService _lanesDatabaseService;
+        private readonly ICardDatabaseService _cardDatabaseService;
         public List<Lane> LanesCollection { get; set; }
         private FlowLayoutPanel _layoutPanel;
-        public LanesContainer(IDatabaseService databaseService)
+        public LanesContainer(ILanesDatabaseService lanesDatabaseService, ICardDatabaseService cardDatabaseService)
         {
             InitializeComponent();
-            _databaseService = databaseService;
+            _lanesDatabaseService = lanesDatabaseService;
+            _cardDatabaseService = cardDatabaseService;
             LanesCollection = new List<Lane>();
             _layoutPanel = new FlowLayoutPanel
             {
@@ -39,7 +41,7 @@ namespace IronCards.Controls
 
         private void LoadLanes()
         {
-            var lanesCollection = _databaseService.GetAll();
+            var lanesCollection = _lanesDatabaseService.GetAll();
 
             foreach (var laneDocument in lanesCollection)
             {
@@ -70,9 +72,11 @@ namespace IronCards.Controls
             {
                 return;
             }
-            //Add card to UserControl Lane passed in Args
-            var card = new Card(parentLaneId,cardName,cardDescription,cardPoints);
-            //Add CardDocument, store Card, name, points, description ,lane_Id in the database as a card Document 
+            //Insert card to UserControl Lane passed in Args
+            var cardId=_cardDatabaseService.Insert(parentLaneId, cardName, cardDescription, cardPoints);
+            var card = new Card(parentLaneId,cardName,cardDescription,cardPoints,cardId);
+            
+            //Insert CardDocument, store Card, name, points, description ,lane_Id in the database as a card Document 
             parentLane.AddCard(card);
         }
 
@@ -93,7 +97,7 @@ namespace IronCards.Controls
 
         private void DeleteLane(int Id, UserControl lane)
         {
-            _databaseService.Delete(Id);
+            _lanesDatabaseService.Delete(Id);
             LanesCollection.Remove(LanesCollection.Find(x => x.Id == Id));
             _layoutPanel.Controls.Remove((UserControl) lane);
         }
@@ -113,7 +117,7 @@ namespace IronCards.Controls
             lane.LaneRequestingDelete += Lane_LaneRequestingDelete;
             lane.LaneRequestingAddLane += Lane_LaneRequestingAddLane;
             lane.LaneRequestingAddCard += Lane_LaneRequestingAddCard;
-            lane.Id=_databaseService.Insert(laneLabel);
+            lane.Id=_lanesDatabaseService.Insert(laneLabel);
             LanesCollection.Add(lane);
            _layoutPanel.Controls.Add(lane);
            lane.Focus();
@@ -121,7 +125,7 @@ namespace IronCards.Controls
 
         private void Lane_TitleChanged(object sender, LaneTitleEditedArgs e)
         {
-            _databaseService.Update(e.LaneId, e.NewTitle);
+            _lanesDatabaseService.Update(e.LaneId, e.NewTitle);
         }
     }
 }

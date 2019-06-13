@@ -44,8 +44,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DatabaseService.cs" />
-    <Compile Include="IDatabaseService.cs" />
+    <Compile Include="CardDatabaseService.cs" />
+    <Compile Include="ICardDatabaseService.cs" />
+    <Compile Include="LanesDatabaseService.cs" />
+    <Compile Include="ILanesDatabaseService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

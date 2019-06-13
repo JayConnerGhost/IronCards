@@ -55,9 +55,9 @@ namespace IronCards.Controls
             var laneContextMenu=new ContextMenuStrip();
             var deleteButton = new ToolStripButton("Delete",null,OnDeleteClick);
             laneContextMenu.Items.Add(deleteButton);
-            var addLaneButton =new ToolStripButton("Add Lane",null,OnAddLaneClick);
+            var addLaneButton =new ToolStripButton("Insert Lane",null,OnAddLaneClick);
             laneContextMenu.Items.Add(addLaneButton);
-            var addCardButton = new ToolStripButton("Add Card", null, OnAddCardClick);
+            var addCardButton = new ToolStripButton("Insert Card", null, OnAddCardClick);
             laneContextMenu.Items.Add(addCardButton);
             lane.ContextMenuStrip=laneContextMenu;
            // laneContextMenu.Show();

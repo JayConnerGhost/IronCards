@@ -11,13 +11,15 @@ namespace IronCards.Controls
         public string CardName { get; }
         public string CardDescription { get; }
         public int CardPoints { get; }
+        public int CardId { get; }
 
-        public Card(int parentLaneId, string cardName, string cardDescription, int cardPoints)
+        public Card(int parentLaneId, string cardName, string cardDescription, int points, int cardId)
         {
             ParentLaneId = parentLaneId;
             CardName = cardName;
             CardDescription = cardDescription;
-            CardPoints = cardPoints;
+            CardPoints = points;
+            CardId = cardId;
             BuildCard();
 
         }
@@ -37,10 +39,20 @@ namespace IronCards.Controls
             this.Margin = new Padding(10,20,10,10);
             this.Width = 240;
             this.Height = 100;
+            //Id
+            var IdLabel = new Label()
+            {
+                Text = CardId.ToString(),
+                Width = 25,
+                BackColor=Color.AliceBlue,
+                BorderStyle = BorderStyle.None
+            };
+            cardBodyLayout.Controls.Add(IdLabel);
             //Name row 
-            var nameLabel = new Label() { Text = CardName,Width = 200};
-            nameLabel.BackColor=Color.AliceBlue;
-            nameLabel.BorderStyle = BorderStyle.None;
+            var nameLabel = new Label
+            {
+                Text = CardName, Width = 200, BackColor = Color.AliceBlue, BorderStyle = BorderStyle.None
+            };
             cardBodyLayout.Controls.Add(nameLabel);
 
             var pointsLayout = new FlowLayoutPanel() { FlowDirection = FlowDirection.LeftToRight, Size=new Size(200,30)};

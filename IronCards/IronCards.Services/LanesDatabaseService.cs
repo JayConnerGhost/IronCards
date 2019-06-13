@@ -8,7 +8,7 @@ using IronCards.Objects;
 
 namespace IronCards.Services
 {
-    public class DatabaseService : IDatabaseService
+    public class LanesDatabaseService : ILanesDatabaseService
     {
         public int Insert(string laneLabel)
         {

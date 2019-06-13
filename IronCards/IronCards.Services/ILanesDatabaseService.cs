@@ -3,7 +3,7 @@ using IronCards.Objects;
 
 namespace IronCards.Services
 {
-    public interface IDatabaseService
+    public interface ILanesDatabaseService
     {
         int Insert(string laneLabel);
         void Update(int targetId, string laneLabel);
