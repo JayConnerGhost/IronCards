@@ -24,8 +24,16 @@ namespace IronCards.Dialogs
                 MetroLabel descriptionLabel = new MetroLabel() {  Text = "Card Description",Width = 110};
                 MetroButton confirmation = new MetroButton() { Text = "Save", TabIndex = 1, TabStop = true };
                 MetroButton close = new MetroButton() { Text = "close", TabIndex = 1, TabStop = true };
-                confirmation.Click += (sender, e) => { form.Close(); };
-                close.Click += (sender, e) => { form.Close(); };
+                confirmation.Click += (sender, e) =>
+                {
+                    form.DialogResult = DialogResult.OK;
+                    form.Close();
+                };
+                close.Click += (sender, e) =>
+                {
+                    form.DialogResult = DialogResult.Cancel;
+                    form.Close();
+                };
 
                  var pointsLayoutPanel=new FlowLayoutPanel();
                  pointsLayoutPanel.Size = new System.Drawing.Size(485, 30);
