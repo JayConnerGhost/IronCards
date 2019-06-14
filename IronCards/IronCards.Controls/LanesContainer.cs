@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using IronCards.Dialogs;
 using IronCards.Services;
-using DataGridViewAutoSizeColumnModeEventArgs = System.Windows.Forms.DataGridViewAutoSizeColumnModeEventArgs;
 
 
 namespace IronCards.Controls
