@@ -56,7 +56,8 @@ namespace IronCards.Controls
 
         private void _cardContainer_DragEnter(object sender, DragEventArgs e)
         {
-            throw new NotImplementedException();
+            var target = (Card) e.Data.GetData(typeof(Card));
+            this.AddCard(target);
         }
 
         private void BuildsContextMenu(UserControl lane)
