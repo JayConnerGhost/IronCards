@@ -48,7 +48,7 @@ namespace IronCards.Controls
                 WrapContents = false,
                 AutoScroll = true
             };
-            BorderStyle = BorderStyle.Fixed3D;
+            BorderStyle = BorderStyle.FixedSingle;
             return _cardContainer;
         }
 
