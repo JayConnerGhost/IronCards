@@ -7,7 +7,7 @@ namespace IronCards.Controls
 {
     public class Card:UserControl
     {
-        public int ParentLaneId { get; }
+        public int ParentLaneId { get; set; }
         public string CardName { get; }
         public string CardDescription { get; }
         public int CardPoints { get; }

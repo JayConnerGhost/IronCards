@@ -49,6 +49,7 @@ namespace IronCards.Controls
                 lane.LaneRequestingDelete += Lane_LaneRequestingDelete;
                 lane.LaneRequestingAddLane += Lane_LaneRequestingAddLane;
                 lane.LaneRequestingAddCard += Lane_LaneRequestingAddCard;
+                lane.LaneRequestingEditCardLane += Lane_LaneRequestingEditCardLane;
                 LanesCollection.Add(lane);
                 LoadCards(lane);
                 _layoutPanel.Controls.Add(lane);
@@ -121,10 +122,28 @@ namespace IronCards.Controls
             lane.LaneRequestingDelete += Lane_LaneRequestingDelete;
             lane.LaneRequestingAddLane += Lane_LaneRequestingAddLane;
             lane.LaneRequestingAddCard += Lane_LaneRequestingAddCard;
+            lane.LaneRequestingEditCardLane += Lane_LaneRequestingEditCardLane;
             lane.Id=_lanesDatabaseService.Insert(laneLabel);
             LanesCollection.Add(lane);
            _layoutPanel.Controls.Add(lane);
            lane.Focus();
+        }
+
+        private void Lane_LaneRequestingEditCardLane(object sender, EditCardArgs e)
+        {
+            e.target.ParentLaneId = e.NewLaneId;
+            var cardDocument = new CardDocument
+            {
+                Id = e.target.CardId,
+                CardDescription = e.target.CardDescription,
+                CardName = e.target.CardName,
+                CardPoints = e.target.CardPoints,
+                ParentLaneId = e.target.ParentLaneId
+            };
+            if (!_cardDatabaseService.Update(cardDocument))
+            {
+                throw new KeyNotFoundException("Card could not be updated ");
+            }
         }
 
         private void Lane_TitleChanged(object sender, LaneTitleEditedArgs e)

@@ -37,5 +37,18 @@ namespace IronCards.Services
 
             return cardDocuments;
         }
-     }
+
+        public bool Update(CardDocument cardDocument)
+        {
+            bool result;
+            using (var database = new LiteDB.LiteDatabase("Lanes.db"))
+            {
+                var cards = database.GetCollection<CardDocument>();
+                cards.EnsureIndex("Id");
+                result=cards.Update(cardDocument.Id, cardDocument);
+            }
+
+            return result;
+        }
+    }
 }

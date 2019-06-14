@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Drawing;
 using System.Dynamic;
+using System.Security.Permissions;
 using System.Windows.Forms;
 using IronCards.Services;
 using MetroFramework.Controls;
@@ -58,6 +59,10 @@ namespace IronCards.Controls
         {
             var target = (Card) e.Data.GetData(typeof(Card));
             this.AddCard(target);
+            //LaneRequestingEditCardLane
+            EventHandler<EditCardArgs> handler = LaneRequestingEditCardLane;
+            handler?.Invoke(this, new EditCardArgs() { NewLaneId = this.Id, target=target});
+
         }
 
         private void BuildsContextMenu(UserControl lane)
@@ -141,12 +146,17 @@ namespace IronCards.Controls
         public event EventHandler<LaneDeleteArgs> LaneRequestingDelete;
         public event EventHandler<LaneAddArgs> LaneRequestingAddLane;
         public event EventHandler<AddCardArgs> LaneRequestingAddCard;
-
-        //TODO: hook up add card event 
+        public event EventHandler<EditCardArgs> LaneRequestingEditCardLane;
         public void AddCard(Card card)
         {
             _cardContainer.Controls.Add(card);
         }
+    }
+
+    public class EditCardArgs:EventArgs
+    {
+        public int NewLaneId { get; set; }
+        public Card target { get; set; }
     }
 
     public class LaneTitleEditedArgs : EventArgs
@@ -157,6 +167,7 @@ namespace IronCards.Controls
 
     public class LaneDeleteArgs : EventArgs
     {
+        
         public int LaneId { get; set; }
     }
 
