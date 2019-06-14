@@ -49,7 +49,14 @@ namespace IronCards.Controls
                 AutoScroll = true
             };
             BorderStyle = BorderStyle.FixedSingle;
+            _cardContainer.AllowDrop = true;
+            _cardContainer.DragEnter += _cardContainer_DragEnter;
             return _cardContainer;
+        }
+
+        private void _cardContainer_DragEnter(object sender, DragEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void BuildsContextMenu(UserControl lane)

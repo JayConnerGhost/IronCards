@@ -21,8 +21,8 @@ namespace IronCards.Controls
             CardPoints = points;
             CardId = cardId;
             BuildCard();
-
         }
+
 
         private void BuildCard()
         {
@@ -31,6 +31,7 @@ namespace IronCards.Controls
                 FlowDirection = FlowDirection.TopDown,
                 Dock = DockStyle.Fill,
             };
+            cardBodyLayout.MouseDown += CardBodyLayout_MouseDown;
             this.BorderStyle = BorderStyle.FixedSingle;
 
 
@@ -62,6 +63,11 @@ namespace IronCards.Controls
             pointsLayout.Controls.Add(pointsValue);
             cardBodyLayout.Controls.Add(pointsLayout);
             this.Controls.Add(cardBodyLayout);
+        }
+
+        private void CardBodyLayout_MouseDown(object sender, MouseEventArgs e)
+        {
+            this.DoDragDrop(this, DragDropEffects.Move);
         }
     }
 }
