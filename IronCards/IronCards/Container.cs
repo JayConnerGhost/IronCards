@@ -20,6 +20,7 @@ namespace IronCards
             _lanes = lanes;
             InitializeComponent();
             //Build a container 
+            this.Text = "Wall";
 
             ((UserControl) lanes).Dock = DockStyle.Fill;
             Controls.Add((UserControl)lanes);
