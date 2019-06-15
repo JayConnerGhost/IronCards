@@ -12,6 +12,7 @@ namespace IronCards.Controls
 {
     public class Lane:UserControl
     {
+        private readonly ICardDatabaseService _databaseService;
         private FlowLayoutPanel _cardContainer;
 
         enum TextChangedValue
@@ -21,8 +22,9 @@ namespace IronCards.Controls
         }
         public int Id { get; set; }
 
-        public Lane(string laneLabel)
+        public Lane(string laneLabel,ICardDatabaseService databaseService)
         {
+            _databaseService = databaseService;
             BuildLane(laneLabel);
         }
 
@@ -149,7 +151,13 @@ namespace IronCards.Controls
         public event EventHandler<EditCardArgs> LaneRequestingEditCardLane;
         public void AddCard(Card card)
         {
+            card.CardRequestingView += Card_CardRequestingView;
             _cardContainer.Controls.Add(card);
+        }
+
+        private void Card_CardRequestingView(object sender, CardViewArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 

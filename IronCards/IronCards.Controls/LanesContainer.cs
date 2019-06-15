@@ -44,7 +44,7 @@ namespace IronCards.Controls
 
             foreach (var laneDocument in lanesCollection)
             {
-                var lane = new Lane(laneDocument.Title) { Height = this.Height - 20 ,Id = laneDocument.Id};
+                var lane = new Lane(laneDocument.Title, _cardDatabaseService) { Height = this.Height - 20 ,Id = laneDocument.Id};
                 lane.TitleChanged += Lane_TitleChanged;
                 lane.LaneRequestingDelete += Lane_LaneRequestingDelete;
                 lane.LaneRequestingAddLane += Lane_LaneRequestingAddLane;
@@ -117,7 +117,7 @@ namespace IronCards.Controls
 
         public void AddLane(string laneLabel)
         {
-            var lane = new Lane(laneLabel) {Height = this.Height - 20};
+            var lane = new Lane(laneLabel, _cardDatabaseService) {Height = this.Height - 20};
             lane.TitleChanged += Lane_TitleChanged;
             lane.LaneRequestingDelete += Lane_LaneRequestingDelete;
             lane.LaneRequestingAddLane += Lane_LaneRequestingAddLane;

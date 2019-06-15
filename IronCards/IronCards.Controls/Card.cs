@@ -42,7 +42,7 @@ namespace IronCards.Controls
            
             this.Margin = new Padding(10,20,10,10);
             this.Width = 240;
-            this.Height = 150;
+            this.Height = 120;
             //Id
             var IdLabel = new Label()
             {
@@ -69,7 +69,9 @@ namespace IronCards.Controls
                 Size = new Size(235, 30), FlowDirection = FlowDirection.RightToLeft
             };
             var editButton=new Button(){Text = "Edit"};
+            editButton.Click += EditButton_Click;
             var viewButton=new Button(){Text = "View"};
+            viewButton.Click += ViewButton_Click;
             controlsLayout.Controls.Add(editButton);
             controlsLayout.Controls.Add(viewButton);
             cardBodyLayout.Controls.Add(pointsLayout);
@@ -77,9 +79,29 @@ namespace IronCards.Controls
             this.Controls.Add(cardBodyLayout);
         }
 
+        private void ViewButton_Click(object sender, EventArgs e)
+        {
+            EventHandler<CardViewArgs> handler = CardRequestingView;
+            handler?.Invoke(this, new CardViewArgs() { Card = this, CardId = CardId });
+
+        }
+
+        private void EditButton_Click(object sender, EventArgs e)
+        {
+ 
+        }
+       
         private void CardBodyLayout_MouseDown(object sender, MouseEventArgs e)
         {
             this.DoDragDrop(this, DragDropEffects.Move);
         }
+
+        public event EventHandler<CardViewArgs> CardRequestingView;
+    }
+
+    public class CardViewArgs : EventArgs
+    {
+        public Card Card{get; set; }
+        public int CardId { get; set; }
     }
 }
