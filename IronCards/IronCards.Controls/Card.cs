@@ -21,8 +21,10 @@ namespace IronCards.Controls
             CardPoints = points;
             CardId = cardId;
             BuildCard();
+         
         }
 
+       
 
         private void BuildCard()
         {
@@ -32,6 +34,7 @@ namespace IronCards.Controls
                 Dock = DockStyle.Fill,
             };
             cardBodyLayout.MouseDown += CardBodyLayout_MouseDown;
+    
             this.BorderStyle = BorderStyle.FixedSingle;
 
 
@@ -39,7 +42,7 @@ namespace IronCards.Controls
            
             this.Margin = new Padding(10,20,10,10);
             this.Width = 240;
-            this.Height = 100;
+            this.Height = 150;
             //Id
             var IdLabel = new Label()
             {
@@ -61,7 +64,16 @@ namespace IronCards.Controls
             pointsLayout.Controls.Add(pointsLabel);
             var pointsValue=new Label(){Text=CardPoints.ToString(), Width = 25};
             pointsLayout.Controls.Add(pointsValue);
+            var controlsLayout = new FlowLayoutPanel
+            {
+                Size = new Size(235, 30), FlowDirection = FlowDirection.RightToLeft
+            };
+            var editButton=new Button(){Text = "Edit"};
+            var viewButton=new Button(){Text = "View"};
+            controlsLayout.Controls.Add(editButton);
+            controlsLayout.Controls.Add(viewButton);
             cardBodyLayout.Controls.Add(pointsLayout);
+            cardBodyLayout.Controls.Add(controlsLayout);
             this.Controls.Add(cardBodyLayout);
         }
 
