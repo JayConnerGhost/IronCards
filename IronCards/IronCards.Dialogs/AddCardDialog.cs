@@ -17,13 +17,13 @@ namespace IronCards.Dialogs
             var result = DialogResult;
             using (var form = new DialogForm(new FormInfo("Add Card", 485, 600)))
             {
-               MetroLabel nameLabel = new MetroLabel() { Height = 20, Text = "Card Name" };
-          
+                MetroLabel nameLabel = new MetroLabel() { Height = 20, Text = "Card Name" };
+
                 name.Left = 4;
-              
+
                 description.Left = 4;
 
-                MetroLabel descriptionLabel = new MetroLabel() {  Text = "Card Description",Width = 110};
+                MetroLabel descriptionLabel = new MetroLabel() { Text = "Card Description", Width = 110 };
                 MetroButton confirmation = new MetroButton() { Text = "Save", TabIndex = 1, TabStop = true };
                 MetroButton close = new MetroButton() { Text = "close", TabIndex = 1, TabStop = true };
                 confirmation.Click += (sender, e) =>
@@ -37,16 +37,16 @@ namespace IronCards.Dialogs
                     form.Close();
                 };
 
-                 var pointsLayoutPanel=new FlowLayoutPanel();
-                 pointsLayoutPanel.Size = new System.Drawing.Size(485, 30);
-                 pointsLayoutPanel.FlowDirection = FlowDirection.LeftToRight;
-                 var pointsLabel = new MetroLabel(){Text="Points"};
-                 
+                var pointsLayoutPanel = new FlowLayoutPanel();
+                pointsLayoutPanel.Size = new System.Drawing.Size(485, 30);
+                pointsLayoutPanel.FlowDirection = FlowDirection.LeftToRight;
+                var pointsLabel = new MetroLabel() { Text = "Points" };
+
                 pointsLayoutPanel.Controls.Add(pointsLabel);
                 pointsLayoutPanel.Controls.Add(numericUpDown);
 
-                var flowLayoutVertical=new FlowLayoutPanel();
-                
+                var flowLayoutVertical = new FlowLayoutPanel();
+
                 flowLayoutVertical.FlowDirection = FlowDirection.TopDown;
                 flowLayoutVertical.Location = new System.Drawing.Point(0, 60);
                 flowLayoutVertical.Size = new System.Drawing.Size(485, 600);
@@ -70,10 +70,10 @@ namespace IronCards.Dialogs
                 form.FormBorderStyle = FormBorderStyle.FixedDialog;
                 form.StartPosition = FormStartPosition.CenterScreen;
                 form.ControlBox = false;
-                result= form.ShowDialog();
+                result = form.ShowDialog();
             }
 
-            return new Tuple<string, string, int,DialogResult>(name.Text, description.Text, Decimal.ToInt32(d: numericUpDown.Value), result);
+            return new Tuple<string, string, int, DialogResult>(name.Text, description.Text, Decimal.ToInt32(d: numericUpDown.Value), result);
         }
     }
 }

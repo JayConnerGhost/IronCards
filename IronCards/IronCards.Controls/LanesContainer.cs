@@ -129,7 +129,7 @@ namespace IronCards.Controls
            lane.Focus();
         }
 
-        private void Lane_LaneRequestingEditCardLane(object sender, EditCardArgs e)
+        private void Lane_LaneRequestingEditCardLane(object sender, EditCardLaneArgs e)
         {
             e.target.ParentLaneId = e.NewLaneId;
             var cardDocument = new CardDocument

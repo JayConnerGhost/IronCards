@@ -63,8 +63,8 @@ namespace IronCards.Controls
             var target = (Card) e.Data.GetData(typeof(Card));
             this.AddCard(target);
             //LaneRequestingEditCardLane
-            EventHandler<EditCardArgs> handler = LaneRequestingEditCardLane;
-            handler?.Invoke(this, new EditCardArgs() { NewLaneId = this.Id, target=target});
+            EventHandler<EditCardLaneArgs> handler = LaneRequestingEditCardLane;
+            handler?.Invoke(this, new EditCardLaneArgs() { NewLaneId = this.Id, target=target});
 
         }
 
@@ -149,7 +149,7 @@ namespace IronCards.Controls
         public event EventHandler<LaneDeleteArgs> LaneRequestingDelete;
         public event EventHandler<LaneAddArgs> LaneRequestingAddLane;
         public event EventHandler<AddCardArgs> LaneRequestingAddCard;
-        public event EventHandler<EditCardArgs> LaneRequestingEditCardLane;
+        public event EventHandler<EditCardLaneArgs> LaneRequestingEditCardLane;
         public void AddCard(Card card)
         {
             card.CardRequestingView += Card_CardRequestingView;
@@ -158,24 +158,18 @@ namespace IronCards.Controls
         }
 
         private void Card_CardRequestingEdit(object sender, CardEditArgs e)
-        { 
-
-            //TODO build dialog
-            //TODO Load data into controls 
-            //TODO Save any edits 
-            throw new NotImplementedException();
+        {
+            var result = new EditCardDialog().ShowDialog(e.CardId, e.CardName, e.CardDescription, e.CardPoints);
+            //TODO: deal with a edited card
         }
 
         private void Card_CardRequestingView(object sender, CardViewArgs e)
         {
-      
-            //TODO build dialog
-            //TODO Load data into controls 
             new ViewCardDialog().ShowDialog(e.CardName,e.CardDescription,e.CardPoints, e.CardId);
         }
     }
 
-    public class EditCardArgs:EventArgs
+    public class EditCardLaneArgs:EventArgs
     {
         public int NewLaneId { get; set; }
         public Card target { get; set; }

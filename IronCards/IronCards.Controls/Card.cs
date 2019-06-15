@@ -88,7 +88,7 @@ namespace IronCards.Controls
         private void EditButton_Click(object sender, EventArgs e)
         {
             EventHandler<CardEditArgs> handler = CardRequestingEdit;
-            handler?.Invoke(this, new CardEditArgs() { Card = this, CardId = CardId });
+            handler?.Invoke(this, new CardEditArgs() { CardId = CardId, CardDescription = CardDescription, CardName = CardName, CardPoints = CardPoints });
         }
        
         private void CardBodyLayout_MouseDown(object sender, MouseEventArgs e)
@@ -110,7 +110,9 @@ namespace IronCards.Controls
 
     public class CardEditArgs : EventArgs
     {
-        public Card Card { get; set; }
+        public string CardDescription { get; set; }
+        public string CardName { get; set; }
+        public int CardPoints { get; set; }
         public int CardId { get; set; }
     }
 }
