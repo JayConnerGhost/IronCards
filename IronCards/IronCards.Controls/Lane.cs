@@ -124,7 +124,7 @@ namespace IronCards.Controls
             if ((TextChangedValue)textBox.Tag == TextChangedValue.Changed)
             {
                
-                    EventHandler<LaneTitleEditedArgs> handler = TitleChanged;
+                    EventHandler<LaneTitleEditedArgs> handler = LaneRequestingTitleChanged;
                     handler?.Invoke(this, new LaneTitleEditedArgs() { LaneId = Id, NewTitle = textBox.Text.Trim() });
                     //raise event passing out new Args 
                
@@ -145,11 +145,12 @@ namespace IronCards.Controls
             ((MetroTextBox) (sender)).ReadOnly = false;
         }
 
-        public event EventHandler<LaneTitleEditedArgs> TitleChanged;
+        public event EventHandler<LaneTitleEditedArgs> LaneRequestingTitleChanged;
         public event EventHandler<LaneDeleteArgs> LaneRequestingDelete;
         public event EventHandler<LaneAddArgs> LaneRequestingAddLane;
         public event EventHandler<AddCardArgs> LaneRequestingAddCard;
         public event EventHandler<EditCardLaneArgs> LaneRequestingEditCardLane;
+        public event EventHandler<EditCardArgs> LaneRequestingEditCard;
         public void AddCard(Card card)
         {
             card.CardRequestingView += Card_CardRequestingView;
@@ -160,13 +161,41 @@ namespace IronCards.Controls
         private void Card_CardRequestingEdit(object sender, CardEditArgs e)
         {
             var result = new EditCardDialog().ShowDialog(e.CardId, e.CardName, e.CardDescription, e.CardPoints);
-            //TODO: deal with a edited card
+
+            if (result.Item5 == DialogResult.Cancel)
+            {
+                return;
+            }
+
+            EventHandler<EditCardArgs> handler = LaneRequestingEditCard;
+
+            handler?.Invoke(this, new EditCardArgs()
+            {
+                CardName=result.Item1,
+                CardDescription = result.Item2,
+                CardId = result.Item3,
+                CardPoints = result.Item4,
+                LaneId = this.Id
+            });
+
         }
 
         private void Card_CardRequestingView(object sender, CardViewArgs e)
         {
             new ViewCardDialog().ShowDialog(e.CardName,e.CardDescription,e.CardPoints, e.CardId);
         }
+    }
+
+    public class EditCardArgs : EventArgs
+    {
+        public string CardDescription { get; set; }
+        public string CardName { get; set; }
+        public int CardPoints { get; set; }
+        public int CardId { get; set; }
+
+        public int LaneId { get; set; }
+    }
+    {
     }
 
     public class EditCardLaneArgs:EventArgs
