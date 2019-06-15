@@ -152,11 +152,24 @@ namespace IronCards.Controls
         public void AddCard(Card card)
         {
             card.CardRequestingView += Card_CardRequestingView;
+            card.CardRequestingEdit += Card_CardRequestingEdit;
             _cardContainer.Controls.Add(card);
+        }
+
+        private void Card_CardRequestingEdit(object sender, CardEditArgs e)
+        { 
+
+            //TODO build dialog
+            //TODO Load data into controls 
+            //TODO Save any edits 
+            throw new NotImplementedException();
         }
 
         private void Card_CardRequestingView(object sender, CardViewArgs e)
         {
+
+            //TODO build dialog
+            //TODO Load data into controls 
             throw new NotImplementedException();
         }
     }

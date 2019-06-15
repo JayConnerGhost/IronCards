@@ -81,14 +81,15 @@ namespace IronCards.Controls
 
         private void ViewButton_Click(object sender, EventArgs e)
         {
-            EventHandler<CardViewArgs> handler = CardRequestingView;
-            handler?.Invoke(this, new CardViewArgs() { Card = this, CardId = CardId });
+            EventHandler<CardEditArgs> handler = CardRequestingEdit;
+            handler?.Invoke(this, new CardEditArgs() { Card = this, CardId = CardId });
 
         }
 
         private void EditButton_Click(object sender, EventArgs e)
         {
- 
+            EventHandler<CardViewArgs> handler = CardRequestingView;
+            handler?.Invoke(this, new CardViewArgs() { Card = this, CardId = CardId });
         }
        
         private void CardBodyLayout_MouseDown(object sender, MouseEventArgs e)
@@ -97,11 +98,18 @@ namespace IronCards.Controls
         }
 
         public event EventHandler<CardViewArgs> CardRequestingView;
+        public event EventHandler<CardEditArgs> CardRequestingEdit;
     }
 
     public class CardViewArgs : EventArgs
     {
         public Card Card{get; set; }
+        public int CardId { get; set; }
+    }
+
+    public class CardEditArgs : EventArgs
+    {
+        public Card Card { get; set; }
         public int CardId { get; set; }
     }
 }
