@@ -5,6 +5,8 @@ using MetroFramework.Controls;
 namespace IronCards.Dialogs
 {
     //Add points text box and label
+
+
     public class AddCardDialog : BaseDialogForm
     {
         public Tuple<string, string, int, DialogResult> ShowDialog()

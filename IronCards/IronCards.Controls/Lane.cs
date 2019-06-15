@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Dynamic;
 using System.Security.Permissions;
 using System.Windows.Forms;
+using IronCards.Dialogs;
 using IronCards.Services;
 using MetroFramework.Controls;
 using MetroFramework.Drawing;
@@ -167,10 +168,10 @@ namespace IronCards.Controls
 
         private void Card_CardRequestingView(object sender, CardViewArgs e)
         {
-
+      
             //TODO build dialog
             //TODO Load data into controls 
-            throw new NotImplementedException();
+            new ViewCardDialog().ShowDialog(e.CardName,e.CardDescription,e.CardPoints, e.CardId);
         }
     }
 

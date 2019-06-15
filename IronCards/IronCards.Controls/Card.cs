@@ -8,10 +8,10 @@ namespace IronCards.Controls
     public class Card:UserControl
     {
         public int ParentLaneId { get; set; }
-        public string CardName { get; }
-        public string CardDescription { get; }
-        public int CardPoints { get; }
-        public int CardId { get; }
+        public string CardName { get; set; }
+        public string CardDescription { get; set; }
+        public int CardPoints { get; set; }
+        public int CardId { get; set; }
 
         public Card(int parentLaneId, string cardName, string cardDescription, int points, int cardId)
         {
@@ -81,15 +81,14 @@ namespace IronCards.Controls
 
         private void ViewButton_Click(object sender, EventArgs e)
         {
-            EventHandler<CardEditArgs> handler = CardRequestingEdit;
-            handler?.Invoke(this, new CardEditArgs() { Card = this, CardId = CardId });
-
+            EventHandler<CardViewArgs> handler = CardRequestingView;
+            handler?.Invoke(this, new CardViewArgs() { CardId = CardId,CardDescription = CardDescription,CardName = CardName, CardPoints = CardPoints});
         }
 
         private void EditButton_Click(object sender, EventArgs e)
         {
-            EventHandler<CardViewArgs> handler = CardRequestingView;
-            handler?.Invoke(this, new CardViewArgs() { Card = this, CardId = CardId });
+            EventHandler<CardEditArgs> handler = CardRequestingEdit;
+            handler?.Invoke(this, new CardEditArgs() { Card = this, CardId = CardId });
         }
        
         private void CardBodyLayout_MouseDown(object sender, MouseEventArgs e)
@@ -103,7 +102,9 @@ namespace IronCards.Controls
 
     public class CardViewArgs : EventArgs
     {
-        public Card Card{get; set; }
+        public string CardDescription{get; set; }
+        public string CardName{get; set; }
+        public int CardPoints{get; set; }
         public int CardId { get; set; }
     }
 
