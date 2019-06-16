@@ -195,8 +195,8 @@ namespace IronCards.Controls
 
         public int LaneId { get; set; }
     }
-    {
-    }
+    
+    
 
     public class EditCardLaneArgs:EventArgs
     {

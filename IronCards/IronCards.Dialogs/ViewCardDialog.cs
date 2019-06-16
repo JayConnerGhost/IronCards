@@ -8,7 +8,7 @@ namespace IronCards.Dialogs
         public void ShowDialog(string cardName, string cardDescription, int cardPoints, int cardId)
         {
             MetroLabel name = new MetroLabel() { Width = 460, Height = 20, TabIndex = 0, TabStop = true,  Text = cardName };
-            MetroTextBox description = new MetroTextBox() { Width = 460, Height = 350, TabIndex = 0, TabStop = true, Text = cardDescription,ReadOnly = true};
+            MetroTextBox description = new MetroTextBox() { Width = 460, Height = 350, TabIndex = 0, TabStop = true, Text = cardDescription,ReadOnly = true,Multiline = true};
             var numericUpDown = new MetroLabel() { Width = 50, Height = 20, TabIndex = 0, TabStop = true, Text = cardPoints.ToString() };
             var result = DialogResult;
             using (var form = new DialogForm(new FormInfo("View Card", 485, 600)))

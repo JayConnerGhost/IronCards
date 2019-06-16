@@ -50,10 +50,28 @@ namespace IronCards.Controls
                 lane.LaneRequestingAddLane += Lane_LaneRequestingAddLane;
                 lane.LaneRequestingAddCard += Lane_LaneRequestingAddCard;
                 lane.LaneRequestingEditCardLane += Lane_LaneRequestingEditCardLane;
+                lane.LaneRequestingEditCard += Lane_LaneRequestingEditCard;
                 LanesCollection.Add(lane);
                 LoadCards(lane);
                 _layoutPanel.Controls.Add(lane);
             }   
+        }
+
+        private void Lane_LaneRequestingEditCard(object sender, EditCardArgs e)
+        {
+      
+            var cardDocument = new CardDocument
+            {
+                Id = e.CardId,
+                CardDescription = e.CardDescription,
+                CardName = e.CardName,
+                CardPoints = e.CardPoints,
+                ParentLaneId = e.LaneId
+            };
+            if (!_cardDatabaseService.Update(cardDocument))
+            {
+                throw new KeyNotFoundException("Card could not be updated ");
+            }
         }
 
         private void Lane_LaneRequestingAddCard(object sender, AddCardArgs e)
@@ -128,7 +146,7 @@ namespace IronCards.Controls
            _layoutPanel.Controls.Add(lane);
            lane.Focus();
         }
-
+        //cc form here
         private void Lane_LaneRequestingEditCardLane(object sender, EditCardLaneArgs e)
         {
             e.target.ParentLaneId = e.NewLaneId;
