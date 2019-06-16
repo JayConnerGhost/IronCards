@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Drawing;
 using System.Dynamic;
+using System.Linq;
 using System.Security.Permissions;
 using System.Windows.Forms;
 using IronCards.Dialogs;
@@ -13,7 +14,7 @@ namespace IronCards.Controls
 {
     public class Lane:UserControl
     {
-        private readonly ICardDatabaseService _databaseService;
+     
         private FlowLayoutPanel _cardContainer;
 
         enum TextChangedValue
@@ -23,9 +24,8 @@ namespace IronCards.Controls
         }
         public int Id { get; set; }
 
-        public Lane(string laneLabel,ICardDatabaseService databaseService)
+        public Lane(string laneLabel)
         {
-            _databaseService = databaseService;
             BuildLane(laneLabel);
         }
 
@@ -71,17 +71,18 @@ namespace IronCards.Controls
         private void BuildsContextMenu(UserControl lane)
         {
             var laneContextMenu=new ContextMenuStrip();
-            var deleteButton = new ToolStripButton("Delete",null,OnDeleteClick);
+            var deleteButton = new ToolStripButton("Delete Lane",null,OnDeleteClick);
             laneContextMenu.Items.Add(deleteButton);
             var addLaneButton =new ToolStripButton("Insert Lane",null,OnAddLaneClick);
             laneContextMenu.Items.Add(addLaneButton);
             var addCardButton = new ToolStripButton("Insert Card", null, OnAddCardClick);
             laneContextMenu.Items.Add(addCardButton);
             lane.ContextMenuStrip=laneContextMenu;
-           // laneContextMenu.Show();
+         
 
-            //TODO:hook up add card menu item
         }
+
+      
 
         private void OnAddCardClick(object sender, EventArgs e)
         {
@@ -145,17 +146,24 @@ namespace IronCards.Controls
             ((MetroTextBox) (sender)).ReadOnly = false;
         }
 
-        public event EventHandler<LaneTitleEditedArgs> LaneRequestingTitleChanged;
-        public event EventHandler<LaneDeleteArgs> LaneRequestingDelete;
-        public event EventHandler<LaneAddArgs> LaneRequestingAddLane;
-        public event EventHandler<AddCardArgs> LaneRequestingAddCard;
-        public event EventHandler<EditCardLaneArgs> LaneRequestingEditCardLane;
-        public event EventHandler<EditCardArgs> LaneRequestingEditCard;
         public void AddCard(Card card)
         {
             card.CardRequestingView += Card_CardRequestingView;
             card.CardRequestingEdit += Card_CardRequestingEdit;
+            card.CardRequestingDelete += Card_CardRequestingDelete;
+            card.Name = card.CardId.ToString();
             _cardContainer.Controls.Add(card);
+        }
+
+        private void Card_CardRequestingDelete(object sender, CardDeleteArgs e)
+        {
+           var target= _cardContainer.Controls.Find(e.CardId.ToString(), true).First();
+           _cardContainer.Controls.Remove(target);
+
+            //LaneRequestingDeleteCard
+            EventHandler<DeleteCardArgs> handler = LaneRequestingDeleteCard;
+            handler?.Invoke(this, new DeleteCardArgs() {cardId = e.CardId});
+
         }
 
         private void Card_CardRequestingEdit(object sender, CardEditArgs e)
@@ -190,6 +198,15 @@ namespace IronCards.Controls
         {
             new ViewCardDialog().ShowDialog(e.CardName,e.CardDescription,e.CardPoints, e.CardId);
         }
+
+
+        public event EventHandler<LaneTitleEditedArgs> LaneRequestingTitleChanged;
+        public event EventHandler<LaneDeleteArgs> LaneRequestingDelete;
+        public event EventHandler<LaneAddArgs> LaneRequestingAddLane;
+        public event EventHandler<AddCardArgs> LaneRequestingAddCard;
+        public event EventHandler<EditCardLaneArgs> LaneRequestingEditCardLane;
+        public event EventHandler<EditCardArgs> LaneRequestingEditCard;
+        public event EventHandler<DeleteCardArgs> LaneRequestingDeleteCard;
     }
 
     public class EditCardArgs : EventArgs
@@ -231,6 +248,11 @@ namespace IronCards.Controls
     {
         public Lane Target { get; set; }
         public int LaneId { get; set; }
+    }
+
+    public class DeleteCardArgs : EventArgs
+    {
+        public int cardId { get; set; }
     }
 }
 

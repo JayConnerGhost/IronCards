@@ -44,17 +44,27 @@ namespace IronCards.Controls
 
             foreach (var laneDocument in lanesCollection)
             {
-                var lane = new Lane(laneDocument.Title, _cardDatabaseService) { Height = this.Height - 20 ,Id = laneDocument.Id};
+                //TODO refactor duplicated code .
+                var lane = new Lane(laneDocument.Title) { Height = this.Height - 20 ,Id = laneDocument.Id};
                 lane.LaneRequestingTitleChanged += LaneLaneRequestingTitleChanged;
                 lane.LaneRequestingDelete += Lane_LaneRequestingDelete;
                 lane.LaneRequestingAddLane += Lane_LaneRequestingAddLane;
                 lane.LaneRequestingAddCard += Lane_LaneRequestingAddCard;
                 lane.LaneRequestingEditCardLane += Lane_LaneRequestingEditCardLane;
                 lane.LaneRequestingEditCard += Lane_LaneRequestingEditCard;
+                lane.LaneRequestingDeleteCard += Lane_LaneRequestingDeleteCard; 
                 LanesCollection.Add(lane);
                 LoadCards(lane);
                 _layoutPanel.Controls.Add(lane);
             }   
+        }
+
+        private void Lane_LaneRequestingDeleteCard(object sender, DeleteCardArgs e)
+        {
+            if (!_cardDatabaseService.Delete(e.cardId))
+            {
+                throw new Exception("Card could not be deleted ");
+            }
         }
 
         private void Lane_LaneRequestingEditCard(object sender, EditCardArgs e)
@@ -70,7 +80,7 @@ namespace IronCards.Controls
             };
             if (!_cardDatabaseService.Update(cardDocument))
             {
-                throw new KeyNotFoundException("Card could not be updated ");
+                throw new Exception("Card could not be updated ");
             }
         }
 
@@ -135,12 +145,14 @@ namespace IronCards.Controls
 
         public void AddLane(string laneLabel)
         {
-            var lane = new Lane(laneLabel, _cardDatabaseService) {Height = this.Height - 20};
+            var lane = new Lane(laneLabel) {Height = this.Height - 20};
             lane.LaneRequestingTitleChanged += LaneLaneRequestingTitleChanged;
             lane.LaneRequestingDelete += Lane_LaneRequestingDelete;
             lane.LaneRequestingAddLane += Lane_LaneRequestingAddLane;
             lane.LaneRequestingAddCard += Lane_LaneRequestingAddCard;
             lane.LaneRequestingEditCardLane += Lane_LaneRequestingEditCardLane;
+            lane.LaneRequestingEditCard += Lane_LaneRequestingEditCard;
+            lane.LaneRequestingDeleteCard += Lane_LaneRequestingDeleteCard;
             lane.Id=_lanesDatabaseService.Insert(laneLabel);
             LanesCollection.Add(lane);
            _layoutPanel.Controls.Add(lane);

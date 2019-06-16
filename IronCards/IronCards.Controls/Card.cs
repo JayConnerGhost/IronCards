@@ -80,6 +80,21 @@ namespace IronCards.Controls
             cardBodyLayout.Controls.Add(pointsLayout);
             cardBodyLayout.Controls.Add(controlsLayout);
             this.Controls.Add(cardBodyLayout);
+            BuildMenu();
+        }
+
+        private void BuildMenu()
+        {
+            var contextMenu=new ContextMenuStrip();
+            var deleteCard = new ToolStripButton("Delete", null, DeleteCardOnClick);
+            contextMenu.Items.Add(deleteCard);
+            this.ContextMenuStrip = contextMenu;
+        }
+
+        private void DeleteCardOnClick(object sender, EventArgs e)
+        {
+            EventHandler<CardDeleteArgs> handler = CardRequestingDelete;
+            handler?.Invoke(this,new CardDeleteArgs(){ CardId = CardId,Target = this});
         }
 
         private void ViewButton_Click(object sender, EventArgs e)
@@ -105,6 +120,7 @@ namespace IronCards.Controls
 
         public event EventHandler<CardViewArgs> CardRequestingView;
         public event EventHandler<CardEditArgs> CardRequestingEdit;
+        public event EventHandler<CardDeleteArgs> CardRequestingDelete;
 
         public void UpdateValues(string cardName, string cardDescription, int Id, int cardPoints)
         {
@@ -138,5 +154,11 @@ namespace IronCards.Controls
         public string CardName { get; set; }
         public int CardPoints { get; set; }
         public int CardId { get; set; }
+    }
+
+    public class CardDeleteArgs : EventArgs
+    {
+        public int CardId { get; set; }
+        public Card Target { get; set; }
     }
 }
