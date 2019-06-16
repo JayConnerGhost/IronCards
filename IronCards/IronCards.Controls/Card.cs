@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using MetroFramework.Controls;
 
 namespace IronCards.Controls
 {
-    public class Card:UserControl
+    public class Card : UserControl
     {
         public int ParentLaneId { get; set; }
         public string CardName { get; set; }
@@ -21,10 +22,10 @@ namespace IronCards.Controls
             CardPoints = points;
             CardId = cardId;
             BuildCard();
-         
+
         }
 
-       
+
 
         private void BuildCard()
         {
@@ -34,13 +35,13 @@ namespace IronCards.Controls
                 Dock = DockStyle.Fill,
             };
             cardBodyLayout.MouseDown += CardBodyLayout_MouseDown;
-    
+
             this.BorderStyle = BorderStyle.FixedSingle;
 
 
-            this.BackColor=Color.AliceBlue;
-           
-            this.Margin = new Padding(10,20,10,10);
+            this.BackColor = Color.AliceBlue;
+
+            this.Margin = new Padding(10, 20, 10, 10);
             this.Width = 240;
             this.Height = 120;
             //Id
@@ -48,29 +49,31 @@ namespace IronCards.Controls
             {
                 Text = CardId.ToString(),
                 Width = 25,
-                BackColor=Color.AliceBlue,
+                BackColor = Color.AliceBlue,
                 BorderStyle = BorderStyle.None
             };
             cardBodyLayout.Controls.Add(IdLabel);
             //Name row 
             var nameLabel = new Label
             {
-                Text = CardName, Width = 200, BackColor = Color.AliceBlue, BorderStyle = BorderStyle.None
+                Text = CardName, Width = 200, BackColor = Color.AliceBlue, BorderStyle = BorderStyle.None,
+                Name = "nameLabel"
             };
             cardBodyLayout.Controls.Add(nameLabel);
 
-            var pointsLayout = new FlowLayoutPanel() { FlowDirection = FlowDirection.LeftToRight, Size=new Size(200,30)};
-            var pointsLabel=new Label(){Text = "Points: ",Width = 40};
+            var pointsLayout = new FlowLayoutPanel()
+                {FlowDirection = FlowDirection.LeftToRight, Size = new Size(200, 30)};
+            var pointsLabel = new Label() {Text = "Points: ", Width = 40};
             pointsLayout.Controls.Add(pointsLabel);
-            var pointsValue=new Label(){Text=CardPoints.ToString(), Width = 25};
+            var pointsValue = new Label() {Text = CardPoints.ToString(), Width = 25, Name = "pointsLabel"};
             pointsLayout.Controls.Add(pointsValue);
             var controlsLayout = new FlowLayoutPanel
             {
                 Size = new Size(235, 30), FlowDirection = FlowDirection.RightToLeft
             };
-            var editButton=new Button(){Text = "Edit"};
+            var editButton = new Button() {Text = "Edit"};
             editButton.Click += EditButton_Click;
-            var viewButton=new Button(){Text = "View"};
+            var viewButton = new Button() {Text = "View"};
             viewButton.Click += ViewButton_Click;
             controlsLayout.Controls.Add(editButton);
             controlsLayout.Controls.Add(viewButton);
@@ -82,15 +85,19 @@ namespace IronCards.Controls
         private void ViewButton_Click(object sender, EventArgs e)
         {
             EventHandler<CardViewArgs> handler = CardRequestingView;
-            handler?.Invoke(this, new CardViewArgs() { CardId = CardId,CardDescription = CardDescription,CardName = CardName, CardPoints = CardPoints});
+            handler?.Invoke(this,
+                new CardViewArgs()
+                    {CardId = CardId, CardDescription = CardDescription, CardName = CardName, CardPoints = CardPoints});
         }
 
         private void EditButton_Click(object sender, EventArgs e)
         {
             EventHandler<CardEditArgs> handler = CardRequestingEdit;
-            handler?.Invoke(this, new CardEditArgs() { CardId = CardId, CardDescription = CardDescription, CardName = CardName, CardPoints = CardPoints });
+            handler?.Invoke(this,
+                new CardEditArgs()
+                    {CardId = CardId, CardDescription = CardDescription, CardName = CardName, CardPoints = CardPoints});
         }
-       
+
         private void CardBodyLayout_MouseDown(object sender, MouseEventArgs e)
         {
             this.DoDragDrop(this, DragDropEffects.Move);
@@ -98,6 +105,23 @@ namespace IronCards.Controls
 
         public event EventHandler<CardViewArgs> CardRequestingView;
         public event EventHandler<CardEditArgs> CardRequestingEdit;
+
+        public void UpdateValues(string cardName, string cardDescription, int Id, int cardPoints)
+        {
+            this.CardId = Id;
+            this.CardName = cardName;
+            this.CardDescription = cardDescription;
+            this.CardPoints = cardPoints;
+            UpdateUi();
+        }
+
+        private void UpdateUi()
+        {
+            var nameLabel = (Label) this.Controls.Find("nameLabel", true).First();
+            nameLabel.Text = CardName;
+            var pointsLabel = (Label) this.Controls.Find("pointsLabel", true).First();
+            pointsLabel.Text = CardPoints.ToString();
+        }
     }
 
     public class CardViewArgs : EventArgs

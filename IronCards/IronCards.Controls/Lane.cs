@@ -177,7 +177,13 @@ namespace IronCards.Controls
                 CardPoints = result.Item4,
                 LaneId = this.Id
             });
-
+            foreach (Card card in this._cardContainer.Controls)
+            {
+                if (card.CardId == result.Item3)
+                {
+                    card.UpdateValues(result.Item1, result.Item2, result.Item3, result.Item4);
+                }
+            }
         }
 
         private void Card_CardRequestingView(object sender, CardViewArgs e)
