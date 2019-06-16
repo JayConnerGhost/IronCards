@@ -148,6 +148,7 @@ namespace IronCards.Controls
 
         public void AddCard(Card card)
         {
+            //If null add event handlers
             card.CardRequestingView += Card_CardRequestingView;
             card.CardRequestingEdit += Card_CardRequestingEdit;
             card.CardRequestingDelete += Card_CardRequestingDelete;

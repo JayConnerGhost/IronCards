@@ -13,7 +13,7 @@ namespace IronCards.Controls
         public string CardDescription { get; set; }
         public int CardPoints { get; set; }
         public int CardId { get; set; }
-
+        private ContextMenuStrip contextMenu;
         public Card(int parentLaneId, string cardName, string cardDescription, int points, int cardId)
         {
             ParentLaneId = parentLaneId;
@@ -29,11 +29,13 @@ namespace IronCards.Controls
 
         private void BuildCard()
         {
+            BuildMenu();
             var cardBodyLayout = new FlowLayoutPanel
             {
                 FlowDirection = FlowDirection.TopDown,
                 Dock = DockStyle.Fill,
             };
+            cardBodyLayout.ContextMenuStrip = contextMenu;
             cardBodyLayout.MouseDown += CardBodyLayout_MouseDown;
 
             this.BorderStyle = BorderStyle.FixedSingle;
@@ -80,12 +82,13 @@ namespace IronCards.Controls
             cardBodyLayout.Controls.Add(pointsLayout);
             cardBodyLayout.Controls.Add(controlsLayout);
             this.Controls.Add(cardBodyLayout);
-            BuildMenu();
+
         }
 
         private void BuildMenu()
         {
-            var contextMenu=new ContextMenuStrip();
+          
+            contextMenu = new ContextMenuStrip();
             var deleteCard = new ToolStripButton("Delete", null, DeleteCardOnClick);
             contextMenu.Items.Add(deleteCard);
             this.ContextMenuStrip = contextMenu;
