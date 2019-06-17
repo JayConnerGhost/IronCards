@@ -146,12 +146,16 @@ namespace IronCards.Controls
             ((MetroTextBox) (sender)).ReadOnly = false;
         }
 
-        public void AddCard(Card card)
+        public void AddCardEventHandlers(Card card)
         {
-            //If null add event handlers
             card.CardRequestingView += Card_CardRequestingView;
             card.CardRequestingEdit += Card_CardRequestingEdit;
             card.CardRequestingDelete += Card_CardRequestingDelete;
+        }
+        public void AddCard(Card card)
+        {
+            //If null add event handlers
+    
             card.Name = card.CardId.ToString();
             _cardContainer.Controls.Add(card);
         }

@@ -103,7 +103,7 @@ namespace IronCards.Controls
             //Insert card to UserControl Lane passed in Args
             var cardId=_cardDatabaseService.Insert(parentLaneId, cardName, cardDescription, cardPoints);
             var card = new Card(parentLaneId,cardName,cardDescription,cardPoints,cardId);
-            
+            parentLane.AddCardEventHandlers(card);
             parentLane.AddCard(card);
         }
 
@@ -114,6 +114,7 @@ namespace IronCards.Controls
            foreach (var cardDocument in cardDocuments)
            {
                 var card = new Card(cardDocument.ParentLaneId,cardDocument.CardName,cardDocument.CardDescription,cardDocument.CardPoints,cardDocument.Id);
+                lane.AddCardEventHandlers(card);
                 lane.AddCard(card);
            }
         }
@@ -133,6 +134,7 @@ namespace IronCards.Controls
             _lanesDatabaseService.Delete(Id);
             LanesCollection.Remove(LanesCollection.Find(x => x.Id == Id));
             _layoutPanel.Controls.Remove((UserControl) lane);
+            lane.Dispose();
         }
 
         private void LanesContainer_Resize(object sender, EventArgs e)
