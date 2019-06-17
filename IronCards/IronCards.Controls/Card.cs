@@ -96,34 +96,22 @@ namespace IronCards.Controls
 
         private void DeleteCardOnClick(object sender, EventArgs e)
         {
-            EventHandler<CardDeleteArgs> handler = CardRequestingDelete;
-            handler?.Invoke(this,new CardDeleteArgs(){ CardId = CardId,Target = this});
+            
         }
 
         private void ViewButton_Click(object sender, EventArgs e)
         {
-            EventHandler<CardViewArgs> handler = CardRequestingView;
-            handler?.Invoke(this,
-                new CardViewArgs()
-                    {CardId = CardId, CardDescription = CardDescription, CardName = CardName, CardPoints = CardPoints});
         }
 
         private void EditButton_Click(object sender, EventArgs e)
         {
-            EventHandler<CardEditArgs> handler = CardRequestingEdit;
-            handler?.Invoke(this,
-                new CardEditArgs()
-                    {CardId = CardId, CardDescription = CardDescription, CardName = CardName, CardPoints = CardPoints});
-        }
+      }
 
         private void CardBodyLayout_MouseDown(object sender, MouseEventArgs e)
         {
             this.DoDragDrop(this, DragDropEffects.Move);
         }
 
-        public event EventHandler<CardViewArgs> CardRequestingView;
-        public event EventHandler<CardEditArgs> CardRequestingEdit;
-        public event EventHandler<CardDeleteArgs> CardRequestingDelete;
 
         public void UpdateValues(string cardName, string cardDescription, int Id, int cardPoints)
         {
@@ -143,25 +131,5 @@ namespace IronCards.Controls
         }
     }
 
-    public class CardViewArgs : EventArgs
-    {
-        public string CardDescription{get; set; }
-        public string CardName{get; set; }
-        public int CardPoints{get; set; }
-        public int CardId { get; set; }
-    }
-
-    public class CardEditArgs : EventArgs
-    {
-        public string CardDescription { get; set; }
-        public string CardName { get; set; }
-        public int CardPoints { get; set; }
-        public int CardId { get; set; }
-    }
-
-    public class CardDeleteArgs : EventArgs
-    {
-        public int CardId { get; set; }
-        public Card Target { get; set; }
-    }
+   
 }

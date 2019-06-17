@@ -45,43 +45,17 @@ namespace IronCards.Controls
             foreach (var laneDocument in lanesCollection)
             {
                 //TODO refactor duplicated code .
-                var lane = new Lane(laneDocument.Title) { Height = this.Height - 20 ,Id = laneDocument.Id};
+                var lane = new Lane(laneDocument.Title,_cardDatabaseService) { Height = this.Height - 20 ,Id = laneDocument.Id};
                 lane.LaneRequestingTitleChanged += LaneLaneRequestingTitleChanged;
                 lane.LaneRequestingDelete += Lane_LaneRequestingDelete;
                 lane.LaneRequestingAddLane += Lane_LaneRequestingAddLane;
                 lane.LaneRequestingAddCard += Lane_LaneRequestingAddCard;
                 lane.LaneRequestingEditCardLane += Lane_LaneRequestingEditCardLane;
-                lane.LaneRequestingEditCard += Lane_LaneRequestingEditCard;
-                lane.LaneRequestingDeleteCard += Lane_LaneRequestingDeleteCard; 
+         
                 LanesCollection.Add(lane);
                 LoadCards(lane);
                 _layoutPanel.Controls.Add(lane);
             }   
-        }
-
-        private void Lane_LaneRequestingDeleteCard(object sender, DeleteCardArgs e)
-        {
-            if (!_cardDatabaseService.Delete(e.cardId))
-            {
-                throw new Exception("Card could not be deleted ");
-            }
-        }
-
-        private void Lane_LaneRequestingEditCard(object sender, EditCardArgs e)
-        {
-      
-            var cardDocument = new CardDocument
-            {
-                Id = e.CardId,
-                CardDescription = e.CardDescription,
-                CardName = e.CardName,
-                CardPoints = e.CardPoints,
-                ParentLaneId = e.LaneId
-            };
-            if (!_cardDatabaseService.Update(cardDocument))
-            {
-                throw new Exception("Card could not be updated ");
-            }
         }
 
         private void Lane_LaneRequestingAddCard(object sender, AddCardArgs e)
@@ -103,7 +77,6 @@ namespace IronCards.Controls
             //Insert card to UserControl Lane passed in Args
             var cardId=_cardDatabaseService.Insert(parentLaneId, cardName, cardDescription, cardPoints);
             var card = new Card(parentLaneId,cardName,cardDescription,cardPoints,cardId);
-            parentLane.AddCardEventHandlers(card);
             parentLane.AddCard(card);
         }
 
@@ -114,7 +87,6 @@ namespace IronCards.Controls
            foreach (var cardDocument in cardDocuments)
            {
                 var card = new Card(cardDocument.ParentLaneId,cardDocument.CardName,cardDocument.CardDescription,cardDocument.CardPoints,cardDocument.Id);
-                lane.AddCardEventHandlers(card);
                 lane.AddCard(card);
            }
         }
@@ -147,14 +119,12 @@ namespace IronCards.Controls
 
         public void AddLane(string laneLabel)
         {
-            var lane = new Lane(laneLabel) {Height = this.Height - 20};
+            var lane = new Lane(laneLabel,_cardDatabaseService) {Height = this.Height - 20};
             lane.LaneRequestingTitleChanged += LaneLaneRequestingTitleChanged;
             lane.LaneRequestingDelete += Lane_LaneRequestingDelete;
             lane.LaneRequestingAddLane += Lane_LaneRequestingAddLane;
             lane.LaneRequestingAddCard += Lane_LaneRequestingAddCard;
             lane.LaneRequestingEditCardLane += Lane_LaneRequestingEditCardLane;
-            lane.LaneRequestingEditCard += Lane_LaneRequestingEditCard;
-            lane.LaneRequestingDeleteCard += Lane_LaneRequestingDeleteCard;
             lane.Id=_lanesDatabaseService.Insert(laneLabel);
             LanesCollection.Add(lane);
            _layoutPanel.Controls.Add(lane);
@@ -172,10 +142,8 @@ namespace IronCards.Controls
                 CardPoints = e.target.CardPoints,
                 ParentLaneId = e.target.ParentLaneId
             };
-            if (!_cardDatabaseService.Update(cardDocument))
-            {
-                throw new KeyNotFoundException("Card could not be updated ");
-            }
+            _cardDatabaseService.Update(cardDocument);
+
         }
 
         private void LaneLaneRequestingTitleChanged(object sender, LaneTitleEditedArgs e)

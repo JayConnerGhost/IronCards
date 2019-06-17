@@ -14,7 +14,8 @@ namespace IronCards.Controls
 {
     public class Lane:UserControl
     {
-     
+        private readonly ICardDatabaseService _cardDatabaseService;
+
         private FlowLayoutPanel _cardContainer;
 
         enum TextChangedValue
@@ -24,8 +25,9 @@ namespace IronCards.Controls
         }
         public int Id { get; set; }
 
-        public Lane(string laneLabel)
+        public Lane(string laneLabel, ICardDatabaseService cardDatabaseService)
         {
+            _cardDatabaseService = cardDatabaseService;
             BuildLane(laneLabel);
         }
 
@@ -55,13 +57,27 @@ namespace IronCards.Controls
             BorderStyle = BorderStyle.FixedSingle;
             _cardContainer.AllowDrop = true;
             _cardContainer.DragEnter += _cardContainer_DragEnter;
+            _cardContainer.DragLeave += _cardContainer_DragLeave;
+            _cardContainer.DragDrop += _cardContainer_DragDrop;
             return _cardContainer;
+        }
+
+        private void _cardContainer_DragDrop(object sender, DragEventArgs e)
+        {
+            var target = (Card)e.Data.GetData(typeof(Card));
+        }
+
+        private void _cardContainer_DragLeave(object sender, EventArgs e)
+        {
+           //issue to be solved 
         }
 
         private void _cardContainer_DragEnter(object sender, DragEventArgs e)
         {
             var target = (Card) e.Data.GetData(typeof(Card));
+           
             this.AddCard(target);
+      
             //LaneRequestingEditCardLane
             EventHandler<EditCardLaneArgs> handler = LaneRequestingEditCardLane;
             handler?.Invoke(this, new EditCardLaneArgs() { NewLaneId = this.Id, target=target});
@@ -145,13 +161,7 @@ namespace IronCards.Controls
         {
             ((MetroTextBox) (sender)).ReadOnly = false;
         }
-
-        public void AddCardEventHandlers(Card card)
-        {
-            card.CardRequestingView += Card_CardRequestingView;
-            card.CardRequestingEdit += Card_CardRequestingEdit;
-            card.CardRequestingDelete += Card_CardRequestingDelete;
-        }
+        
         public void AddCard(Card card)
         {
             //If null add event handlers
@@ -160,69 +170,16 @@ namespace IronCards.Controls
             _cardContainer.Controls.Add(card);
         }
 
-        private void Card_CardRequestingDelete(object sender, CardDeleteArgs e)
-        {
-           _cardContainer.Controls.Remove(e.Target);
-
-            //LaneRequestingDeleteCard
-            EventHandler<DeleteCardArgs> handler = LaneRequestingDeleteCard;
-            handler?.Invoke(this, new DeleteCardArgs() {cardId = e.CardId});
-
-        }
-
-        private void Card_CardRequestingEdit(object sender, CardEditArgs e)
-        {
-            var result = new EditCardDialog().ShowDialog(e.CardId, e.CardName, e.CardDescription, e.CardPoints);
-
-            if (result.Item5 == DialogResult.Cancel)
-            {
-                return;
-            }
-
-            EventHandler<EditCardArgs> handler = LaneRequestingEditCard;
-
-            handler?.Invoke(this, new EditCardArgs()
-            {
-                CardName=result.Item1,
-                CardDescription = result.Item2,
-                CardId = result.Item3,
-                CardPoints = result.Item4,
-                LaneId = this.Id
-            });
-            foreach (Card card in this._cardContainer.Controls)
-            {
-                if (card.CardId == result.Item3)
-                {
-                    card.UpdateValues(result.Item1, result.Item2, result.Item3, result.Item4);
-                }
-            }
-        }
-
-        private void Card_CardRequestingView(object sender, CardViewArgs e)
-        {
-            new ViewCardDialog().ShowDialog(e.CardName,e.CardDescription,e.CardPoints, e.CardId);
-        }
-
-
+       
         public event EventHandler<LaneTitleEditedArgs> LaneRequestingTitleChanged;
         public event EventHandler<LaneDeleteArgs> LaneRequestingDelete;
         public event EventHandler<LaneAddArgs> LaneRequestingAddLane;
         public event EventHandler<AddCardArgs> LaneRequestingAddCard;
         public event EventHandler<EditCardLaneArgs> LaneRequestingEditCardLane;
-        public event EventHandler<EditCardArgs> LaneRequestingEditCard;
-        public event EventHandler<DeleteCardArgs> LaneRequestingDeleteCard;
+ 
+
     }
 
-    public class EditCardArgs : EventArgs
-    {
-        public string CardDescription { get; set; }
-        public string CardName { get; set; }
-        public int CardPoints { get; set; }
-        public int CardId { get; set; }
-
-        public int LaneId { get; set; }
-    }
-    
     
 
     public class EditCardLaneArgs:EventArgs
@@ -254,9 +211,6 @@ namespace IronCards.Controls
         public int LaneId { get; set; }
     }
 
-    public class DeleteCardArgs : EventArgs
-    {
-        public int cardId { get; set; }
-    }
+ 
 }
 
