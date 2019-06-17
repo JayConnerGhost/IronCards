@@ -2,6 +2,8 @@
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using IronCards.Dialogs;
+using IronCards.Services;
 using MetroFramework.Controls;
 
 namespace IronCards.Controls
@@ -13,7 +15,9 @@ namespace IronCards.Controls
         public string CardDescription { get; set; }
         public int CardPoints { get; set; }
         public int CardId { get; set; }
+        public ICardDatabaseService DatabaseService { get; set; }
 
+        private ContextMenuStrip contextMenu;
         public Card(int parentLaneId, string cardName, string cardDescription, int points, int cardId)
         {
             ParentLaneId = parentLaneId;
@@ -25,15 +29,18 @@ namespace IronCards.Controls
 
         }
 
+      
 
 
         private void BuildCard()
         {
+            BuildMenu();
             var cardBodyLayout = new FlowLayoutPanel
             {
                 FlowDirection = FlowDirection.TopDown,
                 Dock = DockStyle.Fill,
             };
+            cardBodyLayout.ContextMenuStrip = contextMenu;
             cardBodyLayout.MouseDown += CardBodyLayout_MouseDown;
 
             this.BorderStyle = BorderStyle.FixedSingle;
@@ -80,12 +87,13 @@ namespace IronCards.Controls
             cardBodyLayout.Controls.Add(pointsLayout);
             cardBodyLayout.Controls.Add(controlsLayout);
             this.Controls.Add(cardBodyLayout);
-            BuildMenu();
+
         }
 
         private void BuildMenu()
         {
-            var contextMenu=new ContextMenuStrip();
+          
+            contextMenu = new ContextMenuStrip();
             var deleteCard = new ToolStripButton("Delete", null, DeleteCardOnClick);
             contextMenu.Items.Add(deleteCard);
             this.ContextMenuStrip = contextMenu;
@@ -93,34 +101,39 @@ namespace IronCards.Controls
 
         private void DeleteCardOnClick(object sender, EventArgs e)
         {
-            EventHandler<CardDeleteArgs> handler = CardRequestingDelete;
-            handler?.Invoke(this,new CardDeleteArgs(){ CardId = CardId,Target = this});
+            DatabaseService.Delete(this.CardId);
         }
 
         private void ViewButton_Click(object sender, EventArgs e)
         {
-            EventHandler<CardViewArgs> handler = CardRequestingView;
-            handler?.Invoke(this,
-                new CardViewArgs()
-                    {CardId = CardId, CardDescription = CardDescription, CardName = CardName, CardPoints = CardPoints});
+            new ViewCardDialog().ShowDialog(this.CardName, this.CardDescription, this.CardPoints, this.CardId);
         }
 
         private void EditButton_Click(object sender, EventArgs e)
         {
-            EventHandler<CardEditArgs> handler = CardRequestingEdit;
-            handler?.Invoke(this,
-                new CardEditArgs()
-                    {CardId = CardId, CardDescription = CardDescription, CardName = CardName, CardPoints = CardPoints});
-        }
+            //add edit functionality call updatevalues 
+            var result =
+                new EditCardDialog().ShowDialog(this.CardId, this.CardName, this.CardDescription, this.CardPoints);
+            //TODO update card values 
+            UpdateValues(result.Item1, result.Item2, CardId, result.Item4);
+
+            //ToDO update database
+            var cardDocument = new CardDocument
+            {
+                Id = CardId,
+                CardDescription = CardDescription,
+                CardName = CardName,
+                CardPoints = CardPoints,
+                ParentLaneId = ParentLaneId
+            };
+            DatabaseService.Update(cardDocument);
+        } 
 
         private void CardBodyLayout_MouseDown(object sender, MouseEventArgs e)
         {
             this.DoDragDrop(this, DragDropEffects.Move);
         }
 
-        public event EventHandler<CardViewArgs> CardRequestingView;
-        public event EventHandler<CardEditArgs> CardRequestingEdit;
-        public event EventHandler<CardDeleteArgs> CardRequestingDelete;
 
         public void UpdateValues(string cardName, string cardDescription, int Id, int cardPoints)
         {
@@ -140,25 +153,5 @@ namespace IronCards.Controls
         }
     }
 
-    public class CardViewArgs : EventArgs
-    {
-        public string CardDescription{get; set; }
-        public string CardName{get; set; }
-        public int CardPoints{get; set; }
-        public int CardId { get; set; }
-    }
-
-    public class CardEditArgs : EventArgs
-    {
-        public string CardDescription { get; set; }
-        public string CardName { get; set; }
-        public int CardPoints { get; set; }
-        public int CardId { get; set; }
-    }
-
-    public class CardDeleteArgs : EventArgs
-    {
-        public int CardId { get; set; }
-        public Card Target { get; set; }
-    }
+   
 }
