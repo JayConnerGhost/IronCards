@@ -162,8 +162,7 @@ namespace IronCards.Controls
 
         private void Card_CardRequestingDelete(object sender, CardDeleteArgs e)
         {
-           var target= _cardContainer.Controls.Find(e.CardId.ToString(), true).First();
-           _cardContainer.Controls.Remove(target);
+           _cardContainer.Controls.Remove(e.Target);
 
             //LaneRequestingDeleteCard
             EventHandler<DeleteCardArgs> handler = LaneRequestingDeleteCard;
