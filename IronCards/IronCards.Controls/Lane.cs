@@ -165,7 +165,7 @@ namespace IronCards.Controls
         public void AddCard(Card card)
         {
             //If null add event handlers
-    
+            card.DatabaseService = _cardDatabaseService;
             card.Name = card.CardId.ToString();
             _cardContainer.Controls.Add(card);
         }

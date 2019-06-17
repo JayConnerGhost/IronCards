@@ -2,6 +2,8 @@
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using IronCards.Dialogs;
+using IronCards.Services;
 using MetroFramework.Controls;
 
 namespace IronCards.Controls
@@ -13,6 +15,8 @@ namespace IronCards.Controls
         public string CardDescription { get; set; }
         public int CardPoints { get; set; }
         public int CardId { get; set; }
+        public ICardDatabaseService DatabaseService { get; set; }
+
         private ContextMenuStrip contextMenu;
         public Card(int parentLaneId, string cardName, string cardDescription, int points, int cardId)
         {
@@ -25,6 +29,7 @@ namespace IronCards.Controls
 
         }
 
+      
 
 
         private void BuildCard()
@@ -96,16 +101,33 @@ namespace IronCards.Controls
 
         private void DeleteCardOnClick(object sender, EventArgs e)
         {
-            
+            DatabaseService.Delete(this.CardId);
         }
 
         private void ViewButton_Click(object sender, EventArgs e)
         {
+            new ViewCardDialog().ShowDialog(this.CardName, this.CardDescription, this.CardPoints, this.CardId);
         }
 
         private void EditButton_Click(object sender, EventArgs e)
         {
-      }
+            //add edit functionality call updatevalues 
+            var result =
+                new EditCardDialog().ShowDialog(this.CardId, this.CardName, this.CardDescription, this.CardPoints);
+            //TODO update card values 
+            UpdateValues(result.Item1, result.Item2, CardId, result.Item4);
+
+            //ToDO update database
+            var cardDocument = new CardDocument
+            {
+                Id = CardId,
+                CardDescription = CardDescription,
+                CardName = CardName,
+                CardPoints = CardPoints,
+                ParentLaneId = ParentLaneId
+            };
+            DatabaseService.Update(cardDocument);
+        } 
 
         private void CardBodyLayout_MouseDown(object sender, MouseEventArgs e)
         {
