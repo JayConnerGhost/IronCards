@@ -146,8 +146,10 @@ namespace IronCards.Controls
         {
             var nameLabel = (Label) this.Controls.Find("nameLabel", true).First();
             nameLabel.Text = CardName;
+            _globalToolTip.SetToolTip(nameLabel,CardName);
             var pointsLabel = (Label) this.Controls.Find("pointsLabel", true).First();
             pointsLabel.Text = CardPoints.ToString();
+
         }
     }
 
