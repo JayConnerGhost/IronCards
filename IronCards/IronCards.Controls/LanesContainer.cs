@@ -65,9 +65,18 @@ namespace IronCards.Controls
         {
             var mainMenu = new MenuStrip();
             mainMenu.Width = this.Width;
-            mainMenu.Items.Add(new MaterialToolStripMenuItem() {Text = "Project"});
+            var projectMenuItem = new ToolStripMenuItem("Project"); 
+            var projectDropDownNew = new ToolStripMenuItem("New",null,NewProjectOnClick);
+            projectMenuItem.DropDownItems.Add(projectDropDownNew);
+            mainMenu.Items.Add(projectMenuItem);
             this.Controls.Add(mainMenu);
             return mainMenu;
+        }
+
+        private void NewProjectOnClick(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+            //TODO - add the concept of a project
         }
 
         private void SetupToolTip()
