@@ -98,6 +98,7 @@ namespace IronCards.Controls
 
         private void Lane_LaneRequestingDelete(object sender, LaneDeleteArgs e)
         {
+            e.Target.DeleteAllCardsInLane();
             DeleteLane(e.LaneId,(UserControl) sender);
         }
 

@@ -26,11 +26,7 @@ namespace IronCards.Controls
             CardPoints = points;
             CardId = cardId;
             BuildCard();
-
         }
-
-      
-
 
         private void BuildCard()
         {

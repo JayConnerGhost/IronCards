@@ -116,7 +116,7 @@ namespace IronCards.Controls
         {
 
             EventHandler<LaneDeleteArgs> handler = LaneRequestingDelete;
-            handler?.Invoke(this, new LaneDeleteArgs() { LaneId = Id, });
+            handler?.Invoke(this, new LaneDeleteArgs() { LaneId = Id,Target =this});
         }
 
         private Control BuildLabel(string laneLabel)
@@ -161,7 +161,15 @@ namespace IronCards.Controls
         {
             ((MetroTextBox) (sender)).ReadOnly = false;
         }
-        
+
+        public void DeleteAllCardsInLane()
+        {
+            foreach (Card card in _cardContainer.Controls)
+            {
+                _cardDatabaseService.Delete(card.CardId);
+            }
+        }
+
         public void AddCard(Card card)
         {
             //If null add event handlers
@@ -196,7 +204,7 @@ namespace IronCards.Controls
 
     public class LaneDeleteArgs : EventArgs
     {
-        
+        public Lane Target { get; set; }
         public int LaneId { get; set; }
     }
 
