@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using IronCards.Dialogs;
 using IronCards.Services;
+using MetroFramework.Components;
 
 
 namespace IronCards.Controls
@@ -19,9 +20,11 @@ namespace IronCards.Controls
         private readonly ILanesDatabaseService _lanesDatabaseService;
         private readonly ICardDatabaseService _cardDatabaseService;
         public List<Lane> LanesCollection { get; set; }
+        public MetroToolTip GlobalToolTip =new MetroToolTip();
         private FlowLayoutPanel _layoutPanel;
         public LanesContainer(ILanesDatabaseService lanesDatabaseService, ICardDatabaseService cardDatabaseService)
         {
+            SetupToolTip();
             InitializeComponent();
             _lanesDatabaseService = lanesDatabaseService;
             _cardDatabaseService = cardDatabaseService;
@@ -36,7 +39,13 @@ namespace IronCards.Controls
             LoadLanes();
         }
 
-        
+        private void SetupToolTip()
+        {
+            GlobalToolTip.ToolTipIcon = ToolTipIcon.Info;
+            GlobalToolTip.IsBalloon = true;
+            GlobalToolTip.ShowAlways = true;
+        }
+
 
         private void LoadLanes()
         {
@@ -45,7 +54,7 @@ namespace IronCards.Controls
             foreach (var laneDocument in lanesCollection)
             {
                 //TODO refactor duplicated code .
-                var lane = new Lane(laneDocument.Title,_cardDatabaseService) { Height = this.Height - 20 ,Id = laneDocument.Id};
+                var lane = new Lane(laneDocument.Title,_cardDatabaseService, GlobalToolTip) { Height = this.Height - 20 ,Id = laneDocument.Id};
                 lane.LaneRequestingTitleChanged += LaneLaneRequestingTitleChanged;
                 lane.LaneRequestingDelete += Lane_LaneRequestingDelete;
                 lane.LaneRequestingAddLane += Lane_LaneRequestingAddLane;
@@ -53,7 +62,7 @@ namespace IronCards.Controls
                 lane.LaneRequestingEditCardLane += Lane_LaneRequestingEditCardLane;
          
                 LanesCollection.Add(lane);
-                LoadCards(lane);
+                LoadCards(lane, GlobalToolTip);
                 _layoutPanel.Controls.Add(lane);
             }   
         }
@@ -76,17 +85,18 @@ namespace IronCards.Controls
             }
             //Insert card to UserControl Lane passed in Args
             var cardId=_cardDatabaseService.Insert(parentLaneId, cardName, cardDescription, cardPoints);
-            var card = new Card(parentLaneId,cardName,cardDescription,cardPoints,cardId);
+            var card = new Card(parentLaneId,cardName,cardDescription,cardPoints,cardId, GlobalToolTip);
             parentLane.AddCard(card);
         }
 
-        private void LoadCards(Lane lane)
+        private void LoadCards(Lane lane, MetroToolTip globalToolTip)
         {
            var cardDocuments= _cardDatabaseService.Get(lane.Id);
            //TODO: Build cards and add them to lane
            foreach (var cardDocument in cardDocuments)
            {
-                var card = new Card(cardDocument.ParentLaneId,cardDocument.CardName,cardDocument.CardDescription,cardDocument.CardPoints,cardDocument.Id);
+                var card = new Card(cardDocument.ParentLaneId,cardDocument.CardName,cardDocument.CardDescription,cardDocument.CardPoints,cardDocument.Id, GlobalToolTip);
+
                 lane.AddCard(card);
            }
         }
@@ -120,7 +130,7 @@ namespace IronCards.Controls
 
         public void AddLane(string laneLabel)
         {
-            var lane = new Lane(laneLabel,_cardDatabaseService) {Height = this.Height - 20};
+            var lane = new Lane(laneLabel,_cardDatabaseService, GlobalToolTip) {Height = this.Height - 20};
             lane.LaneRequestingTitleChanged += LaneLaneRequestingTitleChanged;
             lane.LaneRequestingDelete += Lane_LaneRequestingDelete;
             lane.LaneRequestingAddLane += Lane_LaneRequestingAddLane;

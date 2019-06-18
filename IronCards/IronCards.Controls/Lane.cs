@@ -7,6 +7,7 @@ using System.Security.Permissions;
 using System.Windows.Forms;
 using IronCards.Dialogs;
 using IronCards.Services;
+using MetroFramework.Components;
 using MetroFramework.Controls;
 using MetroFramework.Drawing;
 
@@ -15,6 +16,7 @@ namespace IronCards.Controls
     public class Lane:UserControl
     {
         private readonly ICardDatabaseService _cardDatabaseService;
+        private readonly ToolTip _globalToolTip;
 
         private FlowLayoutPanel _cardContainer;
 
@@ -25,9 +27,10 @@ namespace IronCards.Controls
         }
         public int Id { get; set; }
 
-        public Lane(string laneLabel, ICardDatabaseService cardDatabaseService)
+        public Lane(string laneLabel, ICardDatabaseService cardDatabaseService,ToolTip globalToolTip)
         {
             _cardDatabaseService = cardDatabaseService;
+            _globalToolTip = globalToolTip;
             BuildLane(laneLabel);
         }
 

@@ -10,6 +10,7 @@ namespace IronCards.Controls
 {
     public class Card : UserControl
     {
+        private readonly ToolTip _globalToolTip;
         public int ParentLaneId { get; set; }
         public string CardName { get; set; }
         public string CardDescription { get; set; }
@@ -18,8 +19,9 @@ namespace IronCards.Controls
         public ICardDatabaseService DatabaseService { get; set; }
 
         private ContextMenuStrip contextMenu;
-        public Card(int parentLaneId, string cardName, string cardDescription, int points, int cardId)
+        public Card(int parentLaneId, string cardName, string cardDescription, int points, int cardId,ToolTip globalToolTip)
         {
+            _globalToolTip = globalToolTip;
             ParentLaneId = parentLaneId;
             CardName = cardName;
             CardDescription = cardDescription;
@@ -33,12 +35,10 @@ namespace IronCards.Controls
             BuildMenu();
             var cardBodyLayout = new FlowLayoutPanel
             {
-                FlowDirection = FlowDirection.TopDown,
-                Dock = DockStyle.Fill,
+                FlowDirection = FlowDirection.TopDown, Dock = DockStyle.Fill, ContextMenuStrip = contextMenu,
             };
-            cardBodyLayout.ContextMenuStrip = contextMenu;
             cardBodyLayout.MouseDown += CardBodyLayout_MouseDown;
-
+            
             this.BorderStyle = BorderStyle.FixedSingle;
 
 
@@ -60,8 +60,10 @@ namespace IronCards.Controls
             var nameLabel = new Label
             {
                 Text = CardName, Width = 200, BackColor = Color.AliceBlue, BorderStyle = BorderStyle.None,
-                Name = "nameLabel"
+                Name = "nameLabel",
+                
             };
+            _globalToolTip.SetToolTip(nameLabel,CardName);
             cardBodyLayout.Controls.Add(nameLabel);
 
             var pointsLayout = new FlowLayoutPanel()
