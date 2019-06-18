@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using IronCards.Dialogs;
 using IronCards.Services;
+using MaterialSkin.Controls;
 using MetroFramework;
 using MetroFramework.Components;
 
@@ -29,15 +30,44 @@ namespace IronCards.Controls
             InitializeComponent();
             _lanesDatabaseService = lanesDatabaseService;
             _cardDatabaseService = cardDatabaseService;
+            this.Dock = DockStyle.Fill;
+            var mainLayoutPanel = new TableLayoutPanel()
+            {
+                
+                Dock=DockStyle.Fill,
+                Size=new Size(400,800)
+                
+            };
+            var row1=new RowStyle(SizeType.Absolute,50);
+            var row2=new RowStyle(SizeType.Percent,100);
+            var columnStyle=new ColumnStyle(SizeType.Percent,100);
+            mainLayoutPanel.RowStyles.Add(row1);
+            mainLayoutPanel.RowStyles.Add(row2);
+            mainLayoutPanel.ColumnStyles.Add(columnStyle);
+            mainLayoutPanel.Controls.Add(BuildMainMenu(),0,0);
+
+
             LanesCollection = new List<Lane>();
             _layoutPanel = new FlowLayoutPanel
             {
                 FlowDirection = FlowDirection.LeftToRight, Dock = DockStyle.Fill, WrapContents = false,
-                HorizontalScroll = {Enabled = true},AutoScroll = true
+                HorizontalScroll = {Enabled = true},AutoScroll = true,
+                Size = new Size(this.Width, 800)
             };
             this.Controls.Add(_layoutPanel);
             this.Resize += LanesContainer_Resize;
             LoadLanes();
+            mainLayoutPanel.Controls.Add(_layoutPanel,0,1);
+            this.Controls.Add(mainLayoutPanel);
+        }
+
+        private MenuStrip BuildMainMenu()
+        {
+            var mainMenu = new MenuStrip();
+            mainMenu.Width = this.Width;
+            mainMenu.Items.Add(new MaterialToolStripMenuItem() {Text = "Project"});
+            this.Controls.Add(mainMenu);
+            return mainMenu;
         }
 
         private void SetupToolTip()
@@ -54,7 +84,7 @@ namespace IronCards.Controls
             foreach (var laneDocument in lanesCollection)
             {
                 //TODO refactor duplicated code .
-                var lane = new Lane(laneDocument.Title,_cardDatabaseService, GlobalToolTip) { Height = this.Height - 20 ,Id = laneDocument.Id};
+                var lane = new Lane(laneDocument.Title,_cardDatabaseService, GlobalToolTip) { Height = this.Height - 60 ,Id = laneDocument.Id};
                 lane.LaneRequestingTitleChanged += LaneLaneRequestingTitleChanged;
                 lane.LaneRequestingDelete += Lane_LaneRequestingDelete;
                 lane.LaneRequestingAddLane += Lane_LaneRequestingAddLane;
@@ -124,7 +154,7 @@ namespace IronCards.Controls
         {
             foreach (var lane in LanesCollection)
             {
-                ((UserControl) lane).Height = this.Height - 20;
+                ((UserControl) lane).Height = this.Height - 60;
             }
         }
 
