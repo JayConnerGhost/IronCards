@@ -92,7 +92,7 @@ namespace IronCards.Controls
         {
           
             contextMenu = new ContextMenuStrip();
-            var deleteCard = new ToolStripButton("Delete", null, DeleteCardOnClick);
+            var deleteCard = new ToolStripButton("Delete Card", null, DeleteCardOnClick);
             contextMenu.Items.Add(deleteCard);
             this.ContextMenuStrip = contextMenu;
         }
@@ -109,7 +109,6 @@ namespace IronCards.Controls
 
         private void EditButton_Click(object sender, EventArgs e)
         {
-            //add edit functionality call updatevalues 
             var result =
                 new EditCardDialog().ShowDialog(this.CardId, this.CardName, this.CardDescription, this.CardPoints);
             //TODO update card values 
