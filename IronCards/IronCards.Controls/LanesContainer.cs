@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using IronCards.Dialogs;
 using IronCards.Services;
+using MetroFramework;
 using MetroFramework.Components;
 
 
@@ -20,7 +21,7 @@ namespace IronCards.Controls
         private readonly ILanesDatabaseService _lanesDatabaseService;
         private readonly ICardDatabaseService _cardDatabaseService;
         public List<Lane> LanesCollection { get; set; }
-        public MetroToolTip GlobalToolTip =new MetroToolTip();
+        public ToolTip GlobalToolTip =new ToolTip();
         private FlowLayoutPanel _layoutPanel;
         public LanesContainer(ILanesDatabaseService lanesDatabaseService, ICardDatabaseService cardDatabaseService)
         {
@@ -42,7 +43,6 @@ namespace IronCards.Controls
         private void SetupToolTip()
         {
             GlobalToolTip.ToolTipIcon = ToolTipIcon.Info;
-            GlobalToolTip.IsBalloon = true;
             GlobalToolTip.ShowAlways = true;
         }
 
@@ -89,7 +89,7 @@ namespace IronCards.Controls
             parentLane.AddCard(card);
         }
 
-        private void LoadCards(Lane lane, MetroToolTip globalToolTip)
+        private void LoadCards(Lane lane, ToolTip globalToolTip)
         {
            var cardDocuments= _cardDatabaseService.Get(lane.Id);
            //TODO: Build cards and add them to lane
