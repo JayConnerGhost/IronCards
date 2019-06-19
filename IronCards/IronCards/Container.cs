@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using IronCards.Controls;
+using IronCards.Dialogs;
 
 namespace IronCards
 {
@@ -21,12 +22,19 @@ namespace IronCards
             InitializeComponent();
             //Build a container 
             this.Text = "Wall";
-
+            var result = OpenProjectDialog();
             ((UserControl) lanes).Dock = DockStyle.Fill;
             Controls.Add((UserControl)lanes);
             //Insert context menu  to container 
             var contextMenu = BuildContextMenu();
             contextMenu.Show();
+        }
+
+        private int OpenProjectDialog()
+        {
+            var result = new ProjectDialog().ShowDialog();
+
+            return result.Item1;
         }
 
         private ContextMenuStrip BuildContextMenu()
