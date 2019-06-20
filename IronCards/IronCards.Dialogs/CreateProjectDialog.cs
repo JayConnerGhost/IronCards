@@ -1,0 +1,40 @@
+﻿using System;
+using System.Windows.Forms;
+
+namespace IronCards.Dialogs
+{
+    public class CreateProjectDialog : BaseDialogForm
+    {
+        public Tuple<ProjectResult, DialogResult> ShowDialog()
+        {
+            DialogResult result;
+            ProjectResult projectTypeSelected;
+            var projectTypeGroupBox = new GroupBox {Text = "Project Type",Top=100,Dock=DockStyle.Fill};
+            var layoutContainer = new FlowLayoutPanel {Dock = DockStyle.Fill};
+            var radioButtonSimple = new RadioButton() {Text = "Simple"};
+            var radioButtonComplex = new RadioButton() {Text = "Complex"};
+            var radioButtonEmpty = new RadioButton() {Text = "Empty"};
+            layoutContainer.Controls.Add(radioButtonSimple);
+            layoutContainer.Controls.Add(radioButtonComplex);
+            layoutContainer.Controls.Add(radioButtonEmpty);
+            var continueButton = new Button(){Text = "Create",Anchor = AnchorStyles.Right | AnchorStyles.Bottom};
+            layoutContainer.Controls.Add(continueButton);
+            projectTypeGroupBox.Controls.Add(layoutContainer);
+            using (var form = new DialogForm(new FormInfo("Create New Project", 485, 600)))
+            {
+                form.Controls.Add(projectTypeGroupBox);
+
+                continueButton.Click += (sender, e) =>
+                {
+                    //TODO: code in here to get the selected item from the radio buttons and convert it to the enum. 
+                    form.DialogResult = DialogResult.OK;
+                    form.Close();
+                };
+                result = form.ShowDialog();
+            }
+            return new Tuple<ProjectResult, DialogResult>(ProjectResult.Simple,result);
+        }
+
+     
+    }
+}

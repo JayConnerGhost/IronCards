@@ -4,22 +4,6 @@ using System.Windows.Forms;
 
 namespace IronCards.Dialogs
 {
-    public class CreateProjectDialog : BaseDialogForm
-    {
-        public Tuple<ProjectResult, DialogResult> ShowDialog()
-        {
-
-
-        }
-    }
-
-    public enum ProjectResult
-    {
-        Simple,
-        Complex,
-        Empty
-    }
-
     public class ProjectDialog : BaseDialogForm
     {
         public Tuple<int, bool, DialogResult, string> ShowDialog()
@@ -35,6 +19,11 @@ namespace IronCards.Dialogs
                 var newProjectLabel=new Label(){Text = "Project Name", Height=20,Width=80, Font = DefaultFont,TextAlign = ContentAlignment.MiddleCenter};
             
                 var newProjectButton=new Button(){Text="Go",Height = 20, Font=DefaultFont};
+                newProjectButton.Click += (sender, e) =>
+                {
+                    form.DialogResult = DialogResult.OK;
+                    form.Close();
+                };
 
                 newProjectLayout.Controls.Add(newProjectLabel);
                 newProjectLayout.Controls.Add(newProjectTextBox);
@@ -43,7 +32,7 @@ namespace IronCards.Dialogs
                 layout.Controls.Add(newProjectLayout);
 
                 form.Controls.Add(layout);
-                form.ShowDialog();
+                result= form.ShowDialog();
             }
 
             return new Tuple<int, bool, DialogResult,string>(projectId,IsNewProject,result,newProjectTextBox.Text);

@@ -57,7 +57,7 @@ namespace IronCards
 
         private void ShowCreateProject(string projectName)
         {
-            throw new NotImplementedException();
+          var result=  new CreateProjectDialog().ShowDialog();
         }
 
         private ContextMenuStrip BuildContextMenu()
