@@ -11,7 +11,7 @@ namespace IronCards.Dialogs
             ProjectResult projectTypeSelected;
             var projectTypeGroupBox = new GroupBox {Text = "Project Type",Top=100,Dock=DockStyle.Fill};
             var layoutContainer = new FlowLayoutPanel {Dock = DockStyle.Fill};
-            var radioButtonSimple = new RadioButton() {Text = "Simple"};
+            var radioButtonSimple = new RadioButton() {Text = "Simple",Checked = true};
             var radioButtonComplex = new RadioButton() {Text = "Complex"};
             var radioButtonEmpty = new RadioButton() {Text = "Empty"};
             layoutContainer.Controls.Add(radioButtonSimple);
@@ -26,7 +26,8 @@ namespace IronCards.Dialogs
 
                 continueButton.Click += (sender, e) =>
                 {
-                    //TODO: code in here to get the selected item from the radio buttons and convert it to the enum. 
+                    //TODO: code in here to get the selected item from the radio buttons and convert it to the enum.
+                    projectTypeSelected=ReturnSelectedProjectType(radioButtonSimple, radioButtonComplex, radioButtonEmpty);
                     form.DialogResult = DialogResult.OK;
                     form.Close();
                 };
@@ -35,6 +36,24 @@ namespace IronCards.Dialogs
             return new Tuple<ProjectResult, DialogResult>(ProjectResult.Simple,result);
         }
 
-     
+        private ProjectResult ReturnSelectedProjectType(RadioButton radioButtonSimple, RadioButton radioButtonComplex, RadioButton radioButtonEmpty)
+        {
+            if (radioButtonSimple.Checked)
+            {
+                return ProjectResult.Simple;
+            }
+
+            if (radioButtonComplex.Checked)
+            {
+                return ProjectResult.Complex;
+            }
+
+            if (radioButtonEmpty.Checked)
+            {
+                return ProjectResult.Empty;
+            }
+
+            return ProjectResult.Simple;
+        }
     }
 }
