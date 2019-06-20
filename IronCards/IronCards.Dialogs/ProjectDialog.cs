@@ -4,6 +4,22 @@ using System.Windows.Forms;
 
 namespace IronCards.Dialogs
 {
+    public class CreateProjectDialog : BaseDialogForm
+    {
+        public Tuple<ProjectResult, DialogResult> ShowDialog()
+        {
+
+
+        }
+    }
+
+    public enum ProjectResult
+    {
+        Simple,
+        Complex,
+        Empty
+    }
+
     public class ProjectDialog : BaseDialogForm
     {
         public Tuple<int, bool, DialogResult, string> ShowDialog()
