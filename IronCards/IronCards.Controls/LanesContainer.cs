@@ -75,8 +75,9 @@ namespace IronCards.Controls
 
         private void NewProjectOnClick(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
-            //TODO - add the concept of a project
+            EventHandler<EventArgs> handler = LaneContainerRequestingNewProject;
+            handler?.Invoke(this, new LaneTitleEditedArgs());
+
         }
 
         private void SetupToolTip()
@@ -200,5 +201,7 @@ namespace IronCards.Controls
         {
             _lanesDatabaseService.Update(e.LaneId, e.NewTitle);
         }
+
+        public event EventHandler<EventArgs> LaneContainerRequestingNewProject;
     }
 }

@@ -22,19 +22,42 @@ namespace IronCards
             InitializeComponent();
             //Build a container 
             this.Text = "Wall";
-            var result = OpenProjectDialog();
+            OpenProjectDialog();
             ((UserControl) lanes).Dock = DockStyle.Fill;
+            ((LanesContainer)lanes).LaneContainerRequestingNewProject += Container_LaneContainerRequestingNewProject;
             Controls.Add((UserControl)lanes);
             //Insert context menu  to container 
             var contextMenu = BuildContextMenu();
             contextMenu.Show();
         }
 
-        private int OpenProjectDialog()
+        private void Container_LaneContainerRequestingNewProject(object sender, EventArgs e)
         {
-            var result = new ProjectDialog().ShowDialog();
+            OpenProjectDialog();
+        }
 
-            return result.Item1;
+        private void OpenProjectDialog()
+        {
+            int projectId;
+            bool IsNewProject;
+            DialogResult result;
+            string projectName;
+            var returnResult = new ProjectDialog().ShowDialog();
+
+            projectId = returnResult.Item1;
+            IsNewProject = returnResult.Item2;
+            DialogResult = returnResult.Item3;
+            projectName = returnResult.Item4;
+            if (IsNewProject && DialogResult == DialogResult.OK)
+            {
+                ShowCreateProject(projectName);
+            }
+
+        }
+
+        private void ShowCreateProject(string projectName)
+        {
+            throw new NotImplementedException();
         }
 
         private ContextMenuStrip BuildContextMenu()
