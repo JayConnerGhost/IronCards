@@ -21,8 +21,15 @@ namespace IronCards.Dialogs
                 var newProjectButton=new Button(){Text="Go",Height = 20, Font=DefaultFont};
                 newProjectButton.Click += (sender, e) =>
                 {
-                    form.DialogResult = DialogResult.OK;
-                    form.Close();
+                    if (newProjectTextBox.Text != string.Empty)
+                    {
+                        form.DialogResult = DialogResult.OK;
+                        form.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("please enter a name for the project");
+                    }
                 };
 
                 newProjectLayout.Controls.Add(newProjectLabel);
