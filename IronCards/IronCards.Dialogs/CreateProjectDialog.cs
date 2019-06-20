@@ -26,7 +26,7 @@ namespace IronCards.Dialogs
 
                 continueButton.Click += (sender, e) =>
                 {
-                    //TODO: code in here to get the selected item from the radio buttons and convert it to the enum.
+               
                     projectTypeSelected=ReturnSelectedProjectType(radioButtonSimple, radioButtonComplex, radioButtonEmpty);
                     form.DialogResult = DialogResult.OK;
                     form.Close();

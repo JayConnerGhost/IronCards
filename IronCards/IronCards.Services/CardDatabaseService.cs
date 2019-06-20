@@ -1,16 +1,21 @@
 ﻿using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using LiteDB;
 
 namespace IronCards.Services
 {
-    public class CardDatabaseService : ICardDatabaseService
+    public class CardDatabaseService: BaseDatabaseService , ICardDatabaseService
     {
+        public CardDatabaseService() : base()
+        {
+
+        }
         public int Insert(int parentLaneId, string cardName, string cardDescription, int cardPoints)
         {
             int id;
-            using (var database = new LiteDB.LiteDatabase("Lanes.db"))
+            using (var database = new LiteDB.LiteDatabase(ConnectionString))
             {
                 var cards = database.GetCollection<CardDocument>();
                 id = cards.Insert(new CardDocument()
@@ -28,7 +33,7 @@ namespace IronCards.Services
         public List<CardDocument> Get(int laneId)
         {
             var cardDocuments = new List<CardDocument>();
-            using (var database = new LiteDB.LiteDatabase("Lanes.db"))
+            using (var database = new LiteDB.LiteDatabase(ConnectionString))
             {
                 var cards = database.GetCollection<CardDocument>();
                 cards.EnsureIndex("ParentLaneId");
@@ -41,7 +46,7 @@ namespace IronCards.Services
         public bool Update(CardDocument cardDocument)
         {
             bool result;
-            using (var database = new LiteDB.LiteDatabase("Lanes.db"))
+            using (var database = new LiteDB.LiteDatabase(ConnectionString))
             {
                 var cards = database.GetCollection<CardDocument>();
                 cards.EnsureIndex("Id");
@@ -54,7 +59,7 @@ namespace IronCards.Services
         public bool Delete(int cardId)
         {
             bool result;
-            using (var database = new LiteDB.LiteDatabase("Lanes.db"))
+            using (var database = new LiteDB.LiteDatabase(ConnectionString))
             {
                 var cards = database.GetCollection<CardDocument>();
                 cards.EnsureIndex("Id");

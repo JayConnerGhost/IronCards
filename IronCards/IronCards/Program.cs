@@ -32,6 +32,7 @@ namespace IronCards
             container.RegisterType<IApplicationContainer, Container>(new ContainerControlledLifetimeManager());
             container.RegisterType<ILanesDatabaseService, LanesDatabaseService>(new ContainerControlledLifetimeManager());
             container.RegisterType<ICardDatabaseService, CardDatabaseService>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IProjectDatabaseService, ProjectDatabaseService>(new ContainerControlledLifetimeManager());
 
             return container;
         }

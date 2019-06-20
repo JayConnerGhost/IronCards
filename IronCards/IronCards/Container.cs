@@ -9,16 +9,23 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using IronCards.Controls;
 using IronCards.Dialogs;
+using IronCards.Services;
 
 namespace IronCards
 {
     public partial class Container : BaseForm, IApplicationContainer
     {
         private readonly ILanesContainer _lanes;
+        private readonly ICardDatabaseService _cardDatabaseService;
+        private readonly ILanesDatabaseService _lanesDatabaseService;
+        private readonly IProjectDatabaseService _projectDatabaseService;
 
-        public Container(ILanesContainer lanes):base()
+        public Container(ILanesContainer lanes,ICardDatabaseService cardDatabaseService, ILanesDatabaseService lanesDatabaseService, IProjectDatabaseService projectDatabaseService):base()
         {
             _lanes = lanes;
+            _cardDatabaseService = cardDatabaseService;
+            _lanesDatabaseService = lanesDatabaseService;
+            _projectDatabaseService = projectDatabaseService;
             InitializeComponent();
             //Build a container 
             this.Text = "Wall";
