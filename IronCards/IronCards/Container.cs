@@ -65,6 +65,39 @@ namespace IronCards
         private void ShowCreateProject(string projectName)
         {
           var result=  new CreateProjectDialog().ShowDialog();
+
+          if (result.Item1 == ProjectResult.Simple)
+          {
+              SetUpSimpleProject();
+              return;
+          }
+
+          if (result.Item1 == ProjectResult.Complex)
+          {
+              SeupComplexProject();
+              return;
+          }
+
+          if (result.Item1 == ProjectResult.Empty)
+          {
+              SetUpEmptyProject();
+          }
+
+        }
+
+        private void SetUpEmptyProject()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void SeupComplexProject()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void SetUpSimpleProject()
+        {
+            throw new NotImplementedException();
         }
 
         private ContextMenuStrip BuildContextMenu()
