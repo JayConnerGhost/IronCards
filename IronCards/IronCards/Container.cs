@@ -65,7 +65,7 @@ namespace IronCards
         private void ShowCreateProject(string projectName)
         {
           var result=  new CreateProjectDialog().ShowDialog();
-
+          int projectId = SaveProject(projectName);
           if (result.Item1 == ProjectResult.Simple)
           {
               SetUpSimpleProject();
@@ -83,6 +83,11 @@ namespace IronCards
               SetUpEmptyProject();
           }
 
+        }
+
+        private int SaveProject(string projectName)
+        {
+           return _projectDatabaseService.New(projectName);
         }
 
         private void SetUpEmptyProject()

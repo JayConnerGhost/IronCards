@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="CardDocument.cs" />
     <Compile Include="LaneDocument.cs" />
+    <Compile Include="ProjectDocument.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
