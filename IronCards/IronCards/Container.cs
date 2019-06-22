@@ -68,21 +68,36 @@ namespace IronCards
           int projectId = SaveProject(projectName);
           if (result.Item1 == ProjectResult.Simple)
           {
-              SetUpSimpleProject();
+              SetUpSimpleProject(projectId,projectName);
               return;
           }
 
           if (result.Item1 == ProjectResult.Complex)
           {
-              SeupComplexProject();
+              SeupComplexProject(projectId, projectName);
               return;
           }
 
           if (result.Item1 == ProjectResult.Empty)
           {
-              SetUpEmptyProject();
+              SetUpEmptyProject(projectId, projectName);
           }
 
+        }
+
+        private void SetUpEmptyProject(int projectId, string projectName)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void SeupComplexProject(int projectId, string projectName)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void SetUpSimpleProject(int projectId, string projectName)
+        {
+            throw new NotImplementedException();
         }
 
         private int SaveProject(string projectName)
@@ -90,21 +105,7 @@ namespace IronCards
            return _projectDatabaseService.New(projectName);
         }
 
-        private void SetUpEmptyProject()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void SeupComplexProject()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void SetUpSimpleProject()
-        {
-            throw new NotImplementedException();
-        }
-
+        
         private ContextMenuStrip BuildContextMenu()
         {
             var contextMenu = new ContextMenuStrip();
