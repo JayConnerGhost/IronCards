@@ -19,7 +19,8 @@ namespace IronCards
         private readonly ICardDatabaseService _cardDatabaseService;
         private readonly ILanesDatabaseService _lanesDatabaseService;
         private readonly IProjectDatabaseService _projectDatabaseService;
-
+        private int projectId;
+        private string projectName;
         public Container(ILanesContainer lanes,ICardDatabaseService cardDatabaseService, ILanesDatabaseService lanesDatabaseService, IProjectDatabaseService projectDatabaseService):base()
         {
             _lanes = lanes;
@@ -45,10 +46,10 @@ namespace IronCards
 
         private void OpenProjectDialog()
         {
-            int projectId;
+          
             bool IsNewProject;
             DialogResult result;
-            string projectName;
+   
             var returnResult = new ProjectDialog().ShowDialog();
 
             projectId = returnResult.Item1;
@@ -87,7 +88,7 @@ namespace IronCards
 
         private void SetUpEmptyProject(int projectId, string projectName)
         {
-            throw new NotImplementedException();
+         
         }
 
         private void SeupComplexProject(int projectId, string projectName)
@@ -97,7 +98,9 @@ namespace IronCards
 
         private void SetUpSimpleProject(int projectId, string projectName)
         {
-            throw new NotImplementedException();
+            _lanes.AddLane(projectId, projectName, "TODO");
+            _lanes.AddLane(projectId, projectName, "Doing");
+            _lanes.AddLane(projectId, projectName, "Done");
         }
 
         private int SaveProject(string projectName)
@@ -116,16 +119,10 @@ namespace IronCards
 
         private void AddLaneOnClick(object sender, EventArgs e)
         {
-           _lanes.AddLane("New Lane");
+           _lanes.AddLane(projectId,projectName,"New Lane");
         }
 
 
-        private static void BuildInitialLanes(ILanesContainer lanes)
-        {
-            //Replace when menu in place and database 
-            ((LanesContainer) lanes).AddLane("TODO");
-            ((LanesContainer) lanes).AddLane("Doing");
-            ((LanesContainer) lanes).AddLane("Done");
-        }
+      
     }
 }

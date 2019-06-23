@@ -56,7 +56,7 @@ namespace IronCards.Controls
             };
             this.Controls.Add(_layoutPanel);
             this.Resize += LanesContainer_Resize;
-            LoadLanes();
+    
             mainLayoutPanel.Controls.Add(_layoutPanel,0,1);
             this.Controls.Add(mainLayoutPanel);
         }
@@ -87,14 +87,14 @@ namespace IronCards.Controls
         }
 
 
-        private void LoadLanes()
+        public void LoadLanes(int projectId,string projectName)
         {
             var lanesCollection = _lanesDatabaseService.GetAll();
 
             foreach (var laneDocument in lanesCollection)
             {
                 //TODO refactor duplicated code .
-                var lane = new Lane(laneDocument.Title,_cardDatabaseService, GlobalToolTip) { Height = this.Height - 60 ,Id = laneDocument.Id};
+                var lane = new Lane(laneDocument.Title,_cardDatabaseService, GlobalToolTip,projectId,projectName) { Height = this.Height - 60 ,Id = laneDocument.Id};
                 lane.LaneRequestingTitleChanged += LaneLaneRequestingTitleChanged;
                 lane.LaneRequestingDelete += Lane_LaneRequestingDelete;
                 lane.LaneRequestingAddLane += Lane_LaneRequestingAddLane;
@@ -143,7 +143,7 @@ namespace IronCards.Controls
 
         private void Lane_LaneRequestingAddLane(object sender, LaneAddArgs e)
         {
-            AddLane("new Lane");
+            AddLane(e.ProjectId,e.ProjectName,e.LaneName);
         }
 
         private void Lane_LaneRequestingDelete(object sender, LaneDeleteArgs e)
@@ -168,20 +168,23 @@ namespace IronCards.Controls
             }
         }
 
-        public void AddLane(string laneLabel)
+      
+
+        public void AddLane(int projectId, string projectName, string laneLabel)
         {
-            var lane = new Lane(laneLabel,_cardDatabaseService, GlobalToolTip) {Height = this.Height - 20};
+            var lane = new Lane(laneLabel, _cardDatabaseService, GlobalToolTip, projectId,projectName) { Height = this.Height - 20 };
             lane.LaneRequestingTitleChanged += LaneLaneRequestingTitleChanged;
             lane.LaneRequestingDelete += Lane_LaneRequestingDelete;
             lane.LaneRequestingAddLane += Lane_LaneRequestingAddLane;
             lane.LaneRequestingAddCard += Lane_LaneRequestingAddCard;
             lane.LaneRequestingEditCardLane += Lane_LaneRequestingEditCardLane;
-            lane.Id=_lanesDatabaseService.Insert(laneLabel);
+            lane.Id = _lanesDatabaseService.Insert(laneLabel);
             LanesCollection.Add(lane);
-           _layoutPanel.Controls.Add(lane);
-           lane.Focus();
+            _layoutPanel.Controls.Add(lane);
+            lane.Focus();
         }
-      
+
+
         private void Lane_LaneRequestingEditCardLane(object sender, EditCardLaneArgs e)
         {
             e.target.ParentLaneId = e.NewLaneId;

@@ -17,7 +17,8 @@ namespace IronCards.Controls
     {
         private readonly ICardDatabaseService _cardDatabaseService;
         private readonly ToolTip _globalToolTip;
-
+        public string ProjectName { get; set; }
+        public int ProjectId { get; set; }
         private FlowLayoutPanel _cardContainer;
 
         enum TextChangedValue
@@ -27,11 +28,17 @@ namespace IronCards.Controls
         }
         public int Id { get; set; }
 
-        public Lane(string laneLabel, ICardDatabaseService cardDatabaseService,ToolTip globalToolTip)
+       
+            
+
+        public Lane(string laneLabel, ICardDatabaseService cardDatabaseService, ToolTip globalToolTip, int projectId, string projectName)
         {
             _cardDatabaseService = cardDatabaseService;
             _globalToolTip = globalToolTip;
+            this.ProjectId = projectId;
+            this.ProjectName = projectName;
             BuildLane(laneLabel);
+        
         }
 
         private void BuildLane(string laneLabel)
@@ -213,7 +220,9 @@ namespace IronCards.Controls
 
     public class LaneAddArgs : EventArgs
     {
-
+        public string ProjectName { get; set; }
+        public int ProjectId { get; set; }
+        public string LaneName { get; set; }
     }
 
     public class AddCardArgs : EventArgs
