@@ -17,7 +17,7 @@ namespace IronCards.Dialogs
             var newProjectTextBox = new TextBox() { Height = 20, Width = 150, Font = DefaultFont };
             using (var form = new DialogForm(new FormInfo("Projects", 485, 600)))
             {
-                var layout=new FlowLayoutPanel(){Dock=DockStyle.Fill, FlowDirection = FlowDirection.TopDown};
+                var layout=new FlowLayoutPanel(){Dock=DockStyle.Fill, FlowDirection = FlowDirection.TopDown,WrapContents = false};
                 var newProjectLayout=new FlowLayoutPanel(){FlowDirection = FlowDirection.LeftToRight,WrapContents = false,Width = 330};
                 var newProjectLabel=new Label(){Text = "Project Name", Height=20,Width=80, Font = DefaultFont,TextAlign = ContentAlignment.MiddleCenter};
             
