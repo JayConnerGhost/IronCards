@@ -178,7 +178,7 @@ namespace IronCards.Controls
             lane.LaneRequestingAddLane += Lane_LaneRequestingAddLane;
             lane.LaneRequestingAddCard += Lane_LaneRequestingAddCard;
             lane.LaneRequestingEditCardLane += Lane_LaneRequestingEditCardLane;
-            lane.Id = _lanesDatabaseService.Insert(laneLabel);
+            lane.Id = _lanesDatabaseService.Insert(laneLabel,projectId);
             LanesCollection.Add(lane);
             _layoutPanel.Controls.Add(lane);
             lane.Focus();

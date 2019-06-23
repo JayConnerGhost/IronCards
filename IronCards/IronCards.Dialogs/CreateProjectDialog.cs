@@ -8,7 +8,7 @@ namespace IronCards.Dialogs
         public Tuple<ProjectResult, DialogResult> ShowDialog()
         {
             DialogResult result;
-            ProjectResult projectTypeSelected;
+            ProjectResult projectTypeSelected=ProjectResult.Simple;
             var projectTypeGroupBox = new GroupBox {Text = "Project Type",Top=100,Dock=DockStyle.Fill};
             var layoutContainer = new FlowLayoutPanel {Dock = DockStyle.Fill};
             var radioButtonSimple = new RadioButton() {Text = "Simple",Checked = true};
@@ -33,7 +33,7 @@ namespace IronCards.Dialogs
                 };
                 result = form.ShowDialog();
             }
-            return new Tuple<ProjectResult, DialogResult>(ProjectResult.Simple,result);
+            return new Tuple<ProjectResult, DialogResult>(projectTypeSelected, result);
         }
 
         private ProjectResult ReturnSelectedProjectType(RadioButton radioButtonSimple, RadioButton radioButtonComplex, RadioButton radioButtonEmpty)

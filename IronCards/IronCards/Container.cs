@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -75,7 +76,7 @@ namespace IronCards
 
           if (result.Item1 == ProjectResult.Complex)
           {
-              SeupComplexProject(projectId, projectName);
+              SetupComplexProject(projectId, projectName);
               return;
           }
 
@@ -88,16 +89,23 @@ namespace IronCards
 
         private void SetUpEmptyProject(int projectId, string projectName)
         {
-         
+            this.Text = projectName;
         }
 
-        private void SeupComplexProject(int projectId, string projectName)
+        private void SetupComplexProject(int projectId, string projectName)
         {
-            throw new NotImplementedException();
+            this.Text = projectName;
+            _lanes.AddLane(projectId, projectName, "TODO");
+            _lanes.AddLane(projectId, projectName, "Doing");
+            _lanes.AddLane(projectId, projectName, "Code Complete");
+            _lanes.AddLane(projectId, projectName, "Testing");
+            _lanes.AddLane(projectId, projectName, "Deploying");
+            _lanes.AddLane(projectId, projectName, "Finished");
         }
 
         private void SetUpSimpleProject(int projectId, string projectName)
         {
+            this.Text = projectName;
             _lanes.AddLane(projectId, projectName, "TODO");
             _lanes.AddLane(projectId, projectName, "Doing");
             _lanes.AddLane(projectId, projectName, "Done");

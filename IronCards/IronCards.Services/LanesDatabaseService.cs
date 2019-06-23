@@ -15,13 +15,13 @@ namespace IronCards.Services
 
         }
 
-        public int Insert(string laneLabel)
+        public int Insert(string laneLabel, int projectId)
         {
             int id;
             using (var database = new LiteDB.LiteDatabase(ConnectionString))
             {
                 var lanes = database.GetCollection<LaneDocument>();
-                id = lanes.Insert(new LaneDocument() { Title = laneLabel });
+                id = lanes.Insert(new LaneDocument() { Title = laneLabel,ProjectId=projectId });
             }
             return id;
         }
