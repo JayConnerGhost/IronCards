@@ -11,7 +11,7 @@ using System.Windows.Forms;
 using IronCards.Controls;
 using IronCards.Dialogs;
 using IronCards.Services;
-
+using IronCards.Objects;
 namespace IronCards
 {
     public partial class Container : BaseForm, IApplicationContainer
@@ -51,7 +51,7 @@ namespace IronCards
             bool IsNewProject;
             DialogResult result;
    
-            var returnResult = new ProjectDialog().ShowDialog();
+            var returnResult = new ProjectDialog().ShowDialog(_projectDatabaseService.GetAll());
 
             projectId = returnResult.Item1;
             IsNewProject = returnResult.Item2;

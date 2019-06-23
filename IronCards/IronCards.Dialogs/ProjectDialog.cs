@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using IronCards.Objects;
+using MetroFramework.Drawing;
 
 namespace IronCards.Dialogs
 {
     public class ProjectDialog : BaseDialogForm
     {
-        public Tuple<int, bool, DialogResult, string> ShowDialog()
+        public Tuple<int, bool, DialogResult, string> ShowDialog(List<ProjectDocument> projects)
         {
             int projectId=0;
             bool IsNewProject=true;
@@ -35,14 +38,31 @@ namespace IronCards.Dialogs
                 newProjectLayout.Controls.Add(newProjectLabel);
                 newProjectLayout.Controls.Add(newProjectTextBox);
                 newProjectLayout.Controls.Add(newProjectButton);
-
+                //TODO add a list view showing all the projects 
+                //TODO: make each project selectable
                 layout.Controls.Add(newProjectLayout);
+               layout.Controls.Add(BuildExistingProjectLayout(projects));
 
                 form.Controls.Add(layout);
                 result= form.ShowDialog();
             }
 
             return new Tuple<int, bool, DialogResult,string>(projectId,IsNewProject,result,newProjectTextBox.Text);
+        }
+
+        private FlowLayoutPanel BuildExistingProjectLayout(List<ProjectDocument> projects)
+        {
+            var existingProjectLayout = new FlowLayoutPanel
+            {
+                FlowDirection = FlowDirection.TopDown, Size = new Size(430, 400),WrapContents = false
+            };
+            Label label=new Label(){Text="Choose existing project"};
+            existingProjectLayout.Controls.Add(label);
+            ListView projectListView=new ListView(){Size = new Size(425,340),BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle};
+
+
+            existingProjectLayout.Controls.Add(projectListView);
+            return existingProjectLayout;
         }
     }
 }

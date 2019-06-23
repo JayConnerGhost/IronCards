@@ -52,7 +52,6 @@
     <Compile Include="LanesDatabaseService.cs" />
     <Compile Include="ILanesDatabaseService.cs" />
     <Compile Include="ProjectDatabaseService.cs" />
-    <Compile Include="ProjectDocument.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

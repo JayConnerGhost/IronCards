@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
+using IronCards.Objects;
 
 namespace IronCards.Dialogs
 {
@@ -55,5 +57,7 @@ namespace IronCards.Dialogs
 
             return ProjectResult.Simple;
         }
+
+      
     }
 }

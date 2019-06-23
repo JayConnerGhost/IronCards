@@ -1,4 +1,8 @@
-﻿namespace IronCards.Services
+﻿using System.Collections.Generic;
+using System.Linq;
+using IronCards.Objects;
+
+namespace IronCards.Services
 {
     public class ProjectDatabaseService : BaseDatabaseService, IProjectDatabaseService
     {
@@ -19,6 +23,18 @@
             }
 
             return result;
+        }
+
+        public List<ProjectDocument> GetAll()
+        {
+            List<ProjectDocument> results;
+           using (var database = new LiteDB.LiteDatabase(ConnectionString))
+           {
+               var projects = database.GetCollection<ProjectDocument>();
+               results = projects.FindAll().ToList();
+           }
+
+           return results;
         }
     }
 }
