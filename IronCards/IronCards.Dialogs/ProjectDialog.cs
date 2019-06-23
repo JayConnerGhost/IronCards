@@ -17,7 +17,7 @@ namespace IronCards.Dialogs
             var newProjectTextBox = new TextBox() { Height = 20, Width = 150, Font = DefaultFont };
             using (var form = new DialogForm(new FormInfo("Projects", 485, 600)))
             {
-                var layout=new FlowLayoutPanel(){Dock=DockStyle.Fill, FlowDirection = FlowDirection.TopDown};
+                var layout=new FlowLayoutPanel(){Dock=DockStyle.Fill, FlowDirection = FlowDirection.TopDown,WrapContents = false};
                 var newProjectLayout=new FlowLayoutPanel(){FlowDirection = FlowDirection.LeftToRight,WrapContents = false,Width = 330};
                 var newProjectLabel=new Label(){Text = "Project Name", Height=20,Width=80, Font = DefaultFont,TextAlign = ContentAlignment.MiddleCenter};
             
@@ -59,10 +59,23 @@ namespace IronCards.Dialogs
             Label label=new Label(){Text="Choose existing project"};
             existingProjectLayout.Controls.Add(label);
             ListView projectListView=new ListView(){Size = new Size(425,340),BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle};
+            projectListView.View = View.List;
+            foreach (var project in projects)
+            {
+                projectListView.Items.Add(project.Id.ToString(), project.Name,null);
+            }
 
+            projectListView.Activation = ItemActivation.OneClick;
+            projectListView.ItemActivate += ProjectListView_ItemActivate;
 
             existingProjectLayout.Controls.Add(projectListView);
             return existingProjectLayout;
+        }
+
+        private void ProjectListView_ItemActivate(object sender, EventArgs e)
+        {
+            var selectedItem = ((ListView) sender).SelectedItems[0];
+            //TODO: code in here to load project an pass it back to the calling form , or somehting like that
         }
     }
 }
