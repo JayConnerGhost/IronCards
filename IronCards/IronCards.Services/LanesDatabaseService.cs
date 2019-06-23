@@ -18,7 +18,7 @@ namespace IronCards.Services
         public int Insert(string laneLabel)
         {
             int id;
-            using (var database = new LiteDB.LiteDatabase("ConnectionString"))
+            using (var database = new LiteDB.LiteDatabase(ConnectionString))
             {
                 var lanes = database.GetCollection<LaneDocument>();
                 id = lanes.Insert(new LaneDocument() { Title = laneLabel });
@@ -28,7 +28,7 @@ namespace IronCards.Services
 
         public void Update(int targetId, string laneLabel)
         {
-            using (var database = new LiteDB.LiteDatabase("ConnectionString"))
+            using (var database = new LiteDB.LiteDatabase(ConnectionString))
             {
                 var lanes = database.GetCollection<LaneDocument>();
                 lanes.Update(targetId, new LaneDocument() { Title = laneLabel });
@@ -38,7 +38,7 @@ namespace IronCards.Services
         public List<LaneDocument> GetAll()
         {
             var laneDocuments = new List<LaneDocument>();
-            using (var database = new LiteDB.LiteDatabase("ConnectionString"))
+            using (var database = new LiteDB.LiteDatabase(ConnectionString))
             {
                 var lanes = database.GetCollection<LaneDocument>();
                 laneDocuments=lanes.FindAll().ToList();
@@ -49,7 +49,7 @@ namespace IronCards.Services
 
         public bool Delete(int laneId)
         {
-            using (var database = new LiteDB.LiteDatabase("ConnectionString"))
+            using (var database = new LiteDB.LiteDatabase(ConnectionString))
             {
                 var lanes = database.GetCollection<LaneDocument>();
                var result= lanes.Delete(laneId);
