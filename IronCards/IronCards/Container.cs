@@ -139,6 +139,11 @@ namespace IronCards
         private void LoadProjectFromDatabase(int projectId)
         {
             //TODO: RetrieveVirtualItemEventArgs lanes and load wall
+            var lanes=_lanesDatabaseService.GetAll(projectId);
+            foreach (var lane in lanes)
+            {
+                _lanes.LoadLane(lane);
+            }
         }
     }
 }

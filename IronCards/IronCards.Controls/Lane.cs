@@ -17,7 +17,6 @@ namespace IronCards.Controls
     {
         private readonly ICardDatabaseService _cardDatabaseService;
         private readonly ToolTip _globalToolTip;
-        public string ProjectName { get; set; }
         public int ProjectId { get; set; }
         private FlowLayoutPanel _cardContainer;
 
@@ -31,12 +30,11 @@ namespace IronCards.Controls
        
             
 
-        public Lane(string laneLabel, ICardDatabaseService cardDatabaseService, ToolTip globalToolTip, int projectId, string projectName)
+        public Lane(string laneLabel, ICardDatabaseService cardDatabaseService, ToolTip globalToolTip, int projectId)
         {
             _cardDatabaseService = cardDatabaseService;
             _globalToolTip = globalToolTip;
             this.ProjectId = projectId;
-            this.ProjectName = projectName;
             BuildLane(laneLabel);
         
         }

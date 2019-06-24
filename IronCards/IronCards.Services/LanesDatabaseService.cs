@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using IronCards.Objects;
+using LiteDB;
 
 namespace IronCards.Services
 {
@@ -35,13 +37,13 @@ namespace IronCards.Services
             }
         }
 
-        public List<LaneDocument> GetAll()
+        public List<LaneDocument> GetAll(int projectId)
         {
             var laneDocuments = new List<LaneDocument>();
             using (var database = new LiteDB.LiteDatabase(ConnectionString))
             {
                 var lanes = database.GetCollection<LaneDocument>();
-                laneDocuments=lanes.FindAll().ToList();
+                laneDocuments=lanes.Find(Query.EQ("ProjectId",projectId)).ToList();
             }
 
             return laneDocuments;

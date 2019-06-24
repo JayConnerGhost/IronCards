@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using IronCards.Dialogs;
+using IronCards.Objects;
 using IronCards.Services;
 using MaterialSkin.Controls;
 using MetroFramework;
@@ -89,12 +90,12 @@ namespace IronCards.Controls
 
         public void LoadLanes(int projectId,string projectName)
         {
-            var lanesCollection = _lanesDatabaseService.GetAll();
+            var lanesCollection = _lanesDatabaseService.GetAll(projectId);
 
             foreach (var laneDocument in lanesCollection)
             {
                 //TODO refactor duplicated code .
-                var lane = new Lane(laneDocument.Title,_cardDatabaseService, GlobalToolTip,projectId,projectName) { Height = this.Height - 60 ,Id = laneDocument.Id};
+                var lane = new Lane(laneDocument.Title,_cardDatabaseService, GlobalToolTip,projectId) { Height = this.Height - 60 ,Id = laneDocument.Id};
                 lane.LaneRequestingTitleChanged += LaneLaneRequestingTitleChanged;
                 lane.LaneRequestingDelete += Lane_LaneRequestingDelete;
                 lane.LaneRequestingAddLane += Lane_LaneRequestingAddLane;
@@ -172,13 +173,26 @@ namespace IronCards.Controls
 
         public void AddLane(int projectId, string projectName, string laneLabel)
         {
-            var lane = new Lane(laneLabel, _cardDatabaseService, GlobalToolTip, projectId,projectName) { Height = this.Height - 20 };
+            var lane = new Lane(laneLabel, _cardDatabaseService, GlobalToolTip, projectId) { Height = this.Height - 20 };
             lane.LaneRequestingTitleChanged += LaneLaneRequestingTitleChanged;
             lane.LaneRequestingDelete += Lane_LaneRequestingDelete;
             lane.LaneRequestingAddLane += Lane_LaneRequestingAddLane;
             lane.LaneRequestingAddCard += Lane_LaneRequestingAddCard;
             lane.LaneRequestingEditCardLane += Lane_LaneRequestingEditCardLane;
             lane.Id = _lanesDatabaseService.Insert(laneLabel,projectId);
+            LanesCollection.Add(lane);
+            _layoutPanel.Controls.Add(lane);
+            lane.Focus();
+        }
+
+        public void LoadLane(LaneDocument laneDocument)
+        {
+            var lane = new Lane(laneDocument.Title, _cardDatabaseService, GlobalToolTip, laneDocument.ProjectId) { Height = this.Height - 20 };
+            lane.LaneRequestingTitleChanged += LaneLaneRequestingTitleChanged;
+            lane.LaneRequestingDelete += Lane_LaneRequestingDelete;
+            lane.LaneRequestingAddLane += Lane_LaneRequestingAddLane;
+            lane.LaneRequestingAddCard += Lane_LaneRequestingAddCard;
+            lane.LaneRequestingEditCardLane += Lane_LaneRequestingEditCardLane;
             LanesCollection.Add(lane);
             _layoutPanel.Controls.Add(lane);
             lane.Focus();
