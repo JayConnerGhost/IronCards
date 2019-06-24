@@ -12,6 +12,7 @@ using IronCards.Controls;
 using IronCards.Dialogs;
 using IronCards.Services;
 using IronCards.Objects;
+
 namespace IronCards
 {
     public partial class Container : BaseForm, IApplicationContainer
@@ -22,7 +23,9 @@ namespace IronCards
         private readonly IProjectDatabaseService _projectDatabaseService;
         private int projectId;
         private string projectName;
-        public Container(ILanesContainer lanes,ICardDatabaseService cardDatabaseService, ILanesDatabaseService lanesDatabaseService, IProjectDatabaseService projectDatabaseService):base()
+
+        public Container(ILanesContainer lanes, ICardDatabaseService cardDatabaseService,
+            ILanesDatabaseService lanesDatabaseService, IProjectDatabaseService projectDatabaseService) : base()
         {
             _lanes = lanes;
             _cardDatabaseService = cardDatabaseService;
@@ -33,8 +36,8 @@ namespace IronCards
             this.Text = "Wall";
             OpenProjectDialog();
             ((UserControl) lanes).Dock = DockStyle.Fill;
-            ((LanesContainer)lanes).LaneContainerRequestingNewProject += Container_LaneContainerRequestingNewProject;
-            Controls.Add((UserControl)lanes);
+            ((LanesContainer) lanes).LaneContainerRequestingNewProject += Container_LaneContainerRequestingNewProject;
+            Controls.Add((UserControl) lanes);
             //Insert context menu  to container 
             var contextMenu = BuildContextMenu();
             contextMenu.Show();
@@ -47,43 +50,46 @@ namespace IronCards
 
         private void OpenProjectDialog()
         {
-          
+
             bool IsNewProject;
             DialogResult result;
-   
+
             var returnResult = new ProjectDialog().ShowDialog(_projectDatabaseService.GetAll());
 
             projectId = returnResult.Item1;
-            IsNewProject = returnResult.Item2;
             DialogResult = returnResult.Item3;
             projectName = returnResult.Item4;
-            if (IsNewProject && DialogResult == DialogResult.OK)
+            if (projectId < 1 && DialogResult == DialogResult.OK)
             {
                 ShowCreateProject(projectName);
             }
 
+            if (projectId > 0 && DialogResult == DialogResult.OK)
+            {
+                LoadProjectFromDatabase(projectId);
+            }
         }
 
         private void ShowCreateProject(string projectName)
         {
-          var result=  new CreateProjectDialog().ShowDialog();
-          int projectId = SaveProject(projectName);
-          if (result.Item1 == ProjectResult.Simple)
-          {
-              SetUpSimpleProject(projectId,projectName);
-              return;
-          }
+            var result = new CreateProjectDialog().ShowDialog();
+            int projectId = SaveProject(projectName);
+            if (result.Item1 == ProjectResult.Simple)
+            {
+                SetUpSimpleProject(projectId, projectName);
+                return;
+            }
 
-          if (result.Item1 == ProjectResult.Complex)
-          {
-              SetupComplexProject(projectId, projectName);
-              return;
-          }
+            if (result.Item1 == ProjectResult.Complex)
+            {
+                SetupComplexProject(projectId, projectName);
+                return;
+            }
 
-          if (result.Item1 == ProjectResult.Empty)
-          {
-              SetUpEmptyProject(projectId, projectName);
-          }
+            if (result.Item1 == ProjectResult.Empty)
+            {
+                SetUpEmptyProject(projectId, projectName);
+            }
 
         }
 
@@ -113,10 +119,10 @@ namespace IronCards
 
         private int SaveProject(string projectName)
         {
-           return _projectDatabaseService.New(projectName);
+            return _projectDatabaseService.New(projectName);
         }
 
-        
+
         private ContextMenuStrip BuildContextMenu()
         {
             var contextMenu = new ContextMenuStrip();
@@ -127,10 +133,12 @@ namespace IronCards
 
         private void AddLaneOnClick(object sender, EventArgs e)
         {
-           _lanes.AddLane(projectId,projectName,"New Lane");
+            _lanes.AddLane(projectId, projectName, "New Lane");
         }
 
-
-      
+        private void LoadProjectFromDatabase(int projectId)
+        {
+            //TODO: RetrieveVirtualItemEventArgs lanes and load wall
+        }
     }
 }

@@ -9,13 +9,17 @@ namespace IronCards.Dialogs
 {
     public class ProjectDialog : BaseDialogForm
     {
+        public DialogForm form;
+        private int ProjectId;
         public Tuple<int, bool, DialogResult, string> ShowDialog(List<ProjectDocument> projects)
         {
-            int projectId=0;
+            
             bool IsNewProject=true;
             DialogResult result=DialogResult.None;
             var newProjectTextBox = new TextBox() { Height = 20, Width = 150, Font = DefaultFont };
-            using (var form = new DialogForm(new FormInfo("Projects", 485, 600)))
+
+            form = new DialogForm(new FormInfo("Projects", 485, 600));
+            using (form)
             {
                 var layout=new FlowLayoutPanel(){Dock=DockStyle.Fill, FlowDirection = FlowDirection.TopDown,WrapContents = false};
                 var newProjectLayout=new FlowLayoutPanel(){FlowDirection = FlowDirection.LeftToRight,WrapContents = false,Width = 330};
@@ -47,7 +51,7 @@ namespace IronCards.Dialogs
                 result= form.ShowDialog();
             }
 
-            return new Tuple<int, bool, DialogResult,string>(projectId,IsNewProject,result,newProjectTextBox.Text);
+            return new Tuple<int, bool, DialogResult,string>(ProjectId,IsNewProject,result,newProjectTextBox.Text);
         }
 
         private FlowLayoutPanel BuildExistingProjectLayout(List<ProjectDocument> projects)
@@ -76,6 +80,9 @@ namespace IronCards.Dialogs
         {
             var selectedItem = ((ListView) sender).SelectedItems[0];
             //TODO: code in here to load project an pass it back to the calling form , or somehting like that
+            ProjectId = int.Parse(selectedItem.Name.Trim());
+            form.DialogResult = DialogResult.OK;
+            form.Close();
         }
     }
 }
