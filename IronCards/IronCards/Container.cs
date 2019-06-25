@@ -122,12 +122,7 @@ namespace IronCards
 
         private void CleanDownWall()
         {
-            var controlCollection = ((UserControl)_lanes).Controls;
-            foreach (var lane in controlCollection)
-            {
-                ((Lane)lane).DeleteAllCardsInLane();
-                controlCollection.Remove((UserControl)lane);
-            }
+           
         }
 
         private int SaveProject(string projectName)

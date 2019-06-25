@@ -42,10 +42,8 @@ namespace IronCards.Dialogs
                 newProjectLayout.Controls.Add(newProjectLabel);
                 newProjectLayout.Controls.Add(newProjectTextBox);
                 newProjectLayout.Controls.Add(newProjectButton);
-                //TODO add a list view showing all the projects 
-                //TODO: make each project selectable
                 layout.Controls.Add(newProjectLayout);
-               layout.Controls.Add(BuildExistingProjectLayout(projects));
+                layout.Controls.Add(BuildExistingProjectLayout(projects));
 
                 form.Controls.Add(layout);
                 result= form.ShowDialog();

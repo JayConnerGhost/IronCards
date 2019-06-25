@@ -39,6 +39,8 @@ namespace IronCards.Controls
         
         }
 
+        
+
         private void BuildLane(string laneLabel)
         {
             BorderStyle = BorderStyle.FixedSingle;
@@ -172,7 +174,10 @@ namespace IronCards.Controls
 
         public void DeleteAllCardsInLane()
         {
-            foreach (Card card in _cardContainer.Controls)
+            var containerControls = _cardContainer.Controls;
+
+
+            foreach (Card card in containerControls)
             {
                 _cardDatabaseService.Delete(card.CardId);
             }
