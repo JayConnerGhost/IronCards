@@ -95,11 +95,13 @@ namespace IronCards
 
         private void SetUpEmptyProject(int projectId, string projectName)
         {
+            CleanDownWall();
             this.Text = projectName;
         }
 
         private void SetupComplexProject(int projectId, string projectName)
         {
+            CleanDownWall();
             this.Text = projectName;
             _lanes.AddLane(projectId, projectName, "TODO");
             _lanes.AddLane(projectId, projectName, "Doing");
@@ -111,10 +113,21 @@ namespace IronCards
 
         private void SetUpSimpleProject(int projectId, string projectName)
         {
+            CleanDownWall();
             this.Text = projectName;
             _lanes.AddLane(projectId, projectName, "TODO");
             _lanes.AddLane(projectId, projectName, "Doing");
             _lanes.AddLane(projectId, projectName, "Done");
+        }
+
+        private void CleanDownWall()
+        {
+            var controlCollection = ((UserControl)_lanes).Controls;
+            foreach (var lane in controlCollection)
+            {
+                ((Lane)lane).DeleteAllCardsInLane();
+                controlCollection.Remove((UserControl)lane);
+            }
         }
 
         private int SaveProject(string projectName)
