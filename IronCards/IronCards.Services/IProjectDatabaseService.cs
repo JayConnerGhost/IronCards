@@ -7,5 +7,6 @@ namespace IronCards.Services
     {
         int New(string projectName);
         List<ProjectDocument> GetAll();
+        ProjectDocument Get(int projectId);
     }
 }

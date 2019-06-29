@@ -72,6 +72,7 @@ namespace IronCards
 
         private void ShowCreateProject(string projectName)
         {
+            this.Text = projectName;
             var result = new CreateProjectDialog().ShowDialog();
             int projectId = SaveProject(projectName);
             if (result.Item1 == ProjectResult.Simple)
@@ -122,7 +123,7 @@ namespace IronCards
 
         private void CleanDownWall()
         {
-            _lanes.RemoveLanes();
+            _lanes.RemoveLanesDatabase();
         }
 
         private int SaveProject(string projectName)
@@ -147,6 +148,12 @@ namespace IronCards
         private void LoadProjectFromDatabase(int projectId)
         {
             //TODO: RetrieveVirtualItemEventArgs lanes and load wall
+            CleanDownWall();
+            var project = _projectDatabaseService.Get(projectId);
+
+            this.Text = project.Name;
+            this.Invalidate();
+            this.Update();
             var lanes=_lanesDatabaseService.GetAll(projectId);
             foreach (var lane in lanes)
             {

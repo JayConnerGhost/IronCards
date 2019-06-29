@@ -199,7 +199,7 @@ namespace IronCards.Controls
             lane.Focus();
         }
 
-        public void RemoveLanes()
+        public void RemoveLanesDatabase()
         {
             foreach (Lane lane in LanesCollection)
             {
@@ -207,10 +207,7 @@ namespace IronCards.Controls
                 lane.Dispose();
             }
             //TODO code in here to remove lane 
-
-
         }
-
 
         private void Lane_LaneRequestingEditCardLane(object sender, EditCardLaneArgs e)
         {

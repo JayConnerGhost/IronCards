@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using IronCards.Objects;
+using LiteDB;
 
 namespace IronCards.Services
 {
@@ -35,6 +37,19 @@ namespace IronCards.Services
            }
 
            return results;
+        }
+
+        public ProjectDocument Get(int projectId)
+        {
+            ProjectDocument result;
+            using (var database = new LiteDB.LiteDatabase(ConnectionString))
+            {
+                var projects = database.GetCollection<ProjectDocument>();
+                projects.EnsureIndex("Id");
+                result = projects.Find(x=>x.Id==projectId).FirstOrDefault();
+            }
+
+            return result;
         }
     }
 }
