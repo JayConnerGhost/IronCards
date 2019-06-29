@@ -204,8 +204,10 @@ namespace IronCards.Controls
             foreach (Lane lane in LanesCollection)
             {
                 lane.DeleteAllCardsInLane();
+                lane.Dispose();
             }
             //TODO code in here to remove lane 
+
 
         }
 
