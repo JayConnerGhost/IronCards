@@ -28,12 +28,12 @@ namespace IronCards.Services
             return id;
         }
 
-        public void Update(int targetId, string laneLabel)
+        public void Update(int targetId, string laneLabel,int projectId)
         {
             using (var database = new LiteDB.LiteDatabase(ConnectionString))
             {
                 var lanes = database.GetCollection<LaneDocument>();
-                lanes.Update(targetId, new LaneDocument() { Title = laneLabel });
+                lanes.Update(targetId, new LaneDocument() { Title = laneLabel,ProjectId = projectId});
             }
         }
 

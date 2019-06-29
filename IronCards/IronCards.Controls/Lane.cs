@@ -119,7 +119,7 @@ namespace IronCards.Controls
         private void OnAddLaneClick(object sender, EventArgs e)
         {
             EventHandler<LaneAddArgs> handler = LaneRequestingAddLane;
-            handler?.Invoke(this, new LaneAddArgs());
+            handler?.Invoke(this, new LaneAddArgs(){LaneName = "newLane",ProjectId = ProjectId,ProjectName = ProductName});
         }
 
         private void OnDeleteClick(object sender, EventArgs e)
@@ -152,7 +152,7 @@ namespace IronCards.Controls
             {
                
                     EventHandler<LaneTitleEditedArgs> handler = LaneRequestingTitleChanged;
-                    handler?.Invoke(this, new LaneTitleEditedArgs() { LaneId = Id, NewTitle = textBox.Text.Trim() });
+                    handler?.Invoke(this, new LaneTitleEditedArgs() { LaneId = Id, NewTitle = textBox.Text.Trim(),ProjectId = ProjectId});
                     //raise event passing out new Args 
                
             }
@@ -214,6 +214,7 @@ namespace IronCards.Controls
     {
         public int LaneId { get; set; }
         public string NewTitle { get; set; }
+        public int ProjectId { get; set; }
     }
 
     public class LaneDeleteArgs : EventArgs

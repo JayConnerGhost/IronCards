@@ -227,7 +227,7 @@ namespace IronCards.Controls
 
         private void LaneLaneRequestingTitleChanged(object sender, LaneTitleEditedArgs e)
         {
-            _lanesDatabaseService.Update(e.LaneId, e.NewTitle);
+            _lanesDatabaseService.Update(e.LaneId, e.NewTitle,e.ProjectId);
         }
 
         public event EventHandler<EventArgs> LaneContainerRequestingNewProject;
