@@ -187,7 +187,7 @@ namespace IronCards.Controls
 
         public void LoadLane(LaneDocument laneDocument)
         {
-            var lane = new Lane(laneDocument.Title, _cardDatabaseService, GlobalToolTip, laneDocument.ProjectId) { Height = this.Height - 20 };
+            var lane = new Lane(laneDocument.Title, _cardDatabaseService, GlobalToolTip, laneDocument.ProjectId) { Height = this.Height - 20,Id = laneDocument.Id};
             lane.LaneRequestingTitleChanged += LaneLaneRequestingTitleChanged;
             lane.LaneRequestingDelete += Lane_LaneRequestingDelete;
             lane.LaneRequestingAddLane += Lane_LaneRequestingAddLane;
@@ -195,6 +195,7 @@ namespace IronCards.Controls
             lane.LaneRequestingEditCardLane += Lane_LaneRequestingEditCardLane;
             LanesCollection.Add(lane);
             _layoutPanel.Controls.Add(lane);
+            LoadCards(lane, GlobalToolTip);
             lane.Focus();
         }
 
@@ -204,6 +205,8 @@ namespace IronCards.Controls
             {
                 lane.DeleteAllCardsInLane();
             }
+            //TODO code in here to remove lane 
+
         }
 
 
