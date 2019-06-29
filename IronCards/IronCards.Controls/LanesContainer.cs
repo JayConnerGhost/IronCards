@@ -198,6 +198,14 @@ namespace IronCards.Controls
             lane.Focus();
         }
 
+        public void RemoveLanes()
+        {
+            foreach (Lane lane in LanesCollection)
+            {
+                lane.DeleteAllCardsInLane();
+            }
+        }
+
 
         private void Lane_LaneRequestingEditCardLane(object sender, EditCardLaneArgs e)
         {

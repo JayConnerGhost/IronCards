@@ -179,6 +179,7 @@ namespace IronCards.Controls
 
             foreach (Card card in containerControls)
             {
+                card.DeleteCard();
                 _cardDatabaseService.Delete(card.CardId);
             }
         }

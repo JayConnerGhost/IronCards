@@ -92,14 +92,22 @@ namespace IronCards.Controls
         {
           
             contextMenu = new ContextMenuStrip();
-            var deleteCard = new ToolStripButton("Delete Card", null, DeleteCardOnClick);
+            var deleteCard = new ToolStripButton("Delete", null, DeleteCardOnClick);
             contextMenu.Items.Add(deleteCard);
             this.ContextMenuStrip = contextMenu;
         }
 
-        private void DeleteCardOnClick(object sender, EventArgs e)
+        public void DeleteCardOnClick(object sender, EventArgs e)
         {
+            DeleteCard();
+        }
+
+        public void DeleteCard()
+        {
+
             DatabaseService.Delete(this.CardId);
+            //TODO code in here to delete card from ui.
+            this.Dispose();
         }
 
         private void ViewButton_Click(object sender, EventArgs e)

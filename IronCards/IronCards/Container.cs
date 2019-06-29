@@ -122,7 +122,7 @@ namespace IronCards
 
         private void CleanDownWall()
         {
-           
+            _lanes.RemoveLanes();
         }
 
         private int SaveProject(string projectName)
