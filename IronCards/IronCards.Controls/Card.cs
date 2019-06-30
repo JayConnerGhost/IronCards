@@ -66,12 +66,14 @@ namespace IronCards.Controls
             _globalToolTip.SetToolTip(nameLabel,CardName);
             cardBodyLayout.Controls.Add(nameLabel);
 
-            var pointsLayout = new FlowLayoutPanel()
+            var propertiesLayout = new FlowLayoutPanel()
                 {FlowDirection = FlowDirection.LeftToRight, Size = new Size(200, 30)};
             var pointsLabel = new Label() {Text = "Points: ", Width = 40};
-            pointsLayout.Controls.Add(pointsLabel);
+            propertiesLayout.Controls.Add(pointsLabel);
             var pointsValue = new Label() {Text = CardPoints.ToString(), Width = 25, Name = "pointsLabel"};
-            pointsLayout.Controls.Add(pointsValue);
+            propertiesLayout.Controls.Add(pointsValue);
+
+       
             var controlsLayout = new FlowLayoutPanel
             {
                 Size = new Size(235, 30), FlowDirection = FlowDirection.RightToLeft
@@ -82,7 +84,7 @@ namespace IronCards.Controls
             viewButton.Click += ViewButton_Click;
             controlsLayout.Controls.Add(editButton);
             controlsLayout.Controls.Add(viewButton);
-            cardBodyLayout.Controls.Add(pointsLayout);
+            cardBodyLayout.Controls.Add(propertiesLayout);
             cardBodyLayout.Controls.Add(controlsLayout);
             this.Controls.Add(cardBodyLayout);
 
