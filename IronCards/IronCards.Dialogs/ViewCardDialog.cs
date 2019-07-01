@@ -1,12 +1,14 @@
 ﻿using System.Windows.Forms;
+using IronCards.Objects;
 using MetroFramework.Controls;
 
 namespace IronCards.Dialogs
 {
     public class ViewCardDialog : BaseDialogForm
     {
-        public void ShowDialog(string cardName, string cardDescription, int cardPoints, int cardId)
+        public void ShowDialog(string cardName, string cardDescription, int cardPoints, int cardId, CardTypes cardType)
         {
+            Label cardTypeLabel=new Label(){Text=cardType.ToString(), Width=200};
             MetroLabel name = new MetroLabel() { Width = 460, Height = 20, TabIndex = 0, TabStop = true,  Text = cardName };
             MetroTextBox description = new MetroTextBox() { Width = 460, Height = 350, TabIndex = 0, TabStop = true, Text = cardDescription,ReadOnly = true,Multiline = true};
             var numericUpDown = new MetroLabel() { Width = 50, Height = 20, TabIndex = 0, TabStop = true, Text = cardPoints.ToString() };
@@ -29,13 +31,15 @@ namespace IronCards.Dialogs
                     form.Close();
                 };
 
-                var pointsLayoutPanel = new FlowLayoutPanel();
-                pointsLayoutPanel.Size = new System.Drawing.Size(485, 30);
-                pointsLayoutPanel.FlowDirection = FlowDirection.LeftToRight;
+                var propertiesLayout = new FlowLayoutPanel();
+                propertiesLayout.Size = new System.Drawing.Size(485, 30);
+                propertiesLayout.FlowDirection = FlowDirection.LeftToRight;
                 var pointsLabel = new MetroLabel() { Text = "Points" };
 
-                pointsLayoutPanel.Controls.Add(pointsLabel);
-                pointsLayoutPanel.Controls.Add(numericUpDown);
+                propertiesLayout.Controls.Add(pointsLabel);
+                propertiesLayout.Controls.Add(numericUpDown);
+                propertiesLayout.Controls.Add(cardTypeLabel);
+
 
                 var flowLayoutVertical = new FlowLayoutPanel();
 
@@ -46,7 +50,7 @@ namespace IronCards.Dialogs
                 flowLayoutVertical.Controls.Add(name);
                 flowLayoutVertical.Controls.Add(descriptionLabel);
                 flowLayoutVertical.Controls.Add(description);
-                flowLayoutVertical.Controls.Add(pointsLayoutPanel);
+                flowLayoutVertical.Controls.Add(propertiesLayout);
                 var buttonLayoutPanel = new FlowLayoutPanel
                 {
                     FlowDirection = FlowDirection.RightToLeft,

@@ -125,7 +125,7 @@ namespace IronCards.Controls
         private void ViewButton_Click(object sender, EventArgs e)
         {
             //TODO : - > add in card type 
-            new ViewCardDialog().ShowDialog(this.CardName, this.CardDescription, this.CardPoints, this.CardId);
+            new ViewCardDialog().ShowDialog(this.CardName, this.CardDescription, this.CardPoints, this.CardId,this.CardType);
         }
 
         private void EditButton_Click(object sender, EventArgs e)
