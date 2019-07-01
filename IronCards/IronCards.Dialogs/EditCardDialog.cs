@@ -10,7 +10,7 @@ namespace IronCards.Dialogs
     {
         public Tuple<string, string, int, int, DialogResult,string> ShowDialog(int cardId, string cardName, string cardDescription, int cardPoints)
         {
-            string type;
+            string type="Idea";
             MetroTextBox name = new MetroTextBox() { Width = 460, Height = 20, TabIndex = 0, TabStop = true, Multiline = false, Text = cardName };
             MetroTextBox description = new MetroTextBox() { Width = 460, Height = 350, TabIndex = 0, TabStop = true, Multiline = true, Text = cardDescription };
             var numericUpDown = new NumericUpDown() {Value = cardPoints,Width = 50, Height = 20, TabIndex = 0, TabStop = true };

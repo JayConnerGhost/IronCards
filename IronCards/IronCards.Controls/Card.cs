@@ -16,10 +16,12 @@ namespace IronCards.Controls
         public string CardDescription { get; set; }
         public int CardPoints { get; set; }
         public int CardId { get; set; }
+
+        public CardTypes CardType { get; set; }
         public ICardDatabaseService DatabaseService { get; set; }
 
         private ContextMenuStrip contextMenu;
-        public Card(int parentLaneId, string cardName, string cardDescription, int points, int cardId,ToolTip globalToolTip)
+        public Card(int parentLaneId, string cardName, string cardDescription, intoints, int cardId,ToolTip globalToolTip)
         {
             _globalToolTip = globalToolTip;
             ParentLaneId = parentLaneId;
@@ -52,14 +54,14 @@ namespace IronCards.Controls
             {
                 Text = CardId.ToString(),
                 Width = 25,
-                BackColor = Color.AliceBlue,
+           
                 BorderStyle = BorderStyle.None
             };
             cardBodyLayout.Controls.Add(IdLabel);
             //Name row 
             var nameLabel = new Label
             {
-                Text = CardName, Width = 200, BackColor = Color.AliceBlue, BorderStyle = BorderStyle.None,
+                Text = CardName, Width = 200,  BorderStyle = BorderStyle.None,
                 Name = "nameLabel",
                 
             };
@@ -122,7 +124,7 @@ namespace IronCards.Controls
             var result =
                 new EditCardDialog().ShowDialog(this.CardId, this.CardName, this.CardDescription, this.CardPoints);
             //TODO update card values 
-            UpdateValues(result.Item1, result.Item2, CardId, result.Item4);
+            UpdateValues(result.Item1, result.Item2, CardId, result.Item4,result.Item6);
 
             //ToDO update database
             var cardDocument = new CardDocument
@@ -131,7 +133,8 @@ namespace IronCards.Controls
                 CardDescription = CardDescription,
                 CardName = CardName,
                 CardPoints = CardPoints,
-                ParentLaneId = ParentLaneId
+                ParentLaneId = ParentLaneId,
+                CardType=CardType.ToString()
             };
             DatabaseService.Update(cardDocument);
         } 
@@ -142,12 +145,28 @@ namespace IronCards.Controls
         }
 
 
-        public void UpdateValues(string cardName, string cardDescription, int Id, int cardPoints)
+        public void UpdateValues(string cardName, string cardDescription, int Id, int cardPoints, string cardType)
         {
             this.CardId = Id;
             this.CardName = cardName;
             this.CardDescription = cardDescription;
             this.CardPoints = cardPoints;
+            switch (cardType)
+            {
+                case "Idea":
+                    this.CardType = CardTypes.Idea;
+                    break;
+                case "Requirement":
+                    this.CardType = CardTypes.Requirement;
+                    break;
+                case "External Requirement":
+                    this.CardType = CardTypes.ExternalRequirement;
+                    break;
+                case "Bug":
+                    this.CardType = CardTypes.Bug;
+                    break;
+            }
+            
             UpdateUi();
         }
 
@@ -158,9 +177,29 @@ namespace IronCards.Controls
             _globalToolTip.SetToolTip(nameLabel,CardName);
             var pointsLabel = (Label) this.Controls.Find("pointsLabel", true).First();
             pointsLabel.Text = CardPoints.ToString();
-
+            switch (CardType)
+            {
+                case CardTypes.Idea:
+                    this.BackColor=Color.CornflowerBlue;
+                    break;
+                case CardTypes.Bug:
+                    this.BackColor = Color.DarkRed;
+                    break;
+                case CardTypes.ExternalRequirement:
+                    this.BackColor=Color.DarkOliveGreen;
+                    break;
+                case CardTypes.Requirement:
+                    this.BackColor = Color.DarkOrchid;
+                    break;
+            }
         }
     }
 
-   
+    public enum CardTypes
+    {
+       Idea,
+       Requirement,
+       Bug,
+       ExternalRequirement
+    }
 }
