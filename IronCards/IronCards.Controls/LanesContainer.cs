@@ -140,9 +140,9 @@ namespace IronCards.Controls
            var cardDocuments= _cardDatabaseService.Get(lane.Id);
            //TODO: Build cards and add them to lane
            foreach (var cardDocument in cardDocuments)
-           {
-               CardTypes resultingCardType;
-               CardTypes.TryParse(cardDocument.CardType, true, out resultingCardType);
+           { 
+
+               CardTypes.TryParse(cardDocument.CardType, true, out CardTypes resultingCardType);
                //Next line needed to reflect true card type.
                 var card = new Card(cardDocument.ParentLaneId,cardDocument.CardName,cardDocument.CardDescription,cardDocument.CardPoints,cardDocument.Id, GlobalToolTip, resultingCardType);
 

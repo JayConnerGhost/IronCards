@@ -168,7 +168,7 @@ namespace IronCards.Controls
                 case "Requirement":
                     this.CardType = CardTypes.Requirement;
                     break;
-                case "External Requirement":
+                case "ExternalRequirement":
                     this.CardType = CardTypes.ExternalRequirement;
                     break;
                 case "Bug":

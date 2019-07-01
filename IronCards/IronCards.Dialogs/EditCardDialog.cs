@@ -94,7 +94,7 @@ namespace IronCards.Dialogs
                 result= form.ShowDialog();
             }
 
-            return new Tuple<string, string, int,int,DialogResult,string>(name.Text, description.Text,cardId, Decimal.ToInt32(d: numericUpDown.Value), result, selectedCardTypeName);
+            return new Tuple<string, string, int,int,DialogResult,string>(name.Text, description.Text,cardId, Decimal.ToInt32(d: numericUpDown.Value), result,selectedCardTypeName);
         }
 
         
