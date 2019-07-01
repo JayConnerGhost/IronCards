@@ -11,6 +11,11 @@ namespace IronCards.Objects
     }
     public static class CardTypesUtilities
     {
+        public static string GetName(CardTypes cardType)
+        {
+            return cardType.ToString();
+        }
+
         public static Color GetColor(CardTypes cardType)
         {
             var returnValue=Color.AliceBlue;

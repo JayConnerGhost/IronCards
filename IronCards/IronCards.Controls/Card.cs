@@ -131,7 +131,7 @@ namespace IronCards.Controls
         private void EditButton_Click(object sender, EventArgs e)
         {
             var result =
-                new EditCardDialog().ShowDialog(this.CardId, this.CardName, this.CardDescription, this.CardPoints);
+                new EditCardDialog().ShowDialog(this.CardId, this.CardName, this.CardDescription, this.CardPoints, this.CardType);
             //TODO update card values 
             UpdateValues(result.Item1, result.Item2, CardId, result.Item4,result.Item6);
 
