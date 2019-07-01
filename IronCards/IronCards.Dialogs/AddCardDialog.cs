@@ -8,8 +8,9 @@ namespace IronCards.Dialogs
 
     public class AddCardDialog : BaseDialogForm
     {
-        public Tuple<string, string, int, DialogResult> ShowDialog()
+        public Tuple<string, string, int, DialogResult, string> ShowDialog()
         {
+            string type = "Idea";
             MetroTextBox name = new MetroTextBox() { Width = 460, Height = 20, TabIndex = 0, TabStop = true, Multiline = false, Text = "" };
             MetroTextBox description = new MetroTextBox() { Width = 460, Height = 350, TabIndex = 0, TabStop = true, Multiline = true, Text = "" };
             var numericUpDown = new NumericUpDown() { Width = 50, Height = 20, TabIndex = 0, TabStop = true };
@@ -36,13 +37,30 @@ namespace IronCards.Dialogs
                     form.Close();
                 };
 
-                var pointsLayoutPanel = new FlowLayoutPanel();
-                pointsLayoutPanel.Size = new System.Drawing.Size(485, 30);
-                pointsLayoutPanel.FlowDirection = FlowDirection.LeftToRight;
+                var propertiesLayout = new FlowLayoutPanel();
+                propertiesLayout.Size = new System.Drawing.Size(485, 30);
+                propertiesLayout.FlowDirection = FlowDirection.LeftToRight;
                 var pointsLabel = new MetroLabel() { Text = "Points" };
 
-                pointsLayoutPanel.Controls.Add(pointsLabel);
-                pointsLayoutPanel.Controls.Add(numericUpDown);
+                propertiesLayout.Controls.Add(pointsLabel);
+                propertiesLayout.Controls.Add(numericUpDown);
+                //TODO - > add card type controls 
+                var typesLabel = new Label() { Text = "Card Type" };
+                var typeDropDown = new ComboBox();
+
+                propertiesLayout.Controls.Add(typesLabel);
+                propertiesLayout.Controls.Add(typeDropDown);
+                typeDropDown.Items.Add("Idea");
+                typeDropDown.Items.Add("Requirement");
+                typeDropDown.Items.Add("Bug");
+                typeDropDown.Items.Add("External Requirement");
+                typeDropDown.FlatStyle = FlatStyle.Flat;
+                typeDropDown.DropDownStyle = ComboBoxStyle.DropDownList;
+                typeDropDown.SelectedIndexChanged += (sender, e) =>
+                {
+                    type = (string)((ComboBox)(sender)).SelectedItem;
+                };
+
 
                 var flowLayoutVertical = new FlowLayoutPanel();
 
@@ -53,7 +71,7 @@ namespace IronCards.Dialogs
                 flowLayoutVertical.Controls.Add(name);
                 flowLayoutVertical.Controls.Add(descriptionLabel);
                 flowLayoutVertical.Controls.Add(description);
-                flowLayoutVertical.Controls.Add(pointsLayoutPanel);
+                flowLayoutVertical.Controls.Add(propertiesLayout);
                 var buttonLayoutPanel = new FlowLayoutPanel
                 {
                     FlowDirection = FlowDirection.RightToLeft,
@@ -72,7 +90,7 @@ namespace IronCards.Dialogs
                 result = form.ShowDialog();
             }
 
-            return new Tuple<string, string, int, DialogResult>(name.Text, description.Text, Decimal.ToInt32(d: numericUpDown.Value), result);
+            return new Tuple<string, string, int, DialogResult,string>(name.Text, description.Text, Decimal.ToInt32(d: numericUpDown.Value), result, type);
         }
     }
 }

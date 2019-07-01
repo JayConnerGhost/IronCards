@@ -120,13 +120,18 @@ namespace IronCards.Controls
             var cardDescription = result.Item2;
             var cardPoints = result.Item3;
             var dialogResult = result.Item4;
+            var cardType = result.Item5;
             if (dialogResult==DialogResult.Cancel || cardName==string.Empty)
             {
                 return;
             }
+
+            CardTypes parsedCardType;
+            CardTypes.TryParse(cardType, true, out parsedCardType);
             //Insert card to UserControl Lane passed in Args
-            var cardId=_cardDatabaseService.Insert(parentLaneId, cardName, cardDescription, cardPoints);
-            var card = new Card(parentLaneId,cardName,cardDescription,cardPoints,cardId, GlobalToolTip);
+            var cardId =
+                _cardDatabaseService.Insert(parentLaneId, cardName, cardDescription, cardPoints, parsedCardType);
+            var card = new Card(parentLaneId,cardName,cardDescription,cardPoints,cardId, GlobalToolTip, parsedCardType);
             parentLane.AddCard(card);
         }
 
@@ -136,7 +141,7 @@ namespace IronCards.Controls
            //TODO: Build cards and add them to lane
            foreach (var cardDocument in cardDocuments)
            {
-                var card = new Card(cardDocument.ParentLaneId,cardDocument.CardName,cardDocument.CardDescription,cardDocument.CardPoints,cardDocument.Id, GlobalToolTip);
+                var card = new Card(cardDocument.ParentLaneId,cardDocument.CardName,cardDocument.CardDescription,cardDocument.CardPoints,cardDocument.Id, GlobalToolTip,CardTypes.Idea);
 
                 lane.AddCard(card);
            }

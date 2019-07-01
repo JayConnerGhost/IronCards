@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using IronCards.Dialogs;
+using IronCards.Objects;
 using IronCards.Services;
 using MetroFramework.Controls;
 
@@ -21,7 +22,7 @@ namespace IronCards.Controls
         public ICardDatabaseService DatabaseService { get; set; }
 
         private ContextMenuStrip contextMenu;
-        public Card(int parentLaneId, string cardName, string cardDescription, intoints, int cardId,ToolTip globalToolTip)
+        public Card(int parentLaneId, string cardName, string cardDescription, int points, int cardId,ToolTip globalToolTip, CardTypes cardType)
         {
             _globalToolTip = globalToolTip;
             ParentLaneId = parentLaneId;
@@ -29,10 +30,11 @@ namespace IronCards.Controls
             CardDescription = cardDescription;
             CardPoints = points;
             CardId = cardId;
-            BuildCard();
+            CardType = cardType;
+            BuildCard(CardType);
         }
 
-        private void BuildCard()
+        private void BuildCard(CardTypes cardType)
         {
             BuildMenu();
             var cardBodyLayout = new FlowLayoutPanel
@@ -44,7 +46,8 @@ namespace IronCards.Controls
             this.BorderStyle = BorderStyle.FixedSingle;
 
 
-            this.BackColor = Color.AliceBlue;
+            SetBackColor(this, cardType);
+
 
             this.Margin = new Padding(10, 20, 10, 10);
             this.Width = 240;
@@ -92,6 +95,11 @@ namespace IronCards.Controls
 
         }
 
+        private void SetBackColor(Card card, CardTypes cardType)
+        {
+            card.BackColor=CardTypesUtilities.GetColor(cardType);
+        }
+
         private void BuildMenu()
         {
           
@@ -116,6 +124,7 @@ namespace IronCards.Controls
 
         private void ViewButton_Click(object sender, EventArgs e)
         {
+            //TODO : - > add in card type 
             new ViewCardDialog().ShowDialog(this.CardName, this.CardDescription, this.CardPoints, this.CardId);
         }
 
@@ -193,13 +202,5 @@ namespace IronCards.Controls
                     break;
             }
         }
-    }
-
-    public enum CardTypes
-    {
-       Idea,
-       Requirement,
-       Bug,
-       ExternalRequirement
     }
 }

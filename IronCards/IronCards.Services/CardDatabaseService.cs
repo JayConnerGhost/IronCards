@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using IronCards.Objects;
 using LiteDB;
 
 namespace IronCards.Services
@@ -12,7 +13,8 @@ namespace IronCards.Services
         {
 
         }
-        public int Insert(int parentLaneId, string cardName, string cardDescription, int cardPoints)
+        public int Insert(int parentLaneId, string cardName, string cardDescription, int cardPoints,
+            CardTypes parsedCardType)
         {
             int id;
             using (var database = new LiteDB.LiteDatabase(ConnectionString))
