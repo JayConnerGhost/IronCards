@@ -186,21 +186,9 @@ namespace IronCards.Controls
             _globalToolTip.SetToolTip(nameLabel,CardName);
             var pointsLabel = (Label) this.Controls.Find("pointsLabel", true).First();
             pointsLabel.Text = CardPoints.ToString();
-            switch (CardType)
-            {
-                case CardTypes.Idea:
-                    this.BackColor=Color.CornflowerBlue;
-                    break;
-                case CardTypes.Bug:
-                    this.BackColor = Color.DarkRed;
-                    break;
-                case CardTypes.ExternalRequirement:
-                    this.BackColor=Color.DarkOliveGreen;
-                    break;
-                case CardTypes.Requirement:
-                    this.BackColor = Color.DarkOrchid;
-                    break;
-            }
+
+            this.BackColor=CardTypesUtilities.GetColor(CardType);
+            
         }
     }
 }
