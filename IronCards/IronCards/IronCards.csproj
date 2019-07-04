@@ -85,6 +85,7 @@
       <DependentUpon>Container.cs</DependentUpon>
     </Compile>
     <Compile Include="IApplicationContainer.cs" />
+    <Compile Include="IProjectContainer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectMDI.cs">
       <SubType>Form</SubType>

@@ -12,10 +12,11 @@ using IronCards.Controls;
 using IronCards.Dialogs;
 using IronCards.Services;
 using IronCards.Objects;
+using WeifenLuo.WinFormsUI.Docking;
 
 namespace IronCards
 {
-    public partial class Container : BaseForm, IApplicationContainer
+    public partial class Container : DockContent, IApplicationContainer
     {
         private readonly ILanesContainer _lanes;
         private readonly ICardDatabaseService _cardDatabaseService;

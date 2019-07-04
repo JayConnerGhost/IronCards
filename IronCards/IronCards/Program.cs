@@ -22,12 +22,15 @@ namespace IronCards
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             var applicationContainer = container.Resolve<IApplicationContainer>();
-            Application.Run((Form)new ProjectMDI());
+            var mainForm = (Form) container.Resolve<IProjectContainer>();
+            Application.Run(mainForm);
         }
 
         private static UnityContainer BuildUpContainer()
         {
+            //TODO - now go build up the ProjectMDI with the ILanesContainer etc.
             var container = new UnityContainer();
+            container.RegisterType<IProjectContainer, ProjectMDI>(new ContainerControlledLifetimeManager());
             container.RegisterType<ILanesContainer, LanesContainer>(new ContainerControlledLifetimeManager());
             container.RegisterType<IApplicationContainer, Container>(new ContainerControlledLifetimeManager());
             container.RegisterType<ILanesDatabaseService, LanesDatabaseService>(new ContainerControlledLifetimeManager());
