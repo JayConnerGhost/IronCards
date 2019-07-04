@@ -23,6 +23,7 @@ namespace IronCards
             Application.SetCompatibleTextRenderingDefault(false);
             var applicationContainer = container.Resolve<IApplicationContainer>();
             var mainForm = (Form) container.Resolve<IProjectContainer>();
+            ((ProjectMdi) mainForm).DependencyContainer = container;
             Application.Run(mainForm);
         }
 
@@ -30,9 +31,9 @@ namespace IronCards
         {
             //TODO - now go build up the ProjectMDI with the ILanesContainer etc.
             var container = new UnityContainer();
-            container.RegisterType<IProjectContainer, ProjectMDI>(new ContainerControlledLifetimeManager());
-            container.RegisterType<ILanesContainer, LanesContainer>(new ContainerControlledLifetimeManager());
-            container.RegisterType<IApplicationContainer, Container>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IProjectContainer, ProjectMdi>(new ContainerControlledLifetimeManager());
+            container.RegisterType<ILanesContainer, LanesContainer>();
+            container.RegisterType<IApplicationContainer, Container>();
             container.RegisterType<ILanesDatabaseService, LanesDatabaseService>(new ContainerControlledLifetimeManager());
             container.RegisterType<ICardDatabaseService, CardDatabaseService>(new ContainerControlledLifetimeManager());
             container.RegisterType<IProjectDatabaseService, ProjectDatabaseService>(new ContainerControlledLifetimeManager());

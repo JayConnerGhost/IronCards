@@ -8,20 +8,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using IronCards.Controls;
+using Unity;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace IronCards
 {
-    public partial class ProjectMDI : Form, IProjectContainer
+    public partial class ProjectMdi : Form, IProjectContainer
     {
-        private readonly IApplicationContainer _container;
+        public  UnityContainer DependencyContainer { get; set; }
 
-        public ProjectMDI(IApplicationContainer container)
+        public ProjectMdi()
         {
-            _container = container;
+       
             InitializeComponent();
             this.dockPanel.Theme=new VS2015BlueTheme();
-            ((DockContent)_container).Show(this.dockPanel, DockState.Document);
+        
+        }
+
+        private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var newProject = DependencyContainer.Resolve<IApplicationContainer>();
+            ((DockContent)newProject).Show(this.dockPanel, DockState.Document);
         }
     }
 }

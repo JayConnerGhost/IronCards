@@ -45,7 +45,8 @@ namespace IronCards.Controls
             mainLayoutPanel.RowStyles.Add(row1);
             mainLayoutPanel.RowStyles.Add(row2);
             mainLayoutPanel.ColumnStyles.Add(columnStyle);
-            mainLayoutPanel.Controls.Add(BuildMainMenu(),0,0);
+            //Commented out during refactoring - to MDI candidate for migration
+           // mainLayoutPanel.Controls.Add(BuildMainMenu(),0,0);
 
 
             LanesCollection = new List<Lane>();
@@ -62,17 +63,17 @@ namespace IronCards.Controls
             this.Controls.Add(mainLayoutPanel);
         }
 
-        private MenuStrip BuildMainMenu()
-        {
-            var mainMenu = new MenuStrip();
-            mainMenu.Width = this.Width;
-            var projectMenuItem = new ToolStripMenuItem("Project"); 
-            var projectDropDownNew = new ToolStripMenuItem("New",null,NewProjectOnClick);
-            projectMenuItem.DropDownItems.Add(projectDropDownNew);
-            mainMenu.Items.Add(projectMenuItem);
-            this.Controls.Add(mainMenu);
-            return mainMenu;
-        }
+//        private MenuStrip BuildMainMenu()
+//        {
+//            var mainMenu = new MenuStrip();
+//            mainMenu.Width = this.Width;
+//            var projectMenuItem = new ToolStripMenuItem("Project"); 
+//            var projectDropDownNew = new ToolStripMenuItem("New",null,NewProjectOnClick);
+//            projectMenuItem.DropDownItems.Add(projectDropDownNew);
+//            mainMenu.Items.Add(projectMenuItem);
+//            this.Controls.Add(mainMenu);
+//            return mainMenu;
+//        }
 
         private void NewProjectOnClick(object sender, EventArgs e)
         {
