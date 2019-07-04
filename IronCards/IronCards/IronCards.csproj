@@ -67,6 +67,12 @@
     <Reference Include="Unity.Container, Version=5.10.3.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\Unity.5.10.3\lib\net47\Unity.Container.dll</HintPath>
     </Reference>
+    <Reference Include="WeifenLuo.WinFormsUI.Docking, Version=3.0.6.0, Culture=neutral, PublicKeyToken=5cded1a1a0a7b481, processorArchitecture=MSIL">
+      <HintPath>..\packages\DockPanelSuite.3.0.6\lib\net40\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
+    </Reference>
+    <Reference Include="WeifenLuo.WinFormsUI.Docking.ThemeVS2015, Version=3.0.6.0, Culture=neutral, PublicKeyToken=5cded1a1a0a7b481, processorArchitecture=MSIL">
+      <HintPath>..\packages\DockPanelSuite.ThemeVS2015.3.0.6\lib\net40\WeifenLuo.WinFormsUI.Docking.ThemeVS2015.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseForm.cs">
@@ -80,9 +86,18 @@
     </Compile>
     <Compile Include="IApplicationContainer.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="ProjectMDI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProjectMDI.Designer.cs">
+      <DependentUpon>ProjectMDI.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Container.resx">
       <DependentUpon>Container.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProjectMDI.resx">
+      <DependentUpon>ProjectMDI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
