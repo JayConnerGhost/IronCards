@@ -13,7 +13,7 @@ using MetroFramework.Drawing;
 
 namespace IronCards.Controls
 {
-    public class Lane:UserControl
+    public class Lane:BaseControl
     {
         private readonly ICardDatabaseService _cardDatabaseService;
         private readonly ToolTip _globalToolTip;

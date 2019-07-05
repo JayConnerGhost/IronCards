@@ -18,19 +18,20 @@ using MetroFramework.Components;
 
 namespace IronCards.Controls
 {
-    public partial class LanesContainer: UserControl,ILanesContainer
+    public partial class LanesContainer: BaseControl, ILanesContainer
     {
         private readonly ILanesDatabaseService _lanesDatabaseService;
         private readonly ICardDatabaseService _cardDatabaseService;
         public List<Lane> LanesCollection { get; set; }
         public ToolTip GlobalToolTip =new ToolTip();
         private FlowLayoutPanel _layoutPanel;
-        public LanesContainer(ILanesDatabaseService lanesDatabaseService, ICardDatabaseService cardDatabaseService)
+        public LanesContainer(ILanesDatabaseService lanesDatabaseService, ICardDatabaseService cardDatabaseService):base()
         {
             SetupToolTip();
             InitializeComponent();
             _lanesDatabaseService = lanesDatabaseService;
             _cardDatabaseService = cardDatabaseService;
+            BackColor=Color.Snow;
             this.Dock = DockStyle.Fill;
             var mainLayoutPanel = new TableLayoutPanel()
             {

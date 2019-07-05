@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Drawing;
+using System.Windows.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
 using MetroFramework;
@@ -11,9 +12,7 @@ namespace IronCards
         public BaseForm()
         {
          base.FormBorderStyle = FormBorderStyle.Sizable;
-        
-        
-
+         base.BackColor=Color.Snow;
         }
 
     }

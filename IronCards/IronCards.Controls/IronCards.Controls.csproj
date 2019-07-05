@@ -65,6 +65,12 @@
     <Compile Include="Card.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="BaseControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BaseControl.Designer.cs">
+      <DependentUpon>BaseControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="ILanesContainer.cs" />
     <Compile Include="Lane.cs">
       <SubType>UserControl</SubType>
@@ -80,9 +86,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="MetroFramework.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IronCards.Dialogs\IronCards.Dialogs.csproj">

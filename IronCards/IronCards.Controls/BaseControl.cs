@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace IronCards.Controls
 {
-    public partial class Attachments : BaseControl
+    public partial class BaseControl : UserControl
     {
-        public Attachments():base()
+        public BaseControl()
         {
             InitializeComponent();
         }
