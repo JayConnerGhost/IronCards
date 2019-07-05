@@ -28,7 +28,9 @@ namespace IronCards
         private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var newProject = DependencyContainer.Resolve<IApplicationContainer>();
+
             ((DockContent)newProject).Show(this.dockPanel, DockState.Document);
+            ((Container)newProject).OpenProjectDialog();
         }
     }
 }

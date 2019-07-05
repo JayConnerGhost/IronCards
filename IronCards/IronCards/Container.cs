@@ -35,7 +35,7 @@ namespace IronCards
             InitializeComponent();
             //Build a container 
             this.Text = "Wall";
-            OpenProjectDialog();
+           // OpenProjectDialog();
             ((UserControl) lanes).Dock = DockStyle.Fill;
             ((LanesContainer) lanes).LaneContainerRequestingNewProject += Container_LaneContainerRequestingNewProject;
             Controls.Add((UserControl) lanes);
@@ -49,7 +49,7 @@ namespace IronCards
             OpenProjectDialog();
         }
 
-        private void OpenProjectDialog()
+        public void OpenProjectDialog()
         {
 
             bool IsNewProject;

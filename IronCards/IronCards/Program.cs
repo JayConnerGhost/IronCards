@@ -22,9 +22,9 @@ namespace IronCards
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             var applicationContainer = container.Resolve<IApplicationContainer>();
-            var mainForm = (Form) container.Resolve<IProjectContainer>();
+            var mainForm = (ProjectMdi) container.Resolve<IProjectContainer>();
             ((ProjectMdi) mainForm).DependencyContainer = container;
-            Application.Run(mainForm);
+            Application.Run((Form)mainForm);
         }
 
         private static UnityContainer BuildUpContainer()
