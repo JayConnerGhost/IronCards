@@ -34,14 +34,34 @@ namespace IronCards
             _projectDatabaseService = projectDatabaseService;
             InitializeComponent();
             //Build a container 
-            this.Text = "Wall";
-           // OpenProjectDialog();
+            this.Text = "Card Wall";
+            var container = BuildTabPageContainer();
             ((UserControl) lanes).Dock = DockStyle.Fill;
             ((LanesContainer) lanes).LaneContainerRequestingNewProject += Container_LaneContainerRequestingNewProject;
-            Controls.Add((UserControl) lanes);
+           // Controls.Add((UserControl) lanes);
+           CreateTabPages(container);
+           container.TabPages[0].Controls.Add((UserControl)lanes);
             //Insert context menu  to container 
             var contextMenu = BuildContextMenu();
             contextMenu.Show();
+        }
+
+        private void CreateTabPages(TabControl container)
+        {
+            container.TabPages.Add("lanes", "Card Wall");
+            container.TabPages.Add("attachments", "Attachments");
+            container.TabPages.Add("moodwall", "Mood Wall");
+            container.TabPages.Add("notes", "Notes");
+        }
+
+        private TabControl BuildTabPageContainer()
+        {
+            var tabControl = new TabControl
+            {
+                Dock = DockStyle.Fill, Alignment = TabAlignment.Left, Appearance = TabAppearance.Normal
+            };
+            this.Controls.Add(tabControl);
+            return tabControl;
         }
 
         private void Container_LaneContainerRequestingNewProject(object sender, EventArgs e)
