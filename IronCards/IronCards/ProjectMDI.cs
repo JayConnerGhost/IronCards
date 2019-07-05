@@ -22,8 +22,8 @@ namespace IronCards
         {
        
             InitializeComponent();
-            this.dockPanel.Theme=new VS2015BlueTheme();
-            this.dockPanel.DockLeftPortion = 255;
+            this.dockPanel.Theme=new VS2015LightTheme();
+            this.dockPanel.DockLeftPortion = 500;
 
         }
 
