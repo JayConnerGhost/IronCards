@@ -41,6 +41,10 @@ namespace IronCards
            // Controls.Add((UserControl) lanes);
            CreateTabPages(container);
            container.TabPages[0].Controls.Add((UserControl)lanes);
+           var attachmentControl= (UserControl)new Attachments();
+           attachmentControl.Dock = DockStyle.Fill;
+
+           container.TabPages[1].Controls.Add(attachmentControl);
             //Insert context menu  to container 
             var contextMenu = BuildContextMenu();
             contextMenu.Show();

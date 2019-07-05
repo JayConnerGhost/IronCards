@@ -56,6 +56,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attachments.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Attachments.Designer.cs">
+      <DependentUpon>Attachments.cs</DependentUpon>
+    </Compile>
     <Compile Include="Card.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -91,6 +97,11 @@
       <Project>{A6986F78-C6AD-41F8-8D14-4AA7704154CF}</Project>
       <Name>IronCards.Services</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Attachments.resx">
+      <DependentUpon>Attachments.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
