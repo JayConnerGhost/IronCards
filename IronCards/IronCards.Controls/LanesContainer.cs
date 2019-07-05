@@ -59,15 +59,7 @@ namespace IronCards.Controls
             mainLayoutPanel.Controls.Add(_layoutPanel,0,1);
             this.Controls.Add(mainLayoutPanel);
         }
-
-
-        private void NewProjectOnClick(object sender, EventArgs e)
-        {
-            EventHandler<EventArgs> handler = LaneContainerRequestingNewProject;
-            handler?.Invoke(this, new LaneTitleEditedArgs());
-
-        }
-
+        
         private void SetupToolTip()
         {
             GlobalToolTip.ToolTipIcon = ToolTipIcon.Info;
@@ -163,9 +155,6 @@ namespace IronCards.Controls
                 ((UserControl) lane).Height = this.Height - 60;
             }
         }
-
-      
-
         public void AddLane(int projectId, string projectName, string laneLabel)
         {
             var lane = new Lane(laneLabel, _cardDatabaseService, GlobalToolTip, projectId) { Height = this.Height - 20 };
@@ -198,7 +187,6 @@ namespace IronCards.Controls
         {
             foreach (Lane lane in LanesCollection)
             {
-           //     lane.DeleteAllCardsInLane();
                 lane.Dispose();
             }
             //TODO code in here to remove lane 
