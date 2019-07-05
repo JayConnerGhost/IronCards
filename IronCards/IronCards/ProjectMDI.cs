@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -22,7 +23,8 @@ namespace IronCards
        
             InitializeComponent();
             this.dockPanel.Theme=new VS2015BlueTheme();
-        
+            this.dockPanel.DockLeftPortion = 255;
+
         }
 
         private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -32,5 +34,7 @@ namespace IronCards
             ((DockContent)newProject).Show(this.dockPanel, DockState.Document);
             ((Container)newProject).OpenProjectDialog();
         }
+
+  
     }
 }
