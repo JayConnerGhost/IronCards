@@ -54,11 +54,11 @@ namespace IronCards.Controls
             {
                 foreach (var file in fileOpenDialog.FileNames)
                 {
-                    //read to stream
-                    //write stream to file in new directory
-                    //Add to list
+                    string filepathName=new DirectoryInfo(file.ToString()).Name;
+                    File.Copy(file.ToString(),attachmentPath+"/"+ filepathName);
                 }
             }
+            //TODO: Reindex list of files 
         }
 
         private void GetAttachmentsDirectory()
