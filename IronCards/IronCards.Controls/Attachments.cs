@@ -19,7 +19,7 @@ namespace IronCards.Controls
         public Attachments():base()
         {
             InitializeComponent();
-            GetAtachmentsDirectory();
+            GetAttachmentsDirectory();
             CreateUploadTrigger();
            // LoadAttachments();
         }
@@ -48,11 +48,20 @@ namespace IronCards.Controls
         {
             var fileOpenDialog= new OpenFileDialog();
             fileOpenDialog.Multiselect = true;
-            var files=fileOpenDialog.ShowDialog();
+            var fileResult=fileOpenDialog.ShowDialog();
             //Handle file upload
+            if (fileResult == DialogResult.OK)
+            {
+                foreach (var file in fileOpenDialog.FileNames)
+                {
+                    //read to stream
+                    //write stream to file in new directory
+                    //Add to list
+                }
+            }
         }
 
-        private void GetAtachmentsDirectory()
+        private void GetAttachmentsDirectory()
         {
             var configSettingsReader= new AppSettingsReader();
             attachmentPath = (string)configSettingsReader.GetValue("AttachmentPath",typeof(string));
