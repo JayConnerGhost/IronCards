@@ -41,13 +41,14 @@ namespace IronCards.Controls
            var fileListViewLayout=new FlowLayoutPanel();
            fileListViewLayout.FlowDirection = FlowDirection.TopDown;
         
-           var fileList = new ListView() {Width = 300, Height = 500};
+           var fileList = new ListView() {Width =450, Height = 550};
            fileList.Anchor = AnchorStyles.Top;
            fileListViewLayout.Controls.Add(fileList);
            fileListViewLayout.Dock = DockStyle.Top;
-           fileListViewLayout.Height = 300;
-           fileListViewLayout.Width = 500;
+           fileListViewLayout.Height = 500;
+           fileListViewLayout.Width = 600;
            fileListViewLayout.Anchor = AnchorStyles.Top;
+           fileListViewLayout.AutoScroll = true;
            return fileListViewLayout;
         }
 
