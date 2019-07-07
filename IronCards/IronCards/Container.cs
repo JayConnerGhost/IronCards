@@ -55,11 +55,24 @@ namespace IronCards
 
         private void CreateTabPages(TabControl container)
         {
+            container.BackColor=Color.Snow;
+            
             container.TabPages.Add("lanes", "Card Wall");
+            container.TabPages[0].BorderStyle = BorderStyle.FixedSingle;
+            container.TabPages[0].BackColor=Color.Snow;
             container.TabPages.Add("planningwall", "Planning Wall");
+            container.TabPages[1].BorderStyle = BorderStyle.FixedSingle;
+            container.TabPages[1].BackColor = Color.Snow;
             container.TabPages.Add("attachments", "Attachments");
+            container.TabPages[2].BorderStyle = BorderStyle.FixedSingle;
+            container.TabPages[2].BackColor = Color.Snow;
             container.TabPages.Add("moodwall", "Mood Wall");
+            container.TabPages[3].BorderStyle = BorderStyle.FixedSingle;
+            container.TabPages[3].BackColor = Color.Snow;
             container.TabPages.Add("notes", "Notes");
+            container.TabPages[4].BorderStyle = BorderStyle.FixedSingle;
+            container.TabPages[4].BackColor = Color.Snow;
+
         }
 
         private TabControl BuildTabPageContainer()

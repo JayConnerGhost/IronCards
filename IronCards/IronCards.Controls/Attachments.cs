@@ -28,20 +28,44 @@ namespace IronCards.Controls
         {
             var layout =new FlowLayoutPanel();
             layout.FlowDirection = FlowDirection.TopDown;
-            var fileUploadLayout = new FlowLayoutPanel();
-            fileUploadLayout.FlowDirection = FlowDirection.LeftToRight;
-            fileUploadLayout.Width = 200;
-            fileUploadLayout.WrapContents = false;
-            var fileUploadLabel = new Label() {Text = "Upload File",Height=25, Width=80};
-            fileUploadLayout.Controls.Add(fileUploadLabel);
-            var fileupLoadButton=new Button(){Text="Upload", Height=25 , Width=100};
-            fileupLoadButton.Click += FileUpLoadButton_Click;
-            fileUploadLayout.Controls.Add(fileupLoadButton);
-            layout.Controls.Add(fileUploadLayout);
+            layout.Controls.Add(BuildFileUploadControl());
+            layout.Controls.Add(BuildFileListControl());
             layout.Dock = DockStyle.Fill;
             this.Controls.Add(layout);
+            
 
+        }
 
+        private FlowLayoutPanel BuildFileListControl()
+        {
+           var fileListViewLayout=new FlowLayoutPanel();
+           fileListViewLayout.FlowDirection = FlowDirection.TopDown;
+        
+           var fileList = new ListView() {Width = 300, Height = 500};
+           fileList.Anchor = AnchorStyles.Top;
+           fileListViewLayout.Controls.Add(fileList);
+           fileListViewLayout.Dock = DockStyle.Top;
+           fileListViewLayout.Height = 300;
+           fileListViewLayout.Width = 500;
+           fileListViewLayout.Anchor = AnchorStyles.Top;
+           return fileListViewLayout;
+        }
+
+        private FlowLayoutPanel BuildFileUploadControl()
+        {
+
+            var fileUploadLayout = new FlowLayoutPanel();
+            fileUploadLayout.FlowDirection = FlowDirection.LeftToRight;
+            fileUploadLayout.BorderStyle = BorderStyle.FixedSingle;
+            fileUploadLayout.Width = 200;
+            fileUploadLayout.Height = 50;
+            fileUploadLayout.WrapContents = false;
+            var fileUploadLabel = new Label() { Text = "Upload File", Height = 25, Width = 80 };
+            fileUploadLayout.Controls.Add(fileUploadLabel);
+            var fileupLoadButton = new Button() { Text = "Choose File", Height = 25, Width = 100 };
+            fileupLoadButton.Click += FileUpLoadButton_Click;
+            fileUploadLayout.Controls.Add(fileupLoadButton);
+            return fileUploadLayout;
         }
 
         private void FileUpLoadButton_Click(object sender, EventArgs e)
@@ -54,8 +78,8 @@ namespace IronCards.Controls
             {
                 foreach (var file in fileOpenDialog.FileNames)
                 {
-                    string filepathName=new DirectoryInfo(file.ToString()).Name;
-                    File.Copy(file.ToString(),attachmentPath+"/"+ filepathName);
+                    var filePathName=new DirectoryInfo(file.ToString()).Name;
+                    File.Copy(file.ToString(),attachmentPath+"/"+ filePathName);
                 }
             }
             //TODO: Reindex list of files 
