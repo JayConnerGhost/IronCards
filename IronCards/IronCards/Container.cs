@@ -24,7 +24,7 @@ namespace IronCards
         private readonly IProjectDatabaseService _projectDatabaseService;
         private int projectId;
         private string projectName;
-
+        private TabControl container;
         public Container(ILanesContainer lanes, ICardDatabaseService cardDatabaseService,
             ILanesDatabaseService lanesDatabaseService, IProjectDatabaseService projectDatabaseService) : base()
         {
@@ -35,13 +35,15 @@ namespace IronCards
             InitializeComponent();
             //Build a container 
             this.Text = "Card Wall";
-            var container = BuildTabPageContainer();
-            ((UserControl) lanes).Dock = DockStyle.Fill;
-            ((LanesContainer) lanes).LaneContainerRequestingNewProject += Container_LaneContainerRequestingNewProject;
+   
+            container = BuildTabPageContainer();
+//            ((UserControl) lanes).Dock = DockStyle.Fill;
+//            ((LanesContainer) lanes).LaneContainerRequestingNewProject += Container_LaneContainerRequestingNewProject;
            // Controls.Add((UserControl) lanes);
-           CreateTabPages(container);
-           container.TabPages[0].Controls.Add((UserControl)lanes);
-           BuildAttachments(container.TabPages[2]);
+           //trying to set up in  the right place 
+//           CreateTabPages(container);
+//           container.TabPages[0].Controls.Add((UserControl)lanes);
+//           BuildAttachments(container.TabPages[2]);
             //Insert context menu  to container 
             var contextMenu = BuildContextMenu();
             contextMenu.Show();
@@ -49,7 +51,8 @@ namespace IronCards
 
         private void BuildAttachments(TabPage containerTabPage)
         {
-            var attachmentControl = new Attachments {Dock = DockStyle.Fill};
+            //TODO: pass in project Id for appending to path. 
+            var attachmentControl = new Attachments (projectId){Dock = DockStyle.Fill};
             containerTabPage.Controls.Add(attachmentControl);
         }
 
@@ -110,6 +113,19 @@ namespace IronCards
             {
                 LoadProjectFromDatabase(projectId);
             }
+
+            BuildUpChildEnritchmentTabs();
+        }
+
+        private void BuildUpChildEnritchmentTabs()
+        {
+            //Build for project ID.
+            //TODO:Code in here for adding into all path the selected project ID , this might be the wrong place ???
+            CreateTabPages(container);
+            ((UserControl)_lanes).Dock = DockStyle.Fill;
+            ((LanesContainer)_lanes).LaneContainerRequestingNewProject += Container_LaneContainerRequestingNewProject;
+            container.TabPages[0].Controls.Add((UserControl)_lanes);
+            BuildAttachments(container.TabPages[2]);
         }
 
         private void ShowCreateProject(string projectName)

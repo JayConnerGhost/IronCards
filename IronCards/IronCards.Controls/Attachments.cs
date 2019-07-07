@@ -8,11 +8,13 @@ namespace IronCards.Controls
 {
     public partial class Attachments : BaseControl
     {
+        private readonly int _projectId;
         readonly ListView _fileList = new ListView() { Width = 450, Height = 450 };
         string[] _fileNames;
         string attachmentPath;
-        public Attachments() : base()
+        public Attachments(int projectId) : base()
         {
+            _projectId = projectId;
             InitializeComponent();
             GetAttachmentsDirectory();
             CreateUploadTrigger();
@@ -33,7 +35,7 @@ namespace IronCards.Controls
         {
             var fileListViewLayout = new FlowLayoutPanel();
             fileListViewLayout.FlowDirection = FlowDirection.TopDown;
-            DirectoryInfo d=new DirectoryInfo(attachmentPath);
+            DirectoryInfo d=new DirectoryInfo(attachmentPath+@"\"+_projectId);
             _fileList.FullRowSelect = true;
             _fileList.MultiSelect = false;
             _fileList.View = View.List;
@@ -93,7 +95,7 @@ namespace IronCards.Controls
                 foreach (var file in fileOpenDialog.FileNames)
                 {
                     var filePathName = new DirectoryInfo(file.ToString()).Name;
-                    File.Copy(file.ToString(), attachmentPath + "/" + filePathName);
+                    File.Copy(file.ToString(), attachmentPath + "/"+_projectId.ToString()+"/" + filePathName);
                 }
             }
             //TODO: Reindex list of files 
@@ -103,9 +105,9 @@ namespace IronCards.Controls
         {
             var configSettingsReader = new AppSettingsReader();
             attachmentPath = (string)configSettingsReader.GetValue("AttachmentPath", typeof(string));
-            if (!Directory.Exists(attachmentPath))
+            if (!Directory.Exists(attachmentPath+"/"+_projectId))
             {
-                Directory.CreateDirectory(attachmentPath);
+                Directory.CreateDirectory(attachmentPath + "/" + _projectId);
             }
 
         }
