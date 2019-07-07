@@ -31,24 +31,32 @@ namespace IronCards.Controls
             this.Controls.Add(layout);
         }
 
+        private void LoadAttachments()
+        {
+            _fileList.Items.Clear();
+            DirectoryInfo d = new DirectoryInfo(attachmentPath + @"\" + _projectId);
+            FileInfo[] files = d.GetFiles("*.*");
+            foreach (var file in files)
+            {
+                ListViewItem fileItem = new ListViewItem(file.Name, 0) { Tag = file.FullName };
+                _fileList.Items.Add(fileItem);
+            }
+        }
+
         private FlowLayoutPanel BuildFileListControl()
         {
             var fileListViewLayout = new FlowLayoutPanel();
             fileListViewLayout.FlowDirection = FlowDirection.TopDown;
-            DirectoryInfo d=new DirectoryInfo(attachmentPath+@"\"+_projectId);
+        
             _fileList.FullRowSelect = true;
             _fileList.MultiSelect = false;
             _fileList.View = View.List;
-            FileInfo[] files = d.GetFiles("*.*");
+            
 
             _fileList.ItemSelectionChanged += _fileList_ItemSelectionChanged;
-            foreach (var file in files)
-            {
-                ListViewItem fileItem = new ListViewItem(file.Name, 0){Tag = file.FullName};
-                _fileList.Items.Add(fileItem);
-            }
 
-           
+            LoadAttachments();
+            
             _fileList.Anchor = AnchorStyles.Top;
             fileListViewLayout.Controls.Add(_fileList);
             fileListViewLayout.Dock = DockStyle.Top;
@@ -98,7 +106,8 @@ namespace IronCards.Controls
                     File.Copy(file.ToString(), attachmentPath + "/"+_projectId.ToString()+"/" + filePathName);
                 }
             }
-            //TODO: Reindex list of files 
+
+            LoadAttachments();
         }
 
         private void GetAttachmentsDirectory()
