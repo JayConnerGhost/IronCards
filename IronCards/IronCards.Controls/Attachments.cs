@@ -1,55 +1,68 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Configuration;
-using System.Drawing;
-using System.Data;
+using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace IronCards.Controls
 {
     public partial class Attachments : BaseControl
     {
+        readonly ListView _fileList = new ListView() { Width = 450, Height = 450 };
         string[] _fileNames;
         string attachmentPath;
-        public Attachments():base()
+        public Attachments() : base()
         {
             InitializeComponent();
             GetAttachmentsDirectory();
             CreateUploadTrigger();
-           // LoadAttachments();
+            // LoadAttachments();
         }
 
         private void CreateUploadTrigger()
         {
-            var layout =new FlowLayoutPanel();
+            var layout = new FlowLayoutPanel();
             layout.FlowDirection = FlowDirection.TopDown;
             layout.Controls.Add(BuildFileUploadControl());
             layout.Controls.Add(BuildFileListControl());
             layout.Dock = DockStyle.Fill;
             this.Controls.Add(layout);
-            
-
         }
 
         private FlowLayoutPanel BuildFileListControl()
         {
-           var fileListViewLayout=new FlowLayoutPanel();
-           fileListViewLayout.FlowDirection = FlowDirection.TopDown;
-        
-           var fileList = new ListView() {Width =450, Height = 550};
-           fileList.Anchor = AnchorStyles.Top;
-           fileListViewLayout.Controls.Add(fileList);
-           fileListViewLayout.Dock = DockStyle.Top;
-           fileListViewLayout.Height = 500;
-           fileListViewLayout.Width = 600;
-           fileListViewLayout.Anchor = AnchorStyles.Top;
-           fileListViewLayout.AutoScroll = true;
-           return fileListViewLayout;
+            var fileListViewLayout = new FlowLayoutPanel();
+            fileListViewLayout.FlowDirection = FlowDirection.TopDown;
+            DirectoryInfo d=new DirectoryInfo(attachmentPath);
+            _fileList.FullRowSelect = true;
+            _fileList.MultiSelect = false;
+            _fileList.View = View.List;
+            FileInfo[] files = d.GetFiles("*.*");
+
+            _fileList.ItemSelectionChanged += _fileList_ItemSelectionChanged;
+            foreach (var file in files)
+            {
+                ListViewItem fileItem = new ListViewItem(file.Name, 0){Tag = file.FullName};
+                _fileList.Items.Add(fileItem);
+            }
+
+           
+            _fileList.Anchor = AnchorStyles.Top;
+            fileListViewLayout.Controls.Add(_fileList);
+            fileListViewLayout.Dock = DockStyle.Top;
+            fileListViewLayout.Height = 500;
+            fileListViewLayout.Width = 600;
+            fileListViewLayout.Anchor = AnchorStyles.Top;
+            fileListViewLayout.AutoScroll = true;
+            return fileListViewLayout;
+        }
+
+        private void _fileList_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            if (e.IsSelected)
+            {
+                Process.Start((string) e.Item.Tag);
+            }
         }
 
         private FlowLayoutPanel BuildFileUploadControl()
@@ -71,16 +84,16 @@ namespace IronCards.Controls
 
         private void FileUpLoadButton_Click(object sender, EventArgs e)
         {
-            var fileOpenDialog= new OpenFileDialog();
+            var fileOpenDialog = new OpenFileDialog();
             fileOpenDialog.Multiselect = true;
-            var fileResult=fileOpenDialog.ShowDialog();
+            var fileResult = fileOpenDialog.ShowDialog();
             //Handle file upload
             if (fileResult == DialogResult.OK)
             {
                 foreach (var file in fileOpenDialog.FileNames)
                 {
-                    var filePathName=new DirectoryInfo(file.ToString()).Name;
-                    File.Copy(file.ToString(),attachmentPath+"/"+ filePathName);
+                    var filePathName = new DirectoryInfo(file.ToString()).Name;
+                    File.Copy(file.ToString(), attachmentPath + "/" + filePathName);
                 }
             }
             //TODO: Reindex list of files 
@@ -88,13 +101,13 @@ namespace IronCards.Controls
 
         private void GetAttachmentsDirectory()
         {
-            var configSettingsReader= new AppSettingsReader();
-            attachmentPath = (string)configSettingsReader.GetValue("AttachmentPath",typeof(string));
+            var configSettingsReader = new AppSettingsReader();
+            attachmentPath = (string)configSettingsReader.GetValue("AttachmentPath", typeof(string));
             if (!Directory.Exists(attachmentPath))
             {
                 Directory.CreateDirectory(attachmentPath);
             }
-     
+
         }
     }
 }
