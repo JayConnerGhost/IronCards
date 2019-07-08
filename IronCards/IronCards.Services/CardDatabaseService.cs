@@ -26,7 +26,8 @@ namespace IronCards.Services
                     ParentLaneId=parentLaneId,
                     CardName=cardName,
                     CardDescription=cardDescription,
-                    CardPoints=cardPoints
+                    CardPoints=cardPoints,
+                    CardType=parsedCardType.ToString()
                 });
             }
             return id;
