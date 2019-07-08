@@ -132,7 +132,7 @@ namespace IronCards
         {
             this.Text = projectName;
             var result = new CreateProjectDialog().ShowDialog();
-            int projectId = SaveProject(projectName);
+             projectId = SaveProject(projectName);
             if (result.Item1 == ProjectResult.Simple)
             {
                 SetUpSimpleProject(projectId, projectName);
