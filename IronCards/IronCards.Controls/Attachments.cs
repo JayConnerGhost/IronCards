@@ -18,7 +18,7 @@ namespace IronCards.Controls
             InitializeComponent();
             GetAttachmentsDirectory();
             CreateUploadTrigger();
-            // LoadAttachments();
+         
         }
 
         private void CreateUploadTrigger()
@@ -97,7 +97,7 @@ namespace IronCards.Controls
             var fileOpenDialog = new OpenFileDialog();
             fileOpenDialog.Multiselect = true;
             var fileResult = fileOpenDialog.ShowDialog();
-            //Handle file upload
+ 
             if (fileResult == DialogResult.OK)
             {
                 foreach (var file in fileOpenDialog.FileNames)

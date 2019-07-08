@@ -81,6 +81,12 @@
     <Compile Include="LanesContainer.Designer.cs">
       <DependentUpon>LanesContainer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Notes.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Notes.Designer.cs">
+      <DependentUpon>Notes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
@@ -104,6 +110,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Attachments.resx">
       <DependentUpon>Attachments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Notes.resx">
+      <DependentUpon>Notes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

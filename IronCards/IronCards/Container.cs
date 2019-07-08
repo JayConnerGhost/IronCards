@@ -37,14 +37,6 @@ namespace IronCards
             this.Text = "Card Wall";
    
             container = BuildTabPageContainer();
-//            ((UserControl) lanes).Dock = DockStyle.Fill;
-//            ((LanesContainer) lanes).LaneContainerRequestingNewProject += Container_LaneContainerRequestingNewProject;
-           // Controls.Add((UserControl) lanes);
-           //trying to set up in  the right place 
-//           CreateTabPages(container);
-//           container.TabPages[0].Controls.Add((UserControl)lanes);
-//           BuildAttachments(container.TabPages[2]);
-            //Insert context menu  to container 
             var contextMenu = BuildContextMenu();
             contextMenu.Show();
         }
@@ -119,13 +111,19 @@ namespace IronCards
 
         private void BuildUpChildEnritchmentTabs()
         {
-            //Build for project ID.
-            //TODO:Code in here for adding into all path the selected project ID , this might be the wrong place ???
+           
             CreateTabPages(container);
             ((UserControl)_lanes).Dock = DockStyle.Fill;
             ((LanesContainer)_lanes).LaneContainerRequestingNewProject += Container_LaneContainerRequestingNewProject;
             container.TabPages[0].Controls.Add((UserControl)_lanes);
             BuildAttachments(container.TabPages[2]);
+            BuildNotes(container.TabPages[4]);
+        }
+
+        private void BuildNotes(TabPage containerTabPage)
+        {
+            var notesControl = new Notes {Dock = DockStyle.Fill};
+            containerTabPage.Controls.Add(notesControl);
         }
 
         private void ShowCreateProject(string projectName)
