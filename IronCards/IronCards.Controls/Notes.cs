@@ -28,7 +28,9 @@ namespace IronCards.Controls
 
         private void BuildNoteEditor(SplitterPanel editor)
         {
+            editor.AutoScroll = true;
            var editorTableLayout=new TableLayoutPanel();
+           editorTableLayout.AutoScroll = true;
            editorTableLayout.Dock = DockStyle.Fill;
            editorTableLayout.RowCount = 3;
            editorTableLayout.ColumnCount = 2;
@@ -44,10 +46,11 @@ namespace IronCards.Controls
             titleLayout.Controls.Add(titleTextbox);
            editorTableLayout.Controls.Add(titleLayout,0,0);
            var descriptionLabel = new Label() {Text = "Note Description"};
-           var descriptionTextBox=new TextBox(){Multiline = true, Width = 500,Height=300};
+           var descriptionTextBox=new TextBox(){Multiline = true, Width = 500,Height=300,ScrollBars = ScrollBars.Vertical};
            editorTableLayout.Controls.Add(descriptionLabel,0,1);
            editorTableLayout.Controls.Add(descriptionTextBox,0,2);
-
+           var saveButton=new Button(){Text = "Save Note", Anchor =( AnchorStyles.Right | AnchorStyles.Top), Height = 30};
+           editorTableLayout.Controls.Add(saveButton,0,3);
            editor.Controls.Add(editorTableLayout);
         }
 
@@ -65,6 +68,7 @@ namespace IronCards.Controls
             var splitContainer = new SplitContainer {Orientation = Orientation.Horizontal,Dock=DockStyle.Fill};
             splitContainer.Panel1.Name = "NotesEditor";
             splitContainer.Panel2.Name = "Grid";
+            splitContainer.VerticalScroll.Enabled=true;
             _editor = splitContainer.Panel1;
             _grid = splitContainer.Panel2;
             this.Controls.Add(splitContainer);
