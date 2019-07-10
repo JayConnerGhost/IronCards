@@ -9,17 +9,22 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using IronCards.Services;
 using OutlookStyleControls;
 
 namespace IronCards.Controls
 {
-    public partial class Notes : UserControl
+    public partial class Notes : BaseControl
     {
+        private readonly INotesDatabaseService _notesDatabaseService;
+        private readonly int _projectId;
         private SplitterPanel _editor;
         private SplitterPanel _grid;
 
-        public Notes()
+        public Notes(INotesDatabaseService notesDatabaseService,int projectId)
         {
+            _notesDatabaseService = notesDatabaseService;
+            _projectId = projectId;
             InitializeComponent();
             BuildOuterContainer();
             BuildGrid(_grid);
@@ -67,7 +72,14 @@ namespace IronCards.Controls
 
         private void SaveNewEntry(string title, string description)
         {
-            //TODO: Implementation to save to db and add to grid 
+            int Id = _notesDatabaseService.Insert(title, description, _projectId);
+            NotesGridUpdate(Id,title,description);
+        }
+
+        private void NotesGridUpdate(object id, string title, string description)
+        {
+            //throw new NotImplementedException();
+            //TODO: once grid in place insert new record at the bottom of exsisting records 
         }
 
         private void CancelButton_Click(object sender, EventArgs e)

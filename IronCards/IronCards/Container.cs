@@ -22,16 +22,18 @@ namespace IronCards
         private readonly ICardDatabaseService _cardDatabaseService;
         private readonly ILanesDatabaseService _lanesDatabaseService;
         private readonly IProjectDatabaseService _projectDatabaseService;
+        private readonly INotesDatabaseService _notesDatabaseService;
         private int projectId;
         private string projectName;
         private TabControl container;
         public Container(ILanesContainer lanes, ICardDatabaseService cardDatabaseService,
-            ILanesDatabaseService lanesDatabaseService, IProjectDatabaseService projectDatabaseService) : base()
+            ILanesDatabaseService lanesDatabaseService, IProjectDatabaseService projectDatabaseService, INotesDatabaseService notesDatabaseService) : base()
         {
             _lanes = lanes;
             _cardDatabaseService = cardDatabaseService;
             _lanesDatabaseService = lanesDatabaseService;
             _projectDatabaseService = projectDatabaseService;
+            _notesDatabaseService = notesDatabaseService;
             InitializeComponent();
             //Build a container 
             this.Text = "Card Wall";
@@ -122,7 +124,7 @@ namespace IronCards
 
         private void BuildNotes(TabPage containerTabPage)
         {
-            var notesControl = new Notes {Dock = DockStyle.Fill};
+            var notesControl = new Notes(_notesDatabaseService, projectId) {Dock = DockStyle.Fill};
             containerTabPage.Controls.Add(notesControl);
         }
 

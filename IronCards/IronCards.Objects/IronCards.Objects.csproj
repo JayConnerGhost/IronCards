@@ -46,6 +46,7 @@
     <Compile Include="CardDocument.cs" />
     <Compile Include="CardTypes.cs" />
     <Compile Include="LaneDocument.cs" />
+    <Compile Include="NoteDocument.cs" />
     <Compile Include="ProjectDocument.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
