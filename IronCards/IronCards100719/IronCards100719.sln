@@ -1,0 +1,62 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29025.244
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{D714A60A-7C65-48D8-A5D6-50C1131A6D19}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{9CDB54EE-C6EC-4F68-B176-EF298A71EEE4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SupportingDocuments", "SupportingDocuments", "{ABD9048F-0C0D-41AB-91DD-DAFB85C201E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronCards", "..\IronCards\IronCards.csproj", "{3AA0420E-3ECE-4FAC-8E47-DDEDA67192FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronCards.Controls", "..\IronCards.Controls\IronCards.Controls.csproj", "{17379964-0140-4172-A7AD-FAC5D3A01D24}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronCards.Dialogs", "..\IronCards.Dialogs\IronCards.Dialogs.csproj", "{11E6C586-D5CA-4B7D-8E97-67128153B405}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronCards.Objects", "..\IronCards.Objects\IronCards.Objects.csproj", "{5B5C7DD5-A93D-415F-B7A9-1A0D35229C27}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronCards.Services", "..\IronCards.Services\IronCards.Services.csproj", "{A6986F78-C6AD-41F8-8D14-4AA7704154CF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3AA0420E-3ECE-4FAC-8E47-DDEDA67192FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AA0420E-3ECE-4FAC-8E47-DDEDA67192FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AA0420E-3ECE-4FAC-8E47-DDEDA67192FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AA0420E-3ECE-4FAC-8E47-DDEDA67192FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17379964-0140-4172-A7AD-FAC5D3A01D24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17379964-0140-4172-A7AD-FAC5D3A01D24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17379964-0140-4172-A7AD-FAC5D3A01D24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17379964-0140-4172-A7AD-FAC5D3A01D24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11E6C586-D5CA-4B7D-8E97-67128153B405}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11E6C586-D5CA-4B7D-8E97-67128153B405}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11E6C586-D5CA-4B7D-8E97-67128153B405}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11E6C586-D5CA-4B7D-8E97-67128153B405}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B5C7DD5-A93D-415F-B7A9-1A0D35229C27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B5C7DD5-A93D-415F-B7A9-1A0D35229C27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B5C7DD5-A93D-415F-B7A9-1A0D35229C27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B5C7DD5-A93D-415F-B7A9-1A0D35229C27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6986F78-C6AD-41F8-8D14-4AA7704154CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6986F78-C6AD-41F8-8D14-4AA7704154CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6986F78-C6AD-41F8-8D14-4AA7704154CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6986F78-C6AD-41F8-8D14-4AA7704154CF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3AA0420E-3ECE-4FAC-8E47-DDEDA67192FD} = {D714A60A-7C65-48D8-A5D6-50C1131A6D19}
+		{17379964-0140-4172-A7AD-FAC5D3A01D24} = {D714A60A-7C65-48D8-A5D6-50C1131A6D19}
+		{11E6C586-D5CA-4B7D-8E97-67128153B405} = {D714A60A-7C65-48D8-A5D6-50C1131A6D19}
+		{5B5C7DD5-A93D-415F-B7A9-1A0D35229C27} = {9CDB54EE-C6EC-4F68-B176-EF298A71EEE4}
+		{A6986F78-C6AD-41F8-8D14-4AA7704154CF} = {9CDB54EE-C6EC-4F68-B176-EF298A71EEE4}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B67EB120-95B3-4E38-ABA5-595B2A069A99}
+	EndGlobalSection
+EndGlobal

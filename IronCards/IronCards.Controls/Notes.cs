@@ -27,7 +27,7 @@ namespace IronCards.Controls
             _projectId = projectId;
             InitializeComponent();
             BuildOuterContainer();
-            BuildGrid(_grid);
+            BuildList(_grid);
             BuildNoteEditor(_editor);
         }
 
@@ -79,14 +79,14 @@ namespace IronCards.Controls
         private void SaveNewEntry(string title, string description)
         {
             int Id = _notesDatabaseService.Insert(title, description, _projectId);
-            NotesGridUpdate(Id,title,description);
+            NotesListUpdate(Id,title,description);
             
         }
 
-        private void NotesGridUpdate(object id, string title, string description)
+        private void NotesListUpdate(object id, string title, string description)
         {
             //throw new NotImplementedException();
-            //TODO: once grid in place insert new record at the bottom of exsisting records 
+           
         }
 
         private void CancelButton_Click(object sender, EventArgs e)
@@ -95,17 +95,29 @@ namespace IronCards.Controls
         }
 
 
-        private void BuildGrid(SplitterPanel grid)
+        private void BuildList(SplitterPanel list)
         {
-            //ConfigureGrid here
-             OutlookGrid notesGrid=new OutlookGrid();
-            // notesGrid.
-        var data = _notesDatabaseService.GetAllForProject(_projectId);
-        notesGrid.BindData(data,"Note");
-             notesGrid.Dock = DockStyle.Fill;
-             grid.Controls.Add(notesGrid);
+            var horzontalListSplitter = new SplitContainer
+            {
+                Orientation = Orientation.Vertical, SplitterDistance = 5, Dock = DockStyle.Fill
+            };
+            var listView = new ListView {Dock = DockStyle.Fill, View = View.List};
+           var data = _notesDatabaseService.GetAllForProject(_projectId);
+           foreach (var noteDocument in data)
+           {
+               listView.Items.Add(noteDocument.Id.ToString(), noteDocument.Title, null);
+           }
+            listView.ItemSelectionChanged += delegate(object o, ListViewItemSelectionChangedEventArgs args)
+                {
+                    MessageBox.Show(args.Item.Text);
+                };
+           horzontalListSplitter.Panel1.Controls.Add(listView);
+           list.Controls.Add(horzontalListSplitter);
+
         }
-       
+
+        
+
         private void BuildOuterContainer()
         {
             var splitContainer = new SplitContainer {Orientation = Orientation.Horizontal,Dock=DockStyle.Fill};
