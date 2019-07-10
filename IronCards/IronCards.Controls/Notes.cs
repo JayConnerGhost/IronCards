@@ -42,13 +42,13 @@ namespace IronCards.Controls
            editorTableLayout.BorderStyle = BorderStyle.Fixed3D;
 
            var titleLabel=new Label(){Text="Note Title"};
-           var titleTextbox=new TextBox(){Width=200};
+           var titleTextBox=new TextBox(){Width=200};
 
            //TODO - flow layout panel for the next two controls
             var titleLayout=new FlowLayoutPanel(){Width = 500,Height=50};
         
             titleLayout.Controls.Add(titleLabel);
-            titleLayout.Controls.Add(titleTextbox);
+            titleLayout.Controls.Add(titleTextBox);
            editorTableLayout.Controls.Add(titleLayout,0,0);
            var descriptionLabel = new Label() {Text = "Note Description"};
            var descriptionTextBox=new TextBox(){Multiline = true, Width = 500,Height=300,ScrollBars = ScrollBars.Vertical};
@@ -57,7 +57,8 @@ namespace IronCards.Controls
            var saveButton=new Button(){Text = "Save Note", Anchor =( AnchorStyles.Right | AnchorStyles.Top), Height = 30};
             saveButton.Click += delegate(object o, EventArgs args)
                 {
-                    SaveNewEntry(titleTextbox.Text, descriptionTextBox.Text);
+                    SaveNewEntry(titleTextBox.Text, descriptionTextBox.Text);
+                    ResetControls(titleTextBox, descriptionTextBox);
                 };
            var cancelButton=new Button(){Text = "Cancel Edit", Anchor =( AnchorStyles.Right | AnchorStyles.Top), Height = 30};
             cancelButton.Click += CancelButton_Click;
@@ -66,14 +67,20 @@ namespace IronCards.Controls
            buttonsLayout.Controls.Add(saveButton);
            buttonsLayout.Controls.Add(cancelButton);
             editorTableLayout.Controls.Add(buttonsLayout, 0,3);
-           
-           editor.Controls.Add(editorTableLayout);
+            editor.Controls.Add(editorTableLayout);
+        }
+
+        private void ResetControls(TextBox titleTextBox, TextBox descriptionTextBox)
+        {
+            titleTextBox.Text = string.Empty;
+            descriptionTextBox.Text = string.Empty;
         }
 
         private void SaveNewEntry(string title, string description)
         {
             int Id = _notesDatabaseService.Insert(title, description, _projectId);
             NotesGridUpdate(Id,title,description);
+            
         }
 
         private void NotesGridUpdate(object id, string title, string description)
@@ -93,6 +100,8 @@ namespace IronCards.Controls
             //ConfigureGrid here
              OutlookGrid notesGrid=new OutlookGrid();
             // notesGrid.
+        var data = _notesDatabaseService.GetAllForProject(_projectId);
+        notesGrid.BindData(data,"Note");
              notesGrid.Dock = DockStyle.Fill;
              grid.Controls.Add(notesGrid);
         }
