@@ -50,9 +50,31 @@ namespace IronCards.Controls
            editorTableLayout.Controls.Add(descriptionLabel,0,1);
            editorTableLayout.Controls.Add(descriptionTextBox,0,2);
            var saveButton=new Button(){Text = "Save Note", Anchor =( AnchorStyles.Right | AnchorStyles.Top), Height = 30};
-           editorTableLayout.Controls.Add(saveButton,0,3);
+            saveButton.Click += delegate(object o, EventArgs args)
+                {
+                    SaveNewEntry(titleTextbox.Text, descriptionTextBox.Text);
+                };
+           var cancelButton=new Button(){Text = "Cancel Edit", Anchor =( AnchorStyles.Right | AnchorStyles.Top), Height = 30};
+            cancelButton.Click += CancelButton_Click;
+
+           var buttonsLayout=new FlowLayoutPanel(){FlowDirection = FlowDirection.RightToLeft,Width=500};
+           buttonsLayout.Controls.Add(saveButton);
+           buttonsLayout.Controls.Add(cancelButton);
+            editorTableLayout.Controls.Add(buttonsLayout, 0,3);
+           
            editor.Controls.Add(editorTableLayout);
         }
+
+        private void SaveNewEntry(string title, string description)
+        {
+            //TODO: Implementation to save to db and add to grid 
+        }
+
+        private void CancelButton_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
 
         private void BuildGrid(SplitterPanel grid)
         {
