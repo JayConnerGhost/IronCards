@@ -7,5 +7,6 @@ namespace IronCards.Services
     {
         int Insert(string title, string description, int projectId);
         IList<NoteDocument> GetAllForProject(int projectId);
+        string FindNoteTextByNoteId(string noteId);
     }
 }

@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace IronCards.Services
 {
-    public class NoteDatabaseService:BaseDatabaseService,INotesDatabaseService
+    public class NoteDatabaseService : BaseDatabaseService, INotesDatabaseService
     {
         public int Insert(string title, string description, int projectId)
         {
@@ -13,11 +13,12 @@ namespace IronCards.Services
                 var notes = database.GetCollection<NoteDocument>();
                 id = notes.Insert(new NoteDocument()
                 {
-                    Title=title,
-                    Text=description,
-                    ProjectId=projectId
+                    Title = title,
+                    Text = description,
+                    ProjectId = projectId
                 });
             }
+
             return id;
         }
 
@@ -33,6 +34,20 @@ namespace IronCards.Services
             }
 
             return notes;
+        }
+
+        public string FindNoteTextByNoteId(string noteId)
+        {
+            var numericNoteId = int.Parse(noteId.Trim());
+            var result = string.Empty;
+            using (var database = new LiteDB.LiteDatabase(ConnectionString))
+            {
+                var collection = database.GetCollection<NoteDocument>();
+                collection.EnsureIndex(x => x.Id);
+                result = collection.Find(x => x.Id == numericNoteId).First().Text;
+            }
+
+            return result;
         }
     }
 }

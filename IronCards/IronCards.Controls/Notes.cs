@@ -107,12 +107,24 @@ namespace IronCards.Controls
            {
                listView.Items.Add(noteDocument.Id.ToString(), noteDocument.Title, null);
            }
+
+           var bodyTextBox=new TextBox(){Multiline = true,Dock = DockStyle.Fill, ReadOnly = true,ScrollBars = ScrollBars.Vertical};
+
+
             listView.ItemSelectionChanged += delegate(object o, ListViewItemSelectionChangedEventArgs args)
+            {
+                if (!args.IsSelected)
                 {
-                    MessageBox.Show(args.Item.Text);
-                };
+                    return;
+                }
+                var noteId=args.Item.Name;
+                var noteTitle= args.Item.Text;
+                var noteText = _notesDatabaseService.FindNoteTextByNoteId(noteId);
+                bodyTextBox.Text = noteText;
+            };
            horzontalListSplitter.Panel1.Controls.Add(listView);
-           list.Controls.Add(horzontalListSplitter);
+           horzontalListSplitter.Panel2.Controls.Add(bodyTextBox);
+            list.Controls.Add(horzontalListSplitter);
 
         }
 
