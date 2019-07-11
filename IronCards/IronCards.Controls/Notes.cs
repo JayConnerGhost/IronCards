@@ -21,7 +21,7 @@ namespace IronCards.Controls
         private SplitterPanel _editor;
         private SplitterPanel _grid;
         private ErrorProvider _newErrorProvider;
-
+        private ListView _listView;
         public Notes(INotesDatabaseService notesDatabaseService,int projectId)
         {
     
@@ -59,26 +59,38 @@ namespace IronCards.Controls
            editorTableLayout.Controls.Add(descriptionTextBox,0,2);
            var saveButton=new Button(){Text = "Save Note", Anchor =( AnchorStyles.Right | AnchorStyles.Top), Height = 30};
             saveButton.Click += delegate(object o, EventArgs args)
-                {
+            {
+                bool executeOperation = true;
                     if (descriptionTextBox.Text.Length < 1)
                     {
                         _newErrorProvider.SetError(descriptionTextBox,"Please enter a full description for the note");
-                        return;
+                        executeOperation = false;
+            
                     }
                     else
                     {
-                        _newErrorProvider.Clear();
+                        _newErrorProvider.SetError(descriptionTextBox,string.Empty);
                     }
 
                     if (titleTextBox.Text.Length < 1)
                     {
                         _newErrorProvider.SetError(titleTextBox, "Please enter a full title for the note");
-                        return;
+                        executeOperation = false;
+             
 
                     }
-                    SaveNewEntry(titleTextBox.Text, descriptionTextBox.Text);
-                    ResetControls(titleTextBox, descriptionTextBox);
-                };
+                    else
+                    {
+                        _newErrorProvider.SetError(titleTextBox, string.Empty);
+                    }
+
+                    if (executeOperation)
+                    {
+                        SaveNewEntry(titleTextBox.Text, descriptionTextBox.Text);
+                        ResetControls(titleTextBox, descriptionTextBox);
+                     
+                    }
+            };
            var cancelButton=new Button(){Text = "Cancel Edit", Anchor =( AnchorStyles.Right | AnchorStyles.Top), Height = 30};
             cancelButton.Click += CancelButton_Click;
 
@@ -89,6 +101,7 @@ namespace IronCards.Controls
             editor.Controls.Add(editorTableLayout);
         }
 
+
         private void ResetControls(TextBox titleTextBox, TextBox descriptionTextBox)
         {
             titleTextBox.Text = string.Empty;
@@ -98,14 +111,13 @@ namespace IronCards.Controls
         private void SaveNewEntry(string title, string description)
         {
             int Id = _notesDatabaseService.Insert(title, description, _projectId);
-            NotesListUpdate(Id,title,description);
+            NotesListUpdate(Id.ToString(),title,description);
             
         }
 
-        private void NotesListUpdate(object id, string title, string description)
+        private void NotesListUpdate(string id, string title, string description)
         {
-            //throw new NotImplementedException();
-           
+            _listView.Items.Add(id, title, null);
         }
 
         private void CancelButton_Click(object sender, EventArgs e)
@@ -120,17 +132,17 @@ namespace IronCards.Controls
             {
                 Orientation = Orientation.Vertical, SplitterDistance = 5, Dock = DockStyle.Fill
             };
-            var listView = new ListView {Dock = DockStyle.Fill, View = View.List};
+             _listView = new ListView {Dock = DockStyle.Fill, View = View.List};
            var data = _notesDatabaseService.GetAllForProject(_projectId);
            foreach (var noteDocument in data)
            {
-               listView.Items.Add(noteDocument.Id.ToString(), noteDocument.Title, null);
+               _listView.Items.Add(noteDocument.Id.ToString(), noteDocument.Title, null);
            }
 
            var bodyTextBox=new TextBox(){Multiline = true,Dock = DockStyle.Fill, ReadOnly = true,ScrollBars = ScrollBars.Vertical};
 
 
-            listView.ItemSelectionChanged += delegate(object o, ListViewItemSelectionChangedEventArgs args)
+           _listView.ItemSelectionChanged += delegate(object o, ListViewItemSelectionChangedEventArgs args)
             {
                 if (!args.IsSelected)
                 {
@@ -140,7 +152,7 @@ namespace IronCards.Controls
                 var noteText = _notesDatabaseService.FindNoteTextByNoteId(noteId);
                 bodyTextBox.Text = noteText;
             };
-           horzontalListSplitter.Panel1.Controls.Add(listView);
+           horzontalListSplitter.Panel1.Controls.Add(_listView);
            horzontalListSplitter.Panel2.Controls.Add(bodyTextBox);
             list.Controls.Add(horzontalListSplitter);
 
