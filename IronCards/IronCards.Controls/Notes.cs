@@ -20,9 +20,12 @@ namespace IronCards.Controls
         private readonly int _projectId;
         private SplitterPanel _editor;
         private SplitterPanel _grid;
+        private ErrorProvider _newErrorProvider;
 
         public Notes(INotesDatabaseService notesDatabaseService,int projectId)
         {
+    
+            _newErrorProvider = new ErrorProvider();
             _notesDatabaseService = notesDatabaseService;
             _projectId = projectId;
             InitializeComponent();
@@ -46,7 +49,7 @@ namespace IronCards.Controls
 
            //TODO - flow layout panel for the next two controls
             var titleLayout=new FlowLayoutPanel(){Width = 500,Height=50};
-        
+        //TODO add empty validatorrs fortextbox controls
             titleLayout.Controls.Add(titleLabel);
             titleLayout.Controls.Add(titleTextBox);
            editorTableLayout.Controls.Add(titleLayout,0,0);
@@ -57,6 +60,22 @@ namespace IronCards.Controls
            var saveButton=new Button(){Text = "Save Note", Anchor =( AnchorStyles.Right | AnchorStyles.Top), Height = 30};
             saveButton.Click += delegate(object o, EventArgs args)
                 {
+                    if (descriptionTextBox.Text.Length < 1)
+                    {
+                        _newErrorProvider.SetError(descriptionTextBox,"Please enter a full description for the note");
+                        return;
+                    }
+                    else
+                    {
+                        _newErrorProvider.Clear();
+                    }
+
+                    if (titleTextBox.Text.Length < 1)
+                    {
+                        _newErrorProvider.SetError(titleTextBox, "Please enter a full title for the note");
+                        return;
+
+                    }
                     SaveNewEntry(titleTextBox.Text, descriptionTextBox.Text);
                     ResetControls(titleTextBox, descriptionTextBox);
                 };
@@ -118,7 +137,6 @@ namespace IronCards.Controls
                     return;
                 }
                 var noteId=args.Item.Name;
-                var noteTitle= args.Item.Text;
                 var noteText = _notesDatabaseService.FindNoteTextByNoteId(noteId);
                 bodyTextBox.Text = noteText;
             };
