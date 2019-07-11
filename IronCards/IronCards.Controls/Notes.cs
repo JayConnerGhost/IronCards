@@ -92,7 +92,10 @@ namespace IronCards.Controls
                     }
             };
            var cancelButton=new Button(){Text = "Cancel Edit", Anchor =( AnchorStyles.Right | AnchorStyles.Top), Height = 30};
-            cancelButton.Click += CancelButton_Click;
+            cancelButton.Click += delegate(object o, EventArgs args)
+                {
+                    ResetControls(titleTextBox, descriptionTextBox);
+                };
 
            var buttonsLayout=new FlowLayoutPanel(){FlowDirection = FlowDirection.RightToLeft,Width=500};
            buttonsLayout.Controls.Add(saveButton);
@@ -122,7 +125,7 @@ namespace IronCards.Controls
 
         private void CancelButton_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            
         }
 
 
