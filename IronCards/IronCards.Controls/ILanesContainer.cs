@@ -7,5 +7,6 @@ namespace IronCards.Controls
         void AddLane(int projectId, string projectName, string todo);
         void LoadLane(LaneDocument lane);
         void RemoveLanesDatabase();
+        int ProjectId { get; set; }
     }
 }

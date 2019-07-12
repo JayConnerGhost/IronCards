@@ -25,6 +25,7 @@ namespace IronCards.Controls
         public List<Lane> LanesCollection { get; set; }
         public ToolTip GlobalToolTip =new ToolTip();
         private FlowLayoutPanel _layoutPanel;
+        public int ProjectId { get; set; }
         public LanesContainer(ILanesDatabaseService lanesDatabaseService, ICardDatabaseService cardDatabaseService):base()
         {
             SetupToolTip();
@@ -59,8 +60,28 @@ namespace IronCards.Controls
     
             mainLayoutPanel.Controls.Add(_layoutPanel,0,1);
             this.Controls.Add(mainLayoutPanel);
+            var contextMenu = BuildContextMenu();
+            contextMenu.Show();
+
         }
-        
+
+
+        //Refactoring in place 
+        private ContextMenuStrip BuildContextMenu()
+        {
+            var contextMenu = new ContextMenuStrip();
+            this.ContextMenuStrip = contextMenu;
+            ContextMenuStrip.Items.Add("Insert Lane", null, AddLaneOnClick);
+            return contextMenu;
+        }
+
+        private void AddLaneOnClick(object sender, EventArgs e)
+        {
+            this.AddLane(ProjectId, null, "New Lane");
+        }
+
+        //refactor end 
+
         private void SetupToolTip()
         {
             GlobalToolTip.ToolTipIcon = ToolTipIcon.Info;
@@ -192,6 +213,8 @@ namespace IronCards.Controls
             }
             //TODO code in here to remove lane 
         }
+
+    
 
         private void Lane_LaneRequestingEditCardLane(object sender, EditCardLaneArgs e)
         {

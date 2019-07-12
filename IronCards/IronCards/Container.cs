@@ -39,8 +39,8 @@ namespace IronCards
             this.Text = "Card Wall";
    
             container = BuildTabPageContainer();
-            var contextMenu = BuildContextMenu();
-            contextMenu.Show();
+//            var contextMenu = BuildContextMenu();
+//            contextMenu.Show();
         }
 
         private void BuildAttachments(TabPage containerTabPage)
@@ -155,6 +155,7 @@ namespace IronCards
         private void SetUpEmptyProject(int projectId, string projectName)
         {
             CleanDownWall();
+            _lanes.ProjectId = projectId;
             this.Text = projectName;
         }
 
@@ -190,18 +191,18 @@ namespace IronCards
         }
 
 
-        private ContextMenuStrip BuildContextMenu()
-        {
-            var contextMenu = new ContextMenuStrip();
-            this.ContextMenuStrip = contextMenu;
-            ContextMenuStrip.Items.Add("Insert Lane", null, AddLaneOnClick);
-            return contextMenu;
-        }
+//        private ContextMenuStrip BuildContextMenu()
+//        {
+//            var contextMenu = new ContextMenuStrip();
+//            this.ContextMenuStrip = contextMenu;
+//            ContextMenuStrip.Items.Add("Insert Lane", null, AddLaneOnClick);
+//            return contextMenu;
+//        }
 
-        private void AddLaneOnClick(object sender, EventArgs e)
-        {
-            _lanes.AddLane(projectId, projectName, "New Lane");
-        }
+//        private void AddLaneOnClick(object sender, EventArgs e)
+//        {
+//            _lanes.AddLane(projectId, projectName, "New Lane");
+//        }
 
         private void LoadProjectFromDatabase(int projectId)
         {
