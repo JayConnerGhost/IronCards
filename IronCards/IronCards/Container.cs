@@ -39,6 +39,7 @@ namespace IronCards
             this.Text = "Card Wall";
    
             container = BuildTabPageContainer();
+//Code moved for refactor , code left in place tilltesting complete 
 //            var contextMenu = BuildContextMenu();
 //            contextMenu.Show();
         }
@@ -190,19 +191,19 @@ namespace IronCards
             return _projectDatabaseService.New(projectName);
         }
 
+        //Code moved for refactor , code left in place tilltesting complete 
+        //        private ContextMenuStrip BuildContextMenu()
+        //        {
+        //            var contextMenu = new ContextMenuStrip();
+        //            this.ContextMenuStrip = contextMenu;
+        //            ContextMenuStrip.Items.Add("Insert Lane", null, AddLaneOnClick);
+        //            return contextMenu;
+        //        }
 
-//        private ContextMenuStrip BuildContextMenu()
-//        {
-//            var contextMenu = new ContextMenuStrip();
-//            this.ContextMenuStrip = contextMenu;
-//            ContextMenuStrip.Items.Add("Insert Lane", null, AddLaneOnClick);
-//            return contextMenu;
-//        }
-
-//        private void AddLaneOnClick(object sender, EventArgs e)
-//        {
-//            _lanes.AddLane(projectId, projectName, "New Lane");
-//        }
+        //        private void AddLaneOnClick(object sender, EventArgs e)
+        //        {
+        //            _lanes.AddLane(projectId, projectName, "New Lane");
+        //        }
 
         private void LoadProjectFromDatabase(int projectId)
         {
