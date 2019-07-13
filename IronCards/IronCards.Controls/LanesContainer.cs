@@ -66,7 +66,6 @@ namespace IronCards.Controls
         }
 
 
-        //Refactoring in place 
         private ContextMenuStrip BuildContextMenu()
         {
             var contextMenu = new ContextMenuStrip();
@@ -80,7 +79,7 @@ namespace IronCards.Controls
             this.AddLane(ProjectId, null, "New Lane");
         }
 
-        //refactor end 
+  
 
         private void SetupToolTip()
         {
@@ -211,7 +210,7 @@ namespace IronCards.Controls
             {
                 lane.Dispose();
             }
-            //TODO code in here to remove lane 
+            
         }
 
     
