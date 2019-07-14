@@ -72,6 +72,9 @@
     <Compile Include="BaseControl.Designer.cs">
       <DependentUpon>BaseControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Feature.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="ILanesContainer.cs" />
     <Compile Include="Lane.cs">
       <SubType>UserControl</SubType>

@@ -124,7 +124,7 @@ namespace IronCards
 
         private void BuildPlanningWall(TabPage containerTabPage)
         {
-            var projectControl=new Project(_projectDatabaseService, projectId){Dock=DockStyle.Fill};
+            var projectControl=new Project(new FeatureDatabaseService(), projectId){Dock=DockStyle.Fill};
             containerTabPage.Controls.Add(projectControl);
         }
 

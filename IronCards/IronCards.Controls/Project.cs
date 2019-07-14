@@ -13,17 +13,47 @@ namespace IronCards.Controls
 {
     public partial class Project : BaseControl
     {
-        private readonly IProjectDatabaseService _projectDatabaseService;
+        private readonly IFeatureDatabaseService _featureDatabaseService;
         private readonly int _projectId;
         private SplitterPanel _features;
         private SplitterPanel _content;
 
-        public Project(IProjectDatabaseService projectDatabaseService, int projectId):base()
+        public Project(IFeatureDatabaseService featureDatabaseService, int projectId):base()
         {
             InitializeComponent();
-            _projectDatabaseService = projectDatabaseService;
+            _featureDatabaseService = featureDatabaseService;
             _projectId = projectId;
             BuildFrame();
+            BuildFeatureList(_features);
+        }
+
+        private void BuildFeatureList(SplitterPanel features)
+        {
+            var featureList=new ListView();
+            featureList.Dock = DockStyle.Fill;
+            var featureDataSource=LoadFeatures();
+            foreach (var feature in featureDataSource)
+            {
+                featureList.Controls.Add(feature);
+            }
+            features.Controls.Add(featureList);
+        }
+
+        private List<Feature> LoadFeatures()
+        {
+            var results = new List<Feature>();
+            var featureDocuments = _featureDatabaseService.GetAllByProjectId(_projectId);
+            //TODO add fetureDocuments and build out Feature
+            foreach (var featureDocument in featureDocuments)
+            {
+                results.Add(new Feature()
+                {
+                    ProjectId=_projectId,
+                    FeatureName=featureDocument.Name
+                });
+            }
+
+            return results;
         }
 
         private void BuildFrame()
@@ -35,7 +65,7 @@ namespace IronCards.Controls
             _features = splitContainer.Panel1;
             _content = splitContainer.Panel2;
             this.Controls.Add(splitContainer);
-
+         
         }
     }
 }

@@ -47,7 +47,9 @@
   <ItemGroup>
     <Compile Include="BaseDatabaseService.cs" />
     <Compile Include="CardDatabaseService.cs" />
+    <Compile Include="FeatureDatabaseService.cs" />
     <Compile Include="ICardDatabaseService.cs" />
+    <Compile Include="IFeatureDatabaseService.cs" />
     <Compile Include="INotesDatabaseService.cs" />
     <Compile Include="IProjectDatabaseService.cs" />
     <Compile Include="LanesDatabaseService.cs" />
