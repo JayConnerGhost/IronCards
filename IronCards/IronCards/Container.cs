@@ -119,6 +119,13 @@ namespace IronCards
             container.TabPages[0].Controls.Add((UserControl)_lanes);
             BuildAttachments(container.TabPages[2]);
             BuildNotes(container.TabPages[4]);
+            BuildPlanningWall(container.TabPages[1]);
+        }
+
+        private void BuildPlanningWall(TabPage containerTabPage)
+        {
+            var projectControl=new Project(_projectDatabaseService, projectId){Dock=DockStyle.Fill};
+            containerTabPage.Controls.Add(projectControl);
         }
 
         private void BuildNotes(TabPage containerTabPage)
