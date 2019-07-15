@@ -41,7 +41,15 @@ namespace IronCards.Controls
         {
             //TODO dialog to enter feature name 
             var result = new AddFeatureDialog().ShowDialog(_projectId,_featureDatabaseService);
-          
+            if (result.Item4 != DialogResult.OK)
+            {
+                return;
+            }
+
+            var featureName = result.Item1;
+            var featureId = result.Item2;
+            var featureList = (ListView)_features.Controls[0];
+            featureList.Items.Add(new ListViewItem() {Text = featureName, Tag = featureId});
         }
 
         private void BuildFeatureList(SplitterPanel features)

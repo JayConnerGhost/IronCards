@@ -26,7 +26,6 @@ namespace IronCards.Dialogs
                 {
                     form.DialogResult = DialogResult.OK;
                     featureId=service.Insert(new FeatureDocument() {Name = name.Text, ProjectId = projectId});
-
                     form.Close();
                     
                 };
