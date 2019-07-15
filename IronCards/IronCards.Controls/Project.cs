@@ -39,7 +39,6 @@ namespace IronCards.Controls
 
         private void OnClickCreateFeature(object sender, EventArgs e)
         {
-            //TODO dialog to enter feature name 
             var result = new AddFeatureDialog().ShowDialog(_projectId,_featureDatabaseService);
             if (result.Item4 != DialogResult.OK)
             {
@@ -58,9 +57,20 @@ namespace IronCards.Controls
             var featureDataSource=LoadFeatures();
             foreach (var feature in featureDataSource)
             {
-                featureList.Items.Add(new ListViewItem(feature.FeatureName){Tag = feature.Id});
+                var listViewItem = new ListViewItem(feature.FeatureName){Tag = feature.Id};
+                featureList.Items.Add(listViewItem);
             }
+            featureList.ItemSelectionChanged += FeatureList_ItemSelectionChanged;
             features.Controls.Add(featureList);
+        }
+
+        private void FeatureList_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            if (!e.IsSelected)
+            {
+                return;
+            }
+            //TODO: load cards for feature
         }
 
         private List<Feature> LoadFeatures()
@@ -90,7 +100,6 @@ namespace IronCards.Controls
             _features = splitContainer.Panel1;
             _content = splitContainer.Panel2;
             this.Controls.Add(splitContainer);
-         
         }
     }
 }
