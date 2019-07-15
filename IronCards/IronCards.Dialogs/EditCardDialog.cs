@@ -27,7 +27,7 @@ namespace IronCards.Dialogs
                 description.Left = 4;
 
                 MetroLabel descriptionLabel = new MetroLabel() {  Text = "Card Description",Width = 110};
-                MetroButton confirmation = new MetroButton() { Text = "Save", TabIndex = 1, TabStop = true };
+                MetroButton confirmation = new MetroButton() { Text = "Insert", TabIndex = 1, TabStop = true };
                 MetroButton close = new MetroButton() { Text = "close", TabIndex = 1, TabStop = true };
                 confirmation.Click += (sender, e) =>
                 {

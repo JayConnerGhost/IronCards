@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using IronCards.Dialogs;
 using IronCards.Services;
 
 namespace IronCards.Controls
@@ -25,16 +26,31 @@ namespace IronCards.Controls
             _projectId = projectId;
             BuildFrame();
             BuildFeatureList(_features);
+            BuildContextMenu();
+        }
+
+        private void BuildContextMenu()
+        {
+           var featureList=(ListView) _features.Controls[0];
+           var featureListContextMenuStrip = new ContextMenuStrip();
+           featureListContextMenuStrip.Items.Add("Add", null, OnClickCreateFeature);
+           featureList.ContextMenuStrip=featureListContextMenuStrip;
+        }
+
+        private void OnClickCreateFeature(object sender, EventArgs e)
+        {
+            //TODO dialog to enter feature name 
+            var result = new AddFeatureDialog().ShowDialog(_projectId,_featureDatabaseService);
+          
         }
 
         private void BuildFeatureList(SplitterPanel features)
         {
-            var featureList=new ListView();
-            featureList.Dock = DockStyle.Fill;
+            var featureList = new ListView {View = View.List, Dock = DockStyle.Fill};
             var featureDataSource=LoadFeatures();
             foreach (var feature in featureDataSource)
             {
-                featureList.Controls.Add(feature);
+                featureList.Items.Add(new ListViewItem(feature.FeatureName){Tag = feature.Id});
             }
             features.Controls.Add(featureList);
         }
@@ -43,13 +59,14 @@ namespace IronCards.Controls
         {
             var results = new List<Feature>();
             var featureDocuments = _featureDatabaseService.GetAllByProjectId(_projectId);
-            //TODO add fetureDocuments and build out Feature
+         
             foreach (var featureDocument in featureDocuments)
             {
                 results.Add(new Feature()
                 {
                     ProjectId=_projectId,
-                    FeatureName=featureDocument.Name
+                    FeatureName=featureDocument.Name,
+                    Id=featureDocument.Id
                 });
             }
 

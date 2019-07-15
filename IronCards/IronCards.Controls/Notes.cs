@@ -57,7 +57,7 @@ namespace IronCards.Controls
            var descriptionTextBox=new TextBox(){Multiline = true, Width = 500,Height=300,ScrollBars = ScrollBars.Vertical};
            editorTableLayout.Controls.Add(descriptionLabel,0,1);
            editorTableLayout.Controls.Add(descriptionTextBox,0,2);
-           var saveButton=new Button(){Text = "Save Note", Anchor =( AnchorStyles.Right | AnchorStyles.Top), Height = 30};
+           var saveButton=new Button(){Text = "Insert Note", Anchor =( AnchorStyles.Right | AnchorStyles.Top), Height = 30};
             saveButton.Click += delegate(object o, EventArgs args)
             {
                 bool executeOperation = true;

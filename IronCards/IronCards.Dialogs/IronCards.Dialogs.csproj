@@ -47,6 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddFeatureDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="BaseDialogForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -79,6 +82,10 @@
     <ProjectReference Include="..\IronCards.Objects\IronCards.Objects.csproj">
       <Project>{5B5C7DD5-A93D-415F-B7A9-1A0D35229C27}</Project>
       <Name>IronCards.Objects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IronCards.Services\IronCards.Services.csproj">
+      <Project>{A6986F78-C6AD-41F8-8D14-4AA7704154CF}</Project>
+      <Name>IronCards.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

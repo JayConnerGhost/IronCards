@@ -9,5 +9,6 @@
 
         public int ProjectId { get; set; }
         public string FeatureName { get; set; }
+        public int Id { get; set; }
     }
 }

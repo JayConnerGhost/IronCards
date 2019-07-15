@@ -18,6 +18,19 @@ namespace IronCards.Services
 
             return featureDocuments;
         }
+
+        public int Insert(FeatureDocument featureDocument)
+        {
+            int featureId = 0;
+            using (var database = new LiteDB.LiteDatabase(ConnectionString))
+            {
+                var features = database.GetCollection<FeatureDocument>();
+                features.EnsureIndex("Id");
+                featureId = features.Insert(featureDocument);
+            }
+
+            return featureId;
+        }
     }
     
 }

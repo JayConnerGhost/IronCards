@@ -5,5 +5,6 @@ namespace IronCards.Services
     public interface IFeatureDatabaseService
     {
         List<FeatureDocument> GetAllByProjectId(int projectId);
+        int Insert(FeatureDocument featureDocument);
     }
 }
