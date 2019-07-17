@@ -72,6 +72,9 @@
     <Compile Include="BaseControl.Designer.cs">
       <DependentUpon>BaseControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="CardChooser.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Feature.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -120,6 +123,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Attachments.resx">
       <DependentUpon>Attachments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CardChooser.resx">
+      <DependentUpon>CardChooser.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Notes.resx">
       <DependentUpon>Notes.cs</DependentUpon>

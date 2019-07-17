@@ -71,6 +71,14 @@ namespace IronCards.Controls
                 return;
             }
             //TODO: load cards for feature
+            var selectedFeatureId=(int)e.Item.Tag;
+
+            var cardChooser = new CardChooser(selectedFeatureId);
+            cardChooser.Dock = DockStyle.Fill;
+                        
+            _content.Controls.Clear();
+            
+            _content.Controls.Add(cardChooser);
         }
 
         private List<Feature> LoadFeatures()
