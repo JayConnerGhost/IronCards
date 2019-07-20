@@ -9,13 +9,21 @@ namespace IronCards.Services
 {
     public class CardDatabaseService: BaseDatabaseService , ICardDatabaseService
     {
-        public CardDatabaseService() : base()
-        {
+        private readonly IFeatureDatabaseService _featureDatabaseService;
 
+        public CardDatabaseService(IFeatureDatabaseService featureDatabaseService ) : base()
+        {
+            _featureDatabaseService = featureDatabaseService;
         }
         public int Insert(int parentLaneId, string cardName, string cardDescription, int cardPoints,
-            CardTypes parsedCardType)
+            CardTypes parsedCardType,int featureId, string featureName)
         {
+
+            if (!CheckFeatureIsInDatabase())
+            {
+                throw new FeatureIsNotRegisteredException(featureName);
+            }
+
             int id;
             using (var database = new LiteDB.LiteDatabase(ConnectionString))
             {
@@ -31,6 +39,11 @@ namespace IronCards.Services
                 });
             }
             return id;
+        }
+
+        private bool CheckFeatureIsInDatabase()
+        {
+            return true;
         }
 
         public List<CardDocument> Get(int laneId)

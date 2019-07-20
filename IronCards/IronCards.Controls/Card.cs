@@ -13,14 +13,24 @@ namespace IronCards.Controls
     {
         class Data
         {
-          
+            public int FeatureId { get; set; }
+            public string FeatureName { get; set; }
             public int ParentLaneId { get; set; }
             public string CardName { get; set; }
             public string CardDescription { get; set; }
             public int CardPoints { get; set; }
             public int CardId { get; set; }
-
             public CardTypes CardType { get; set; }
+        }
+        public int FeatureId
+        {
+            get => _cardData.FeatureId;
+            set => _cardData.FeatureId = value;
+        }
+        public string FeatureName
+        {
+            get => _cardData.FeatureName;
+            set => _cardData.FeatureName = value;
         }
         public int CardPoints
         {
@@ -60,9 +70,11 @@ namespace IronCards.Controls
         private readonly ToolTip _globalToolTip;
         private ContextMenuStrip contextMenu;
         private readonly Data _cardData = new Data(); 
-        public Card(int parentLaneId, string cardName, string cardDescription, int points, int cardId,ToolTip globalToolTip, CardTypes cardType)
+        public Card(int parentLaneId, string cardName, string cardDescription, int points, int cardId,ToolTip globalToolTip, CardTypes cardType, int featureId, string featureName)
         {
             _globalToolTip = globalToolTip;
+            _cardData.FeatureId = featureId;
+            _cardData.FeatureName = featureName;
             _cardData.ParentLaneId = parentLaneId;
             _cardData.CardName = cardName;
             _cardData.CardDescription = cardDescription;

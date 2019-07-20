@@ -121,6 +121,8 @@ namespace IronCards.Controls
             var cardPoints = result.Item3;
             var dialogResult = result.Item4;
             var cardType = result.Item5;
+            var featureId = 0;
+            var featureName = "Coming soon";
             if (dialogResult==DialogResult.Cancel || cardName==string.Empty)
             {
                 return;
@@ -130,8 +132,8 @@ namespace IronCards.Controls
             CardTypes.TryParse(cardType, true, out parsedCardType);
             //Insert card to UserControl Lane passed in Args
             var cardId =
-                _cardDatabaseService.Insert(parentLaneId, cardName, cardDescription, cardPoints, parsedCardType);
-            var card = new Card(parentLaneId,cardName,cardDescription,cardPoints,cardId, GlobalToolTip, parsedCardType);
+                _cardDatabaseService.Insert(parentLaneId, cardName, cardDescription, cardPoints, parsedCardType, featureId, featureName);
+            var card = new Card(parentLaneId,cardName,cardDescription,cardPoints,cardId, GlobalToolTip, parsedCardType, featureId, featureName);
             parentLane.AddCard(card);
         }
 
@@ -144,7 +146,7 @@ namespace IronCards.Controls
 
                CardTypes.TryParse(cardDocument.CardType, true, out CardTypes resultingCardType);
                //Next line needed to reflect true card type.
-                var card = new Card(cardDocument.ParentLaneId,cardDocument.CardName,cardDocument.CardDescription,cardDocument.CardPoints,cardDocument.Id, GlobalToolTip, resultingCardType);
+                var card = new Card(cardDocument.ParentLaneId,cardDocument.CardName,cardDocument.CardDescription,cardDocument.CardPoints,cardDocument.Id, GlobalToolTip, resultingCardType,0,"test");
 
                 lane.AddCard(card);
            }
