@@ -180,7 +180,7 @@ namespace IronCards.Controls
             foreach (Card card in containerControls)
             {
                 card.DeleteCard();
-                _cardDatabaseService.Delete(card.CardId);
+                _cardDatabaseService.Delete(card.Id);
             }
         }
 
@@ -188,7 +188,7 @@ namespace IronCards.Controls
         {
             //If null add event handlers
             card.DatabaseService = _cardDatabaseService;
-            card.Name = card.CardId.ToString();
+            card.Name = card.Id.ToString();
             _cardContainer.Controls.Add(card);
         }
 

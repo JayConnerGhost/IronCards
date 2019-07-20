@@ -220,7 +220,7 @@ namespace IronCards.Controls
             e.target.ParentLaneId = e.NewLaneId;
             var cardDocument = new CardDocument
             {
-                Id = e.target.CardId,
+                Id = e.target.Id,
                 CardDescription = e.target.CardDescription,
                 CardName = e.target.CardName,
                 CardPoints = e.target.CardPoints,

@@ -22,24 +22,59 @@ namespace IronCards.Controls
 
             public CardTypes CardType { get; set; }
         }
+        public int CardPoints
+        {
+            get => _cardData.CardPoints;
+            set => _cardData.CardPoints = value;
+        }
+
+        public int ParentLaneId
+        {
+            get => _cardData.ParentLaneId;
+            set => _cardData.ParentLaneId = value;
+        }
+        public int Id
+        {
+            get => _cardData.CardId;
+            set => _cardData.CardId = value;
+        }
+        public string CardName
+        {
+            get => _cardData.CardName;
+            set => _cardData.CardName = value;
+        }
+
+        public string CardDescription
+        {
+            get => _cardData.CardDescription;
+            set => _cardData.CardDescription = value;
+        }
+
+        public CardTypes CardType
+        {
+            get => _cardData.CardType;
+            set => _cardData.CardType = value;
+        }
 
         public ICardDatabaseService DatabaseService { get; set; }
         private readonly ToolTip _globalToolTip;
         private ContextMenuStrip contextMenu;
-        private Data cardData = new Data(); 
+        private readonly Data _cardData = new Data(); 
         public Card(int parentLaneId, string cardName, string cardDescription, int points, int cardId,ToolTip globalToolTip, CardTypes cardType)
         {
             _globalToolTip = globalToolTip;
-            cardData.ParentLaneId = parentLaneId;
-            cardData.CardName = cardName;
-            cardData.CardDescription = cardDescription;
-            cardData.CardPoints = points;
-            cardData.CardId = cardId;
-            cardData.CardType = cardType;
-            BuildCard(cardData.CardType);
+            _cardData.ParentLaneId = parentLaneId;
+            _cardData.CardName = cardName;
+            _cardData.CardDescription = cardDescription;
+            _cardData.CardPoints = points;
+            _cardData.CardId = cardId;
+            _cardData.CardType = cardType;
+            BuildCard(_cardData);
         }
 
-        private void BuildCard(CardTypes cardType)
+    
+
+        private void BuildCard(Data data)
         {
             BuildMenu();
             var cardBodyLayout = new FlowLayoutPanel
@@ -51,7 +86,7 @@ namespace IronCards.Controls
             this.BorderStyle = BorderStyle.FixedSingle;
 
 
-            SetBackColor(this, cardType);
+            SetBackColor(this, data.CardType);
 
 
             this.Margin = new Padding(10, 20, 10, 10);
@@ -60,7 +95,7 @@ namespace IronCards.Controls
             //Id
             var IdLabel = new Label()
             {
-                Text = cardData.CardId.ToString(),
+                Text = data.CardId.ToString(),
                 Width = 25,
            
                 BorderStyle = BorderStyle.None
@@ -69,18 +104,18 @@ namespace IronCards.Controls
             //Name row 
             var nameLabel = new Label
             {
-                Text = cardData.CardName, Width = 200,  BorderStyle = BorderStyle.None,
+                Text = data.CardName, Width = 200,  BorderStyle = BorderStyle.None,
                 Name = "nameLabel",
                 
             };
-            _globalToolTip.SetToolTip(nameLabel, cardData.CardName);
+            _globalToolTip.SetToolTip(nameLabel, data.CardName);
             cardBodyLayout.Controls.Add(nameLabel);
 
             var propertiesLayout = new FlowLayoutPanel()
                 {FlowDirection = FlowDirection.LeftToRight, Size = new Size(200, 30)};
             var pointsLabel = new Label() {Text = "Points: ", Width = 40};
             propertiesLayout.Controls.Add(pointsLabel);
-            var pointsValue = new Label() {Text = cardData.CardPoints.ToString(), Width = 25, Name = "pointsLabel"};
+            var pointsValue = new Label() {Text = data.CardPoints.ToString(), Width = 25, Name = "pointsLabel"};
             propertiesLayout.Controls.Add(pointsValue);
 
        
@@ -122,7 +157,7 @@ namespace IronCards.Controls
         public void DeleteCard()
         {
 
-            DatabaseService.Delete(this.cardData.CardId);
+            DatabaseService.Delete(this._cardData.CardId);
             //TODO code in here to delete card from ui.
             this.Dispose();
         }
@@ -130,25 +165,25 @@ namespace IronCards.Controls
         private void ViewButton_Click(object sender, EventArgs e)
         {
             //TODO : - > add in card type 
-            new ViewCardDialog().ShowDialog(this.cardData.CardName, this.cardData.CardDescription, this.cardData.CardPoints, this.cardData.CardId, this.cardData.CardType);
+            new ViewCardDialog().ShowDialog(this._cardData.CardName, this._cardData.CardDescription, this._cardData.CardPoints, this._cardData.CardId, this._cardData.CardType);
         }
 
         private void EditButton_Click(object sender, EventArgs e)
         {
             var result =
-                new EditCardDialog().ShowDialog(this.cardData.CardId, this.cardData.CardName, this.cardData.CardDescription, this.cardData.CardPoints, this.cardData.CardType);
+                new EditCardDialog().ShowDialog(this._cardData.CardId, this._cardData.CardName, this._cardData.CardDescription, this._cardData.CardPoints, this._cardData.CardType);
             //TODO update card values 
-            UpdateValues(result.Item1, result.Item2, cardData.CardId, result.Item4,result.Item6);
+            UpdateValues(result.Item1, result.Item2, _cardData.CardId, result.Item4,result.Item6);
 
             //ToDO update database
             var cardDocument = new CardDocument
             {
-                Id = cardData.CardId,
-                CardDescription = cardData.CardDescription,
-                CardName = cardData.CardName,
-                CardPoints = cardData.CardPoints,
-                ParentLaneId = cardData.ParentLaneId,
-                CardType= cardData.CardType.ToString()
+                Id = _cardData.CardId,
+                CardDescription = _cardData.CardDescription,
+                CardName = _cardData.CardName,
+                CardPoints = _cardData.CardPoints,
+                ParentLaneId = _cardData.ParentLaneId,
+                CardType= _cardData.CardType.ToString()
             };
             DatabaseService.Update(cardDocument);
         } 
@@ -161,23 +196,23 @@ namespace IronCards.Controls
 
         public void UpdateValues(string cardName, string cardDescription, int Id, int cardPoints, string cardType)
         {
-            this.cardData.CardId = Id;
-            this.cardData.CardName = cardName;
-            this.cardData.CardDescription = cardDescription;
-            this.cardData.CardPoints = cardPoints;
+            this._cardData.CardId = Id;
+            this._cardData.CardName = cardName;
+            this._cardData.CardDescription = cardDescription;
+            this._cardData.CardPoints = cardPoints;
             switch (cardType)
             {
                 case "Idea":
-                    this.cardData.CardType = CardTypes.Idea;
+                    this._cardData.CardType = CardTypes.Idea;
                     break;
                 case "Requirement":
-                    this.cardData.CardType = CardTypes.Requirement;
+                    this._cardData.CardType = CardTypes.Requirement;
                     break;
                 case "ExternalRequirement":
-                    this.cardData.CardType = CardTypes.ExternalRequirement;
+                    this._cardData.CardType = CardTypes.ExternalRequirement;
                     break;
                 case "Bug":
-                    this.cardData.CardType = CardTypes.Bug;
+                    this._cardData.CardType = CardTypes.Bug;
                     break;
             }
             
@@ -187,12 +222,12 @@ namespace IronCards.Controls
         private void UpdateUi()
         {
             var nameLabel = (Label) this.Controls.Find("nameLabel", true).First();
-            nameLabel.Text = cardData.CardName;
-            _globalToolTip.SetToolTip(nameLabel, cardData.CardName);
+            nameLabel.Text = _cardData.CardName;
+            _globalToolTip.SetToolTip(nameLabel, _cardData.CardName);
             var pointsLabel = (Label) this.Controls.Find("pointsLabel", true).First();
-            pointsLabel.Text = cardData.CardPoints.ToString();
+            pointsLabel.Text = _cardData.CardPoints.ToString();
 
-            this.BackColor=CardTypesUtilities.GetColor(cardData.CardType);
+            this.BackColor=CardTypesUtilities.GetColor(_cardData.CardType);
             
         }
     }
