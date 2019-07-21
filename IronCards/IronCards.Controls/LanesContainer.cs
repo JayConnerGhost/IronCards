@@ -22,16 +22,18 @@ namespace IronCards.Controls
     {
         private readonly ILanesDatabaseService _lanesDatabaseService;
         private readonly ICardDatabaseService _cardDatabaseService;
+        private readonly IFeatureDatabaseService _featuresDatabaseService;
         public List<Lane> LanesCollection { get; set; }
         public ToolTip GlobalToolTip =new ToolTip();
         private FlowLayoutPanel _layoutPanel;
         public int ProjectId { get; set; }
-        public LanesContainer(ILanesDatabaseService lanesDatabaseService, ICardDatabaseService cardDatabaseService):base()
+        public LanesContainer(ILanesDatabaseService lanesDatabaseService, ICardDatabaseService cardDatabaseService, IFeatureDatabaseService featuresDatabaseService):base()
         {
             SetupToolTip();
             InitializeComponent();
             _lanesDatabaseService = lanesDatabaseService;
             _cardDatabaseService = cardDatabaseService;
+            _featuresDatabaseService = featuresDatabaseService;
             BackColor=Color.Snow;
             this.Dock = DockStyle.Fill;
             var mainLayoutPanel = new TableLayoutPanel()
@@ -112,17 +114,18 @@ namespace IronCards.Controls
         {
             
             //Open dialog to capture card detials 
-            var result = new AddCardDialog().ShowDialog();
+            var result = new AddCardDialog().ShowDialog(_featuresDatabaseService,ProjectId);
             //Create card 
             var parentLaneId = e.LaneId;
             var parentLane = e.Target;
             var cardName = result.Item1;
             var cardDescription = result.Item2;
             var cardPoints = result.Item3;
-            var dialogResult = result.Item4;
-            var cardType = result.Item5;
-            var featureId = 0;
-            var featureName = "Coming soon";
+            var selectedFeatureId = result.Item4;
+            var selectedFeatureName = result.Item5;
+            var dialogResult = result.Item6;
+            var cardType = result.Item7;
+           
             if (dialogResult==DialogResult.Cancel || cardName==string.Empty)
             {
                 return;
@@ -132,8 +135,8 @@ namespace IronCards.Controls
             CardTypes.TryParse(cardType, true, out parsedCardType);
             //Insert card to UserControl Lane passed in Args
             var cardId =
-                _cardDatabaseService.Insert(parentLaneId, cardName, cardDescription, cardPoints, parsedCardType, featureId, featureName);
-            var card = new Card(parentLaneId,cardName,cardDescription,cardPoints,cardId, GlobalToolTip, parsedCardType, featureId, featureName);
+                _cardDatabaseService.Insert(parentLaneId, cardName, cardDescription, cardPoints, parsedCardType, selectedFeatureId, selectedFeatureName);
+            var card = new Card(parentLaneId,cardName,cardDescription,cardPoints,cardId, GlobalToolTip, parsedCardType, selectedFeatureId, selectedFeatureName);
             parentLane.AddCard(card);
         }
 

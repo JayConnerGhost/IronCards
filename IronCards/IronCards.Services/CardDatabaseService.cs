@@ -19,18 +19,18 @@ namespace IronCards.Services
             CardTypes parsedCardType,int featureId, string featureName)
         {
 
-            if (!CheckFeatureIsInDatabase())
+            if (!CheckFeatureIsInDatabase(featureId))
             {
                 throw new FeatureIsNotRegisteredException(featureName);
             }
-
+            //TODO: next refactoring spot for feature work 
             int id;
             using (var database = new LiteDB.LiteDatabase(ConnectionString))
             {
                 var cards = database.GetCollection<CardDocument>();
                 id = cards.Insert(new CardDocument()
                 {
-                    
+                    FeatureId=featureId,
                     ParentLaneId=parentLaneId,
                     CardName=cardName,
                     CardDescription=cardDescription,
@@ -41,9 +41,9 @@ namespace IronCards.Services
             return id;
         }
 
-        private bool CheckFeatureIsInDatabase()
+        private bool CheckFeatureIsInDatabase(int featureId)
         {
-            return true;
+            return _featureDatabaseService.Find(featureId) != null;
         }
 
         public List<CardDocument> Get(int laneId)

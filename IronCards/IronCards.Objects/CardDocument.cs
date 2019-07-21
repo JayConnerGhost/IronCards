@@ -8,5 +8,6 @@
         public string CardDescription { get; set; }
         public int CardPoints { get; set; }
         public string CardType { get; set; }
+        public int FeatureId { get; set; }
     }
 }

@@ -1,14 +1,23 @@
 ﻿using System;
 using System.Windows.Forms;
+using IronCards.Services;
 using MetroFramework.Controls;
 
 namespace IronCards.Dialogs
 {
+    //Staring Feature Refactor
     public class AddCardDialog : BaseDialogForm
     {
-        public Tuple<string, string, int, DialogResult, string> ShowDialog()
+        private IFeatureDatabaseService _featureDatabaseService;
+        private int _projectId;
+
+        public Tuple<string, string, int,int,string, DialogResult, string> ShowDialog(IFeatureDatabaseService featureDatabaseService,int projectId)
         {
+            _featureDatabaseService = featureDatabaseService;
+            _projectId = projectId;
             string type = "Idea";
+            string FeatureName = string.Empty;
+            int featureId=0;
             MetroTextBox name = new MetroTextBox() { Width = 460, Height = 20, TabIndex = 0, TabStop = true, Multiline = false, Text = "" };
             MetroTextBox description = new MetroTextBox() { Width = 460, Height = 350, TabIndex = 0, TabStop = true, Multiline = true, Text = "" };
             var numericUpDown = new NumericUpDown() { Width = 50, Height = 20, TabIndex = 0, TabStop = true };
@@ -58,6 +67,8 @@ namespace IronCards.Dialogs
                 {
                     type = (string)((ComboBox)(sender)).SelectedItem;
                 };
+                var featureDropDown = new ComboBox();
+                propertiesLayout.Controls.Add(BuildFeaturesList(featureDropDown));
 
 
                 var flowLayoutVertical = new FlowLayoutPanel();
@@ -88,7 +99,24 @@ namespace IronCards.Dialogs
                 result = form.ShowDialog();
             }
 
-            return new Tuple<string, string, int, DialogResult,string>(name.Text, description.Text, Decimal.ToInt32(d: numericUpDown.Value), result, type);
+            return new Tuple<string, string, int,int,string, DialogResult,string>(name.Text, description.Text, Decimal.ToInt32(d: numericUpDown.Value),featureId,FeatureName ,result, type);
+        }
+
+        private ComboBox BuildFeaturesList(ComboBox featureDropDown)
+        {
+            //TODO: build combo box 
+            //featureDropDown
+            //TODO rquest feature list for this dropdown
+            //_featureDatabaseService
+
+            var features = _featureDatabaseService.GetAllByProjectId(_projectId);
+
+            foreach (var feature in features)
+            {
+                featureDropDown.Items.Add(feature);
+            }
+
+            return featureDropDown;
         }
     }
 }

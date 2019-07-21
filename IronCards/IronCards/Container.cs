@@ -169,6 +169,7 @@ namespace IronCards
         {
             CleanDownWall();
             this.Text = projectName;
+            _lanes.ProjectId = projectId;
             _lanes.AddLane(projectId, projectName, "TODO");
             _lanes.AddLane(projectId, projectName, "Doing");
             _lanes.AddLane(projectId, projectName, "Code Complete");
@@ -181,6 +182,7 @@ namespace IronCards
         {
             CleanDownWall();
             this.Text = projectName;
+            _lanes.ProjectId = projectId;
             _lanes.AddLane(projectId, projectName, "TODO");
             _lanes.AddLane(projectId, projectName, "Doing");
             _lanes.AddLane(projectId, projectName, "Done");
@@ -208,6 +210,7 @@ namespace IronCards
             this.Invalidate();
             this.Update();
             var lanes=_lanesDatabaseService.GetAll(projectId);
+            _lanes.ProjectId = projectId;
             foreach (var lane in lanes)
             {
                 _lanes.LoadLane(lane);

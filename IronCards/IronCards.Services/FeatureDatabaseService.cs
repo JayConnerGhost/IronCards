@@ -31,6 +31,16 @@ namespace IronCards.Services
 
             return featureId;
         }
+
+        public FeatureDocument Find(int featureId)
+        {
+            using (var database = new LiteDB.LiteDatabase(ConnectionString))
+            {
+                var features = database.GetCollection<FeatureDocument>();
+                features.EnsureIndex("Id");
+                return features.Find(x => x.Id == featureId).FirstOrDefault();
+            }
+        }
     }
     
 }

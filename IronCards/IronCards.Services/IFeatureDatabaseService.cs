@@ -6,5 +6,6 @@ namespace IronCards.Services
     {
         List<FeatureDocument> GetAllByProjectId(int projectId);
         int Insert(FeatureDocument featureDocument);
+        FeatureDocument Find(int featureId);
     }
 }
