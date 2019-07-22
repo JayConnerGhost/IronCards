@@ -19,7 +19,7 @@ namespace IronCards.Dialogs
             string FeatureName = string.Empty;
             int featureId=0;
             MetroTextBox name = new MetroTextBox() { Width = 460, Height = 20, TabIndex = 0, TabStop = true, Multiline = false, Text = "" };
-            MetroTextBox description = new MetroTextBox() { Width = 460, Height = 350, TabIndex = 0, TabStop = true, Multiline = true, Text = "" };
+            MetroTextBox description = new MetroTextBox() { Width = 460, Height = 300, TabIndex = 0, TabStop = true, Multiline = true, Text = "" };
             var numericUpDown = new NumericUpDown() { Width = 50, Height = 20, TabIndex = 0, TabStop = true };
             var result = DialogResult;
             using (var form = new DialogForm(new FormInfo("Add Card", 485, 600)))
@@ -47,30 +47,38 @@ namespace IronCards.Dialogs
                 var propertiesLayout = new FlowLayoutPanel();
                 propertiesLayout.Size = new System.Drawing.Size(485, 30);
                 propertiesLayout.FlowDirection = FlowDirection.LeftToRight;
-                var pointsLabel = new MetroLabel() { Text = "Points" };
+                var pointsLabel = new MetroLabel() { Text = "Points", Width=100 };
 
                 propertiesLayout.Controls.Add(pointsLabel);
                 propertiesLayout.Controls.Add(numericUpDown);
                 //TODO - > add card type controls 
-                var typesLabel = new Label() { Text = "Card Type" };
+                var typesLabel = new Label() { Text = "Card Type", Width = 100 };
                 var typeDropDown = new ComboBox();
-
+               
+                typeDropDown.Width = 100;
                 propertiesLayout.Controls.Add(typesLabel);
                 propertiesLayout.Controls.Add(typeDropDown);
                 typeDropDown.Items.Add("Idea");
                 typeDropDown.Items.Add("Requirement");
                 typeDropDown.Items.Add("Bug");
                 typeDropDown.Items.Add("External Requirement");
-                typeDropDown.FlatStyle = FlatStyle.Flat;
+         
                 typeDropDown.DropDownStyle = ComboBoxStyle.DropDownList;
                 typeDropDown.SelectedIndexChanged += (sender, e) =>
                 {
                     type = (string)((ComboBox)(sender)).SelectedItem;
                 };
-                var featureDropDown = new ComboBox();
-                propertiesLayout.Controls.Add(BuildFeaturesList(featureDropDown));
 
-
+                //TODO:Create some space for feature control 
+                //TODO:Sort out databinding
+          
+                var featuresLayout=new FlowLayoutPanel{Size= new System.Drawing.Size(485, 30)};
+                featuresLayout.FlowDirection = FlowDirection.LeftToRight;
+                var featuresDropDown=new ComboBox();
+                var featuresLabel=new MetroLabel(){Width = 100,Text = "Feature"};
+                featuresLayout.Controls.Add(featuresLabel);
+                featuresLayout.Controls.Add(BuildFeaturesList(featuresDropDown));
+                
                 var flowLayoutVertical = new FlowLayoutPanel();
 
                 flowLayoutVertical.FlowDirection = FlowDirection.TopDown;
@@ -81,6 +89,7 @@ namespace IronCards.Dialogs
                 flowLayoutVertical.Controls.Add(descriptionLabel);
                 flowLayoutVertical.Controls.Add(description);
                 flowLayoutVertical.Controls.Add(propertiesLayout);
+                flowLayoutVertical.Controls.Add(featuresLayout);
                 var buttonLayoutPanel = new FlowLayoutPanel
                 {
                     FlowDirection = FlowDirection.RightToLeft,
@@ -104,17 +113,11 @@ namespace IronCards.Dialogs
 
         private ComboBox BuildFeaturesList(ComboBox featureDropDown)
         {
-            //TODO: build combo box 
-            //featureDropDown
-            //TODO rquest feature list for this dropdown
-            //_featureDatabaseService
-
             var features = _featureDatabaseService.GetAllByProjectId(_projectId);
 
-            foreach (var feature in features)
-            {
-                featureDropDown.Items.Add(feature);
-            }
+            featureDropDown.DataSource = features;
+            featureDropDown.DisplayMember = "Name";
+            featureDropDown.ValueMember = "Id";
 
             return featureDropDown;
         }
