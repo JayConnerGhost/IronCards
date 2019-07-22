@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Remoting.Channels;
 using System.Windows.Forms;
 using IronCards.Services;
 using MetroFramework.Controls;
@@ -69,12 +70,17 @@ namespace IronCards.Dialogs
                     type = (string)((ComboBox)(sender)).SelectedItem;
                 };
 
-                //TODO:Create some space for feature control 
-                //TODO:Sort out databinding
+            
           
                 var featuresLayout=new FlowLayoutPanel{Size= new System.Drawing.Size(485, 30)};
                 featuresLayout.FlowDirection = FlowDirection.LeftToRight;
                 var featuresDropDown=new ComboBox();
+                featuresDropDown.SelectedIndexChanged += (sender, e) =>
+                    {
+                        featureId = (int) ((ComboBox) sender).SelectedValue;
+                        FeatureName = (string) ((ComboBox) sender).Text;
+                    };
+
                 var featuresLabel=new MetroLabel(){Width = 100,Text = "Feature"};
                 featuresLayout.Controls.Add(featuresLabel);
                 featuresLayout.Controls.Add(BuildFeaturesList(featuresDropDown));
